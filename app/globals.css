@@ -466,7 +466,7 @@ button {
   z-index: -2;
 }
 .hero__bg img {
-  object-position: center 58%;
+  object-position: center 66%;
   filter: brightness(0.44) contrast(1.16) saturate(0.62);
   transition: filter 1.9s var(--ease), transform 2s var(--ease);
   transform: scale(1.08);
