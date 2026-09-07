@@ -23,6 +23,8 @@ export type MenuState = {
 
 export type CategoryImage = { src: string; alt: string };
 
+export const catId = (c: Category) => `cat-${c.toLowerCase().replace(/[^a-z]+/g, "-")}`;
+
 /** 3–4 categorically accurate photos per tab, stepped through with the carousel. */
 export const categoryImages: Record<Category, CategoryImage[]> = {
   Bites: [

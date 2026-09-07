@@ -1,27 +1,25 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useMenu } from "@/lib/store";
-import { CATEGORIES, categoryImages, type Category } from "@/lib/menu";
+import { CATEGORIES, catId, type Category } from "@/lib/menu";
+import { categoryImages } from "@/lib/menu";
 import { CtaVideo } from "@/components/CtaVideo";
-
-const catId = (c: Category) => `cat-${c.toLowerCase().replace(/[^a-z]+/g, "-")}`;
+import { MenuCategoryRow } from "@/components/MenuCategoryRow";
 
 /**
- * One continuous, single scrolling dish list grouped by category. A
- * scrollspy (not IntersectionObserver — the "last heading that's scrolled
- * past the activation line" algorithm) tracks which category is in view and
- * highlights its tab + swaps the sticky image panel to that category's
- * photos. Tabs are still clickable as a shortcut (smooth-scrolls to the
- * section). The 3–4 photos within a category are stepped through manually
- * with dots/arrows — that part doesn't move on its own.
+ * Each category is its own row: a 2-up grid of dishes beside its own photo
+ * carousel (see MenuCategoryRow) — Bites pairs with the first image section,
+ * Entrées with the second, and so on down the page. The tab bar is a
+ * shortcut that jumps between rows and highlights whichever one is in view
+ * (a scrollspy — "last heading past the activation line" — not
+ * IntersectionObserver); it no longer drives the images, those are static
+ * until clicked.
  */
 export function MenuBoard() {
   const menu = useMenu();
   const [active, setActive] = useState<Category>(CATEGORIES[0]);
-  const [imgIndex, setImgIndex] = useState(0);
   const activeRef = useRef(active);
   activeRef.current = active;
 
@@ -54,12 +52,6 @@ export function MenuBoard() {
     };
   }, []);
 
-  // the image set follows the category in view — reset to its first photo
-  // whenever scroll (or a tab click) moves us into a new one
-  useEffect(() => {
-    setImgIndex(0);
-  }, [active]);
-
   function scrollToCategory(cat: Category) {
     document.getElementById(catId(cat))?.scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -68,9 +60,6 @@ export function MenuBoard() {
       block: "start",
     });
   }
-
-  const images = categoryImages[active];
-  const shown = images[Math.min(imgIndex, images.length - 1)];
 
   return (
     <div className="menu3">
@@ -100,77 +89,14 @@ export function MenuBoard() {
       </div>
 
       <div className="wrap menu3__board">
-        <div className="menu3__list">
-          {CATEGORIES.map((cat) => (
-            <section key={cat} id={catId(cat)} className="menu3__cat">
-              <h2 className="menu3__catheading">{cat}</h2>
-              <ol className="menu3__dishes">
-                {menu.dishes
-                  .filter((d) => d.category === cat)
-                  .map((d) => (
-                    <li key={d.id} className="menu3__row">
-                      <div className="menu3__rowhead">
-                        <h3>{d.name}</h3>
-                        {d.price ? (
-                          <span className="menu3__price">{d.price}</span>
-                        ) : null}
-                      </div>
-                      <p>{d.description}</p>
-                    </li>
-                  ))}
-              </ol>
-            </section>
-          ))}
-        </div>
-
-        <div className="menu3__panel">
-          <div className="menu3__frame">
-            <Image
-              key={shown.src}
-              src={shown.src}
-              alt={shown.alt}
-              fill
-              sizes="(min-width: 58rem) 38vw, 100vw"
-              priority={imgIndex === 0}
-            />
-            <span className="frame__grade" aria-hidden="true" />
-          </div>
-
-          {images.length > 1 && (
-            <div className="menu3__carousel">
-              <button
-                type="button"
-                className="menu3__arrow"
-                onClick={() =>
-                  setImgIndex((i) => (i - 1 + images.length) % images.length)
-                }
-                aria-label="Previous photo"
-              >
-                ‹
-              </button>
-              <div className="menu3__dots">
-                {images.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className="menu3__dot"
-                    data-active={i === imgIndex}
-                    onClick={() => setImgIndex(i)}
-                    aria-label={`Photo ${i + 1} of ${images.length}`}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                className="menu3__arrow"
-                onClick={() => setImgIndex((i) => (i + 1) % images.length)}
-                aria-label="Next photo"
-              >
-                ›
-              </button>
-            </div>
-          )}
-        </div>
+        {CATEGORIES.map((cat) => (
+          <MenuCategoryRow
+            key={cat}
+            category={cat}
+            dishes={menu.dishes.filter((d) => d.category === cat)}
+            images={categoryImages[cat]}
+          />
+        ))}
       </div>
 
       <section className="menu3__foot callout">
