@@ -152,18 +152,9 @@ export function Nav() {
           Ferrant
         </Link>
 
-        <button
-          type="button"
-          className="nav__toggle"
-          aria-expanded={mobileOpen}
-          aria-controls="nav-list"
-          onClick={() => setMobileOpen((v) => !v)}
-        >
-          {mobileOpen ? "Close" : "Menu"}
-        </button>
-
-        <nav aria-label="Primary">
-          <ul id="nav-list" className="nav__list" data-open={mobileOpen}>
+        <div className="nav__right">
+          <nav aria-label="Primary">
+            <ul id="nav-list" className="nav__list" data-open={mobileOpen}>
             {items.map((it) => {
               const current =
                 pathname === it.href ||
@@ -216,17 +207,41 @@ export function Nav() {
                 </li>
               );
             })}
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+
+          <Link
+            href="/reservations"
+            className="nav__book"
+            onClick={() => setMobileOpen(false)}
+          >
+            Book Now
+          </Link>
+
+          <button
+            type="button"
+            className="nav__toggle"
+            aria-expanded={mobileOpen}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-controls="nav-list"
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            <span className="nav__burger" data-open={mobileOpen}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
       </div>
 
-      {/* the mega panel — one full-width panel below the bar, not a
+      {/* the mega panel — a compact anchored dropdown, not a
           per-item tooltip. Shown only while openId matches a mega item;
           closes on mouse leaving the header, on Escape, and on every
           route change (see the effect above). */}
       {activeItem && (
         <div className="mega" role="region" aria-label={`${activeItem.label} menu`}>
-          <div className="wrap mega__grid" data-count={activeItem.mega!.length}>
+          <div className="mega__grid">
             {activeItem.mega!.map((sub) => (
               <Link
                 key={sub.href}

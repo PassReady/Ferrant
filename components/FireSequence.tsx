@@ -29,6 +29,9 @@ const BEATS = [
     // bottom of the source photo — keeps the frame reading as fire and
     // hands, not stovetop equipment
     position: "center 25%",
+    // the flaming-pan shot is the one photo shown on mobile, where
+    // there's no crossfade — see .firesq__photo[data-mobile-default]
+    mobileDefault: true,
   },
 ];
 
@@ -84,6 +87,7 @@ export function FireSequence() {
               key={beat.src}
               className="firesq__photo"
               data-active={i === active}
+              data-mobile-default={beat.mobileDefault ? "true" : undefined}
             >
               <Image
                 src={beat.src}
