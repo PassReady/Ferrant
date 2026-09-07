@@ -909,7 +909,8 @@ button {
 }
 
 /* ============================================================
-   EVENTS — three rooms, three structures, nothing shared
+   EVENTS — page hero, then three text/image rows with a flip-to-reveal
+   spec card on each image
    ============================================================ */
 
 /* lands a mega-menu anchor link below the fixed nav, not under it */
@@ -917,17 +918,58 @@ button {
   scroll-margin-top: calc(var(--nav-h) + 1rem);
 }
 
-/* shared: the spec pair — a fixed 2-col x 3-row grid (Seats/Where,
-   Food/From, Notice alone) identical across all three spaces, regardless
-   of value length. Label always block + a real margin above its value. */
+/* page hero — the photo that used to be the Chef's Table's full-screen
+   background now sits behind the page intro instead */
+.evintro {
+  position: relative;
+  min-height: 56vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: clip;
+  isolation: isolate;
+}
+.evintro__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.evintro__bg > figure,
+.evintro__bg .frame {
+  height: 100%;
+}
+.evintro__bg .frame {
+  aspect-ratio: auto;
+}
+.evintro__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      75deg,
+      rgba(12, 11, 10, 0.9) 0%,
+      rgba(12, 11, 10, 0.55) 45%,
+      rgba(12, 11, 10, 0.15) 75%
+    ),
+    linear-gradient(to top, rgba(12, 11, 10, 0.85), transparent 55%);
+}
+.evintro__in {
+  width: 100%;
+  padding-block: clamp(3rem, 9vw, 6rem);
+}
+.evintro__in h1 {
+  font-size: var(--d-1);
+  max-width: 15ch;
+}
+
+/* shared: the spec pair on the flip-card back — a fixed 2x2 grid
+   (Seats/Where, Food/From). Label always block + a real margin above
+   its value. */
 .evspec {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem 2rem;
-  margin-top: clamp(2rem, 5vw, 3rem);
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
+  margin-top: 1.5rem;
 }
 .evspec .k {
   display: block;
@@ -943,143 +985,136 @@ button {
   font-size: var(--t-1);
   font-weight: 500;
 }
-/* fixed, generous gap below the grid, left-aligned with the heading above
-   it — identical on all three spaces */
 .evspec__cta {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 }
 
-/* — 1 · THE CHEF'S TABLE — photo fills the screen, everything sits on it — */
-.evhero {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  align-items: flex-end;
-  overflow: clip;
-  isolation: isolate;
+/* one text/image row — side alternates via data-image-side */
+.evrow {
+  padding-block: clamp(3rem, 8vw, 6rem);
+  display: grid;
+  gap: clamp(2rem, 6vw, 3rem);
 }
-.evhero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-.evhero__bg > figure,
-.evhero__bg .frame {
-  height: 100%;
-}
-.evhero__bg .frame {
-  aspect-ratio: auto;
-}
-.evhero__scrim {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-      75deg,
-      rgba(12, 11, 10, 0.9) 0%,
-      rgba(12, 11, 10, 0.5) 42%,
-      rgba(12, 11, 10, 0.1) 72%
-    ),
-    linear-gradient(to top, rgba(12, 11, 10, 0.8), transparent 55%);
-}
-.evhero__over {
-  width: 100%;
-  padding-block: clamp(3rem, 9vw, 7rem);
-}
-.evhero__tag {
+.evrow__tag {
   font-size: var(--t--1);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--flame);
 }
-.evhero h2 {
-  margin-top: 1rem;
-  font-size: var(--d-1);
-}
-.evhero__desc {
-  margin-top: 1.5rem;
-  max-width: 44ch;
-  color: var(--bone);
-  font-size: var(--t-1);
-}
-
-/* — 2 · THE FIRESIDE ROOM — heading, then image+prose, spec+cta last;
-   same DOM order on mobile as the other two spaces. On desktop the
-   heading and the spec+cta column sit left via grid-template-areas
-   (independent of source order), with the spec+cta block pinned. — */
-.evsplit {
-  padding-block: clamp(4rem, 10vw, 8rem);
-  display: grid;
-  gap: 2.5rem;
-}
-.evsplit__heading h2 {
+.evrow__text h2 {
+  margin-top: 0.75rem;
   font-size: var(--d-2);
 }
-.evsplit__flow {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 2.5rem);
-}
-.evsplit__flow p {
+.evrow__desc {
+  margin-top: 1.5rem;
   font-size: var(--t-1);
   color: var(--bone);
   max-width: 46ch;
 }
-.evsplit__flow .frame {
-  aspect-ratio: 3 / 2;
+.evrow__desc p + p {
+  margin-top: 1.15em;
 }
 @media (min-width: 54rem) {
-  .evsplit {
-    grid-template-columns: 20rem 1fr;
-    grid-template-areas: "heading flow" "spec flow";
-    align-content: start;
-    gap: clamp(3rem, 7vw, 6rem);
+  .evrow {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 5rem);
+    align-items: center;
   }
-  .evsplit__heading {
-    grid-area: heading;
-  }
-  .evsplit__flow {
-    grid-area: flow;
-    gap: clamp(2.5rem, 6vw, 4.5rem);
-  }
-  .evsplit__flow p:first-child {
-    font-size: var(--d-3);
-    font-weight: 400;
-    max-width: 20ch;
-    color: var(--bone);
-  }
-  .evsplit__specwrap {
-    grid-area: spec;
-    position: sticky;
-    top: calc(var(--nav-h) + 2.5rem);
-    align-self: start;
+  .evrow[data-image-side="left"] .evrow__media {
+    order: -1;
   }
 }
 
-/* — 3 · THE LONG TABLE — heading+desc, a placeholder image, spec+cta last — */
-.evlong {
-  padding-bottom: clamp(4rem, 10vw, 8rem);
+/* the flip card — a photo that flips on click to reveal the spec + CTA */
+.flipcard {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  perspective: 1800px;
 }
-.evlong__head {
-  padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+.flipcard__inner {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.8s var(--ease);
+  transform-style: preserve-3d;
 }
-.evlong__head h2 {
-  font-size: var(--d-2);
+.flipcard[data-flipped="true"] .flipcard__inner {
+  transform: rotateY(180deg);
 }
-.evlong__desc {
-  margin-top: 1rem;
-  font-size: var(--t-1);
+.flipcard__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+.flipcard__front {
+  background: var(--scale);
+}
+.flipcard__front > figure,
+.flipcard__front .frame {
+  height: 100%;
+}
+.flipcard__front .frame {
+  aspect-ratio: auto;
+}
+.flipcard__front::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(12, 11, 10, 0.82), transparent);
+  pointer-events: none;
+}
+.flipcard__see {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.7rem 1.15rem;
+  background: color-mix(in oklab, var(--forge) 55%, transparent);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--line);
   color: var(--bone);
-  max-width: 52ch;
+  font-family: var(--font-text), sans-serif;
+  font-size: var(--t--1);
+  letter-spacing: 0.02em;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
-.evlong__photo {
-  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+.flipcard__see span {
+  color: var(--flame);
 }
-.evlong__photo .frame {
-  aspect-ratio: 21 / 9;
+.flipcard__see:hover {
+  border-color: var(--flame);
 }
-@media (max-width: 40rem) {
-  .evlong__photo .frame {
-    aspect-ratio: 4 / 3;
+.flipcard__back {
+  transform: rotateY(180deg);
+  background: var(--scale);
+  border: 1px solid var(--line);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flipcard__back h3 {
+  font-size: var(--d-3);
+}
+.flipcard__close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  font-size: var(--t--1);
+  letter-spacing: 0.02em;
+  color: var(--ash);
+  transition: color 0.2s var(--ease);
+}
+.flipcard__close:hover {
+  color: var(--bone);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flipcard__inner {
+    transition: none;
   }
 }
 
