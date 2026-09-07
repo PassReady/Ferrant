@@ -1382,8 +1382,8 @@ button {
   display: inline-block;
   opacity: 0;
   transform: translateY(0.5em);
-  transition: opacity 0.5s var(--ease), transform 0.55s var(--ease);
-  transition-delay: calc(var(--wi) * 20ms);
+  transition: opacity 0.45s var(--ease), transform 0.5s var(--ease);
+  transition-delay: min(calc(var(--wi) * 18ms), 900ms);
 }
 .reveal.is-shown .reveal__w {
   opacity: 1;
