@@ -1479,8 +1479,7 @@ button {
 .menu3__frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  min-height: 20rem;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--scale);
 }
@@ -1536,22 +1535,13 @@ button {
     grid-template-columns: 1.3fr 1fr;
     align-items: start;
   }
-  /* the image now fills its column edge to edge, top to bottom of the
-     viewport, instead of a small centred card — the tabs bar can never
-     paint over it since .menu3__tabsrow is confined to the list column */
+  /* a square, not a full-viewport-height strip — sits just below the
+     tabs bar and stays there as the list scrolls past. The tabs bar
+     can't paint over it either way: .menu3__tabsrow is confined to the
+     list column, so it never extends into this one. */
   .menu3__panel {
     position: sticky;
-    top: 0;
-    height: 100svh;
-  }
-  .menu3__frame {
-    height: 100%;
-    min-height: 0;
-    /* the base rule's aspect-ratio, combined with this definite height,
-       was being used to derive an oversized intrinsic width — which grid
-       then honoured as the column's min size, blowing the whole board out
-       past the viewport. Not needed once height is explicit. */
-    aspect-ratio: auto;
+    top: calc(var(--nav-h) + 4.75rem);
   }
 }
 
