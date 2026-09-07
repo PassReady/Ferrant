@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FireHero } from "@/components/FireHero";
-import { Frame } from "@/components/Frame";
+import { FireSequence } from "@/components/FireSequence";
+import { FireMarquee } from "@/components/FireMarquee";
 import { CtaVideo } from "@/components/CtaVideo";
 
 export default function Home() {
@@ -8,34 +10,24 @@ export default function Home() {
     <>
       <FireHero />
 
-      {/* section 2 — the food, paired directly with the fire that makes it */}
-      <section className="wrap band home-cook">
-        <div className="home-cook__media">
-          <Frame
-            src="/img/oven-fire.jpg"
-            alt="The fire wall inside the kitchen, hearthstones glowing"
-            ratio="4 / 5"
-            light={["50%", "48%"]}
-            sizes="(min-width: 54rem) 40vw, 100vw"
+      {/* section 2 — pinned scroll sequence, not another image-beside-text block */}
+      <FireSequence />
+
+      <FireMarquee />
+
+      {/* section 3 — full-bleed background with the copy as an offset card,
+          not centred, not paired beside the photo */}
+      <section className="dinner">
+        <div className="dinner__media">
+          <Image
+            src="/img/chef-grill.jpg"
+            alt="Flame and smoke rising off the grill as a dish is turned"
+            fill
+            sizes="100vw"
           />
         </div>
-        <div className="home-cook__copy">
-          <h2>Cooked over one fire, start to finish</h2>
-          <div className="prose">
-            <p>
-              There&rsquo;s no gas line at Ferrant and no combi oven in the
-              back. One wood fire does everything &mdash; it bakes the bread,
-              sears the fish, chars the vegetables, and finishes the dessert.
-              If it can&rsquo;t be cooked over flame, it isn&rsquo;t on the
-              menu.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* section 3 — practical info, mirrored layout so it reads differently to section 2 */}
-      <section className="wrap band home-hours">
-        <div className="home-hours__copy">
+        <div className="dinner__scrim" aria-hidden="true" />
+        <div className="dinner__card">
           <h2>Dinner, nightly</h2>
           <div className="prose">
             <p>
@@ -44,22 +36,9 @@ export default function Home() {
               with what the fire and the market give us that week.
             </p>
           </div>
-          <Link
-            href="/reservations"
-            className="link"
-            style={{ marginTop: "1.5rem", display: "inline-block" }}
-          >
+          <Link href="/reservations" className="act">
             Reserve a table
           </Link>
-        </div>
-        <div className="home-hours__media">
-          <Frame
-            src="/img/bar-moody.jpg"
-            alt="The bar at Ferrant, low light, glasses lined up"
-            ratio="4 / 3"
-            light={["58%", "40%"]}
-            sizes="(min-width: 54rem) 46vw, 100vw"
-          />
         </div>
       </section>
 

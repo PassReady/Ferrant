@@ -751,52 +751,230 @@ button {
   }
 }
 
-/* home — section 2, image paired directly beside the copy */
-.home-cook {
+/* home — section 2: a pinned scroll sequence. The image holds still (as
+   its own column at desktop) while three short beats replace each other
+   below the heading, driven by scroll position rather than all three
+   sitting on the page — see FireSequence.tsx for the progress → active
+   beat calculation. Section height is deliberately several screens tall
+   so the sequence actually holds while it plays instead of passing by
+   like every other block on the page. */
+.firesq {
+  position: relative;
+  height: 340vh;
+}
+.firesq__pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   display: grid;
-  gap: clamp(1.75rem, 5vw, 3rem);
-  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
 }
-.home-cook h2 {
+.firesq__media {
+  position: relative;
+  min-height: 40vh;
+}
+.firesq__media img {
+  object-fit: cover;
+  filter: brightness(0.72) contrast(1.08) saturate(0.92);
+}
+.firesq__in {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
+  background: var(--forge);
+}
+.firesq__in h2 {
   font-size: var(--d-2);
-  max-width: 14ch;
+  max-width: 13ch;
 }
-.home-cook .prose {
-  margin-top: 1.1rem;
-  font-size: var(--t-1);
-  max-width: 42ch;
+/* all three beats share one grid cell — the block's height is set by
+   whichever is tallest, and only the active one is visible, so nothing
+   jumps as they cross-fade in place */
+.firesq__beats {
+  position: relative;
+  display: grid;
+}
+.firesq__beat {
+  grid-area: 1 / 1;
+  align-self: start;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--d-3);
+  font-weight: 500;
+  line-height: 1.28;
+  color: var(--bone);
+  max-width: 20ch;
+  opacity: 0;
+  transform: translateY(0.85rem);
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+  pointer-events: none;
+}
+.firesq__beat[data-active="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.firesq__dots {
+  display: flex;
+  gap: 0.6rem;
+}
+.firesq__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 0.3s var(--ease);
+}
+.firesq__dot[data-active="true"] {
+  background: var(--flame);
 }
 @media (min-width: 54rem) {
-  .home-cook {
-    grid-template-columns: 0.85fr 1.15fr;
+  .firesq__pin {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* below 54rem there's no room for a pinned split screen — degrade to the
+   image once, followed by all three beats stacked and fully visible, no
+   scroll-jacking */
+@media (max-width: 53.99rem) {
+  .firesq {
+    height: auto;
+  }
+  .firesq__pin {
+    position: static;
+    height: auto;
+  }
+  .firesq__media {
+    /* must zero the inherited min-height: min-height + aspect-ratio
+       together get read as a definite height, which the width is then
+       derived from instead of the container's own width — blew the grid
+       track (and the page) out past the viewport (see git history for
+       the same bug hitting the menu page twice already). */
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .firesq__beats {
+    display: block;
+  }
+  .firesq__beat {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    max-width: none;
+    margin-top: 1.1em;
+  }
+  .firesq__beat:first-child {
+    margin-top: 0;
+  }
+  .firesq__dots {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .firesq__beat {
+    transition: none;
   }
 }
 
-/* home — section 3, same idea, mirrored ratio and side so it doesn't
-   repeat section 2's structure */
-.home-hours {
-  display: grid;
-  gap: clamp(1.75rem, 5vw, 3rem);
-  align-items: center;
+/* transition strip — a single continuously auto-scrolling line between
+   the two sections, not a section of its own */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  padding-block: clamp(0.6rem, 2vw, 1.1rem);
 }
-.home-hours__media {
-  order: -1;
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
 }
-.home-hours h2 {
+.marquee__seg {
+  flex: none;
+  white-space: nowrap;
+  padding-inline: 1em;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4.6vw, 2.75rem);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--bone) 20%, transparent);
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+}
+
+/* home — section 3: full-bleed background with the copy sitting on top
+   of it as an offset card (lower-left third), rather than a smaller photo
+   paired beside the text */
+.dinner {
+  position: relative;
+  min-height: clamp(30rem, 92vh, 52rem);
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--line);
+}
+.dinner__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.dinner__media img {
+  object-fit: cover;
+  filter: brightness(0.72) contrast(1.1) saturate(0.85);
+}
+.dinner__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      180deg,
+      rgba(12, 11, 10, 0.1) 0%,
+      rgba(12, 11, 10, 0.28) 46%,
+      rgba(12, 11, 10, 0.94) 100%
+    ),
+    linear-gradient(
+      100deg,
+      rgba(12, 11, 10, 0.85) 0%,
+      rgba(12, 11, 10, 0.5) 40%,
+      transparent 70%
+    );
+}
+.dinner__card {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(2rem, 6vw, 3.5rem);
+}
+.dinner__card h2 {
   font-size: var(--d-2);
-  max-width: 14ch;
+  max-width: 12ch;
 }
-.home-hours .prose {
+.dinner__card .prose {
   margin-top: 1.1rem;
   font-size: var(--t-1);
-  max-width: 42ch;
+  max-width: 36ch;
+}
+.dinner__card .act {
+  margin-top: 1.6rem;
 }
 @media (min-width: 54rem) {
-  .home-hours {
-    grid-template-columns: 1.15fr 0.85fr;
-  }
-  .home-hours__media {
-    order: 1;
+  .dinner__card {
+    right: auto;
+    width: min(28rem, 38vw);
   }
 }
 
