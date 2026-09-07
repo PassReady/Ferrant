@@ -1,11 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * A lightweight enquiry modal for a single event space — separate from the
  * general "Reserve a table" dining flow in BookingFlow. Name, email, date,
  * group size; the space itself is fixed, not chosen. No backend.
+ *
+ * Rendered via a portal into document.body: the trigger button lives inside
+ * a flip-card back face, and that card gets `transform: rotateY(...)` when
+ * flipped. A transformed ancestor becomes the containing block for
+ * `position: fixed` descendants, so without the portal this "fixed,
+ * full-viewport" modal was instead sizing itself against the small card.
  */
 export function EnquiryFlow({ space }: { space: string }) {
   const [open, setOpen] = useState(false);
@@ -44,16 +51,17 @@ export function EnquiryFlow({ space }: { space: string }) {
         Enquire about {space}
       </button>
 
-      {open && (
-        <div
-          className="modal"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Enquire about ${space}`}
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setOpen(false);
-          }}
-        >
+      {open &&
+        createPortal(
+          <div
+            className="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Enquire about ${space}`}
+            onMouseDown={(e) => {
+              if (e.target === e.currentTarget) setOpen(false);
+            }}
+          >
           <div className="modal__panel">
             <div className="modal__bar">
               <span className="modal__brand">Ferrant</span>
@@ -153,8 +161,9 @@ export function EnquiryFlow({ space }: { space: string }) {
               </div>
             )}
           </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
