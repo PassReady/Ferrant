@@ -28,7 +28,11 @@ export function EventSpaceSection({
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <section id={id} className="evrow ev-anchor" data-image-side={imageSide}>
+    <section
+      id={id}
+      className="evrow wrap ev-anchor"
+      data-image-side={imageSide}
+    >
       <div className="evrow__text">
         <span className="evrow__tag">{tag}</span>
         <h2>{heading}</h2>
@@ -50,7 +54,7 @@ export function EventSpaceSection({
                 className="flipcard__see"
                 onClick={() => setFlipped(true)}
               >
-                See more <span aria-hidden="true">+</span>
+                See more <span aria-hidden="true" />
               </button>
             </div>
 
@@ -63,7 +67,6 @@ export function EventSpaceSection({
               >
                 Close
               </button>
-              <h3>{heading}</h3>
               <ul className="evspec">
                 {facts.map(([k, v]) => (
                   <li key={k}>

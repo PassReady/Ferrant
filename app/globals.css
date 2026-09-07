@@ -1025,9 +1025,16 @@ button {
   }
 }
 
-/* the flip card — a photo that flips on click to reveal the spec + CTA */
+/* the flip card sits centred in its column at a fixed, contained size —
+   a card, not a full-bleed photo */
+.evrow__media {
+  display: flex;
+  justify-content: center;
+}
 .flipcard {
   position: relative;
+  width: 100%;
+  max-width: 26rem;
   aspect-ratio: 4 / 5;
   perspective: 1800px;
 }
@@ -1065,51 +1072,81 @@ button {
   background: linear-gradient(to top, rgba(12, 11, 10, 0.82), transparent);
   pointer-events: none;
 }
+/* "See more" — a clearly-a-button pill, high contrast against any photo */
 .flipcard__see {
   position: absolute;
-  left: 1.25rem;
-  bottom: 1.25rem;
+  left: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
   padding: 0.7rem 1.15rem;
-  background: color-mix(in oklab, var(--forge) 55%, transparent);
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--line);
+  background: var(--scale);
+  border: 1px solid var(--flame);
   color: var(--bone);
   font-family: var(--font-text), sans-serif;
   font-size: var(--t--1);
+  font-weight: 500;
   letter-spacing: 0.02em;
-  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+  box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.75);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
 .flipcard__see span {
-  color: var(--flame);
+  width: 0.42em;
+  height: 0.42em;
+  border-radius: 50%;
+  background: var(--flame);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--flame) 70%, transparent);
 }
 .flipcard__see:hover {
-  border-color: var(--flame);
+  background: var(--flame);
+  color: var(--forge);
+}
+.flipcard__see:hover span {
+  background: var(--forge);
+  box-shadow: none;
 }
 .flipcard__back {
   transform: rotateY(180deg);
   background: var(--scale);
   border: 1px solid var(--line);
-  padding: clamp(1.5rem, 4vw, 2.25rem);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  padding-bottom: clamp(4rem, 9vw, 4.75rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow-y: auto;
 }
-.flipcard__back h3 {
-  font-size: var(--d-3);
+/* single column on the (now card-sized) back face — a 2-up grid wrapped
+   too aggressively at this width */
+.flipcard__back .evspec {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 0;
 }
+.flipcard__back .evspec .v {
+  font-size: var(--t-0);
+}
+/* Close appears exactly where "See more" was clicked, not a jump to a
+   different corner — same position, same pill treatment */
 .flipcard__close {
   position: absolute;
-  top: 1.1rem;
-  right: 1.1rem;
+  left: 1.1rem;
+  bottom: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.15rem;
+  background: var(--forge);
+  border: 1px solid var(--line);
+  color: var(--ash);
+  font-family: var(--font-text), sans-serif;
   font-size: var(--t--1);
   letter-spacing: 0.02em;
-  color: var(--ash);
-  transition: color 0.2s var(--ease);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 .flipcard__close:hover {
+  border-color: var(--flame);
   color: var(--bone);
 }
 @media (prefers-reduced-motion: reduce) {
