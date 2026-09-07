@@ -41,10 +41,10 @@ const room = (
     <path d="M4.5 4V2.5M11.5 4V2.5M1.75 7.25h12.5" />
   </>
 );
-const buyout = (
+const longTable = (
   <>
-    <path d="M1.5 14.5V6l6.5-4.5L14.5 6v8.5" />
-    <path d="M6 14.5v-5h4v5" />
+    <rect x="1" y="6.5" width="14" height="2.5" rx="0.5" />
+    <path d="M3 9v3.5M13 9v3.5M3 6.5V3M13 6.5V3" />
   </>
 );
 
@@ -67,16 +67,16 @@ const items: Item[] = [
         icon: room,
       },
       {
-        href: "/events#buyout",
-        label: "The Buyout",
-        blurb: "The whole room, to yourselves.",
-        icon: buyout,
+        href: "/events#long-table",
+        label: "The Long Table",
+        blurb: "Ten to sixteen, in the main room.",
+        icon: longTable,
       },
     ],
   },
   {
     href: "/menu",
-    label: "Menu",
+    label: "Restaurant",
     mega: [
       {
         href: "/menu",
@@ -92,7 +92,6 @@ const items: Item[] = [
       },
     ],
   },
-  { href: "/reservations", label: "Reserve" },
   { href: "/admin", label: "Admin" },
 ];
 
@@ -167,7 +166,10 @@ export function Nav() {
           <ul id="nav-list" className="nav__list" data-open={mobileOpen}>
             {items.map((it) => {
               const current =
-                pathname === it.href || pathname.startsWith(it.href + "/");
+                pathname === it.href ||
+                pathname.startsWith(it.href + "/") ||
+                (it.mega?.some((sub) => pathname === sub.href.split("#")[0]) ??
+                  false);
               return (
                 <li
                   key={it.href}

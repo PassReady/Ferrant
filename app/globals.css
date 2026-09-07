@@ -802,7 +802,30 @@ button {
 
 /* home — booking band */
 .callout {
+  position: relative;
+  overflow: hidden;
   border-top: 1px solid var(--line);
+  isolation: isolate;
+}
+.callout__video {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5) contrast(1.1) saturate(0.85);
+}
+.callout__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    rgba(12, 11, 10, 0.88) 0%,
+    rgba(12, 11, 10, 0.6) 55%,
+    rgba(12, 11, 10, 0.35) 100%
+  );
 }
 .callout__in {
   display: flex;
@@ -814,6 +837,7 @@ button {
 .callout h2 {
   font-size: var(--d-2);
   max-width: 16ch;
+  color: var(--bone);
 }
 
 /* ============================================================
@@ -1031,87 +1055,45 @@ button {
   }
 }
 
-/* — 3 · THE BUYOUT — full image with an overlaid line, then a lopsided split — */
-.evbuy {
+/* — 3 · THE LONG TABLE — twin image band, full-width copy above,
+   facts laid out as a row beneath (like place settings) — neither the
+   overlay nor the sticky-sidebar treatment used by the other two — */
+.evlong {
   padding-bottom: clamp(4rem, 10vw, 8rem);
 }
-.evbuy__full {
-  position: relative;
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+.evlong__head {
+  padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
 }
-.evbuy__full .frame {
-  aspect-ratio: 2.4 / 1;
-}
-.evbuy__stmt {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: clamp(1.5rem, 6vw, 4rem) var(--gutter);
-  background: linear-gradient(to top, rgba(12, 11, 10, 0.85), transparent 92%);
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 700;
-  font-size: var(--d-1);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--bone);
-  max-width: 16ch;
-}
-@media (max-width: 40rem) {
-  .evbuy__full .frame {
-    aspect-ratio: 3 / 2;
-  }
-}
-.evbuy__cols {
-  display: grid;
-  gap: 2rem 0;
-}
-.evbuy__major h2 {
+.evlong__head h2 {
   font-size: var(--d-2);
-  margin-bottom: 1.25rem;
 }
-.evbuy__major p {
+.evlong__desc {
+  margin-top: 1rem;
   font-size: var(--t-1);
   color: var(--bone);
-  max-width: 42ch;
+  max-width: 52ch;
 }
-.evbuy__minor {
-  align-self: end;
-}
-.evbuy__minor .evspec {
+.evlong__strip {
   display: grid;
-  gap: 0.9rem;
+  gap: 2px;
+  background: var(--line);
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
-.evbuy__minor .evspec li {
+@media (min-width: 40rem) {
+  .evlong__strip {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.evlong__facts {
   display: grid;
-  gap: 0.15rem;
+  gap: 1.25rem;
+  padding-top: clamp(1.5rem, 4vw, 2rem);
+  border-top: 1px solid var(--line);
 }
-@media (min-width: 54rem) {
-  .evbuy__cols {
-    grid-template-columns: 1.7fr 1fr;
-    gap: 0 clamp(3rem, 8vw, 7rem);
-    align-items: start;
-  }
-  .evbuy__major p {
-    font-size: var(--d-3);
-    line-height: 1.4;
-    font-weight: 400;
-  }
-  .evbuy__minor {
-    text-align: right;
-    padding-top: 0.75rem;
-  }
-  .evbuy__minor .evspec {
-    gap: 1.4rem;
-  }
-  .evbuy__minor .k {
-    display: block;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .evbuy__minor .v {
-    font-size: var(--t--1);
+@media (min-width: 44rem) {
+  .evlong__facts {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
   }
 }
 
@@ -1325,7 +1307,7 @@ button {
 }
 
 /* ============================================================
-   MENU — category tabs, dish list beside a click-through carousel
+   MENU — one continuous scrollspy list beside a click-through carousel
    ============================================================ */
 .menu3__head {
   padding-top: clamp(3rem, 7vw, 5rem);
@@ -1374,14 +1356,28 @@ button {
   display: grid;
   gap: clamp(2rem, 5vw, 3rem);
 }
-.menu3__list {
+.menu3__cat {
+  scroll-margin-top: calc(var(--nav-h) + 4.75rem);
+  padding-top: clamp(1.75rem, 4vw, 2.75rem);
+}
+.menu3__cat:first-child {
+  padding-top: 0;
+}
+.menu3__catheading {
+  font-size: var(--d-2);
+  font-weight: 700;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid var(--ember);
+}
+.menu3__dishes {
   list-style: none;
 }
 .menu3__row {
   padding-block: clamp(1.25rem, 3vw, 1.75rem);
   border-top: 1px solid var(--line-soft);
 }
-.menu3__list li:first-child {
+.menu3__dishes li:first-child {
   border-top: 0;
 }
 .menu3__rowhead {
@@ -1390,7 +1386,7 @@ button {
   align-items: baseline;
   gap: 1rem;
 }
-.menu3__rowhead h2 {
+.menu3__rowhead h3 {
   font-size: var(--d-3);
   font-weight: 600;
 }

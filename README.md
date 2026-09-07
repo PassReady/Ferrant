@@ -43,22 +43,26 @@ Full palette and scale in `app/globals.css` `:root`.
 
 | Route | Notes |
 |---|---|
-| `/` | Full-screen looping fire video hero, letter-by-letter wordmark, parallax on scroll. Two image-paired sections below (mirrored layouts), then a reserve CTA band. |
+| `/` | Full-screen looping fire video hero, letter-by-letter wordmark, parallax on scroll. Two image-paired sections below (mirrored layouts), then a video-background reserve CTA band (a different clip — food actively searing — from the hero fire). |
 | `/story` | Heading + three rows, each pairing a paragraph (staggered word reveal) with a photo, alternating sides. |
-| `/events` | Three private-event offerings, three different layouts: full-bleed photo with the copy overlaid (Chef's Table), a sticky spec sidebar beside scrolling prose (Fireside Room), an asymmetric split with an overlaid statement image (Buyout). |
-| `/menu` | Category tabs (Bites/Entrées/Mains/Sides/Desserts). Dish list beside a click-through image carousel (dots + arrows) of photography for that category — not scroll-linked. |
-| `/reservations` | OpenTable-style booking modal: two-month calendar (Tue–Sun open), arrival slots, party stepper, confirmation screen. No backend. |
+| `/events` | Three private-event offerings, three different layouts: full-bleed photo with the copy overlaid (Chef's Table), a sticky spec sidebar beside scrolling prose (Fireside Room), a twin image band with full-width copy and a five-column fact row (The Long Table). |
+| `/menu` | One continuous scrollspy list, grouped under category headings (Bites/Entrées/Mains/Sides/Desserts). The tab bar and the sticky image carousel both track whichever category is in view as you scroll; tabs are also click-to-smooth-scroll. Carousel photos (3–4 per category, categorically matched) step manually via dots/arrows. |
+| `/reservations` | OpenTable-style booking modal: two-month calendar (Tue–Sun open), arrival slots, party stepper, confirmation screen. No backend. Reached only via the **Restaurant** mega menu now, not a standalone nav item. |
 | `/admin` | Demo CMS (`demo` / `Ferrant2026`). Edit the menu intro and each dish (name, category, price, description); state lives in `lib/store.ts` (localStorage), shared live with `/menu`. |
 
-Nav uses a mega menu on hover/click for **Menu** and **Event Spaces** (a full panel below the
-bar with icon + label + blurb per link) — driven by React state in `components/Nav.tsx`, not
-CSS `:hover`/`:focus-within`, so it can't get stuck open after a client-side navigation.
+Nav order is Our Story / Event Spaces / Restaurant / Admin. **Restaurant** and **Event
+Spaces** open a mega menu on hover/click (a full panel below the bar with icon + label +
+blurb per link) — driven by React state in `components/Nav.tsx`, not CSS
+`:hover`/`:focus-within`, so it can't get stuck open after a client-side navigation.
 
 ## Placeholders to swap at build
 
 - **Photography** is stock (Unsplash), chosen dark and graded to a single look, plus
   categorically-matched dish photography under `public/img/menu/`. Replace with the venue's
   own shoot; the `Frame` grade will keep it consistent.
+- **Video** (`public/video/`) is stock (Pexels): `hero-fire.mp4` for the home hero,
+  `cta-sear.mp4` (a steak searing on the grill) for the reserve CTA band — deliberately a
+  different clip so no section repeats footage.
 - **Copy** — menu, story, event descriptions, the founder (Ada Ferrant), the Fitzroy laneway
   address, phone and email — is written for the concept. All fictional.
 - The booking flow and CMS send/save nothing outside the browser.

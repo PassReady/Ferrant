@@ -5,7 +5,7 @@ import { Frame } from "@/components/Frame";
 export const metadata: Metadata = {
   title: "Event Spaces",
   description:
-    "Private events at Ferrant — the chef's table, the fireside room for up to ten, or a full buyout of the whole restaurant.",
+    "Private events at Ferrant — the chef's table, the fireside room for up to ten, or the long table for a group of ten to sixteen.",
 };
 
 const chefsTable = {
@@ -28,13 +28,13 @@ const fireside = {
   ],
 };
 
-const buyout = {
+const longTable = {
   facts: [
-    ["Seats", "Every table, the whole room"],
-    ["Where", "The entire restaurant"],
-    ["Food", "The menu, built with you"],
-    ["Price", "Per event — we'll quote the date"],
-    ["Notice", "Six weeks, more on a weekend"],
+    ["Seats", "Ten to sixteen, one long table"],
+    ["Where", "Main dining room"],
+    ["Food", "The à la carte menu, shared where you like"],
+    ["From", "No minimum spend, standard menu pricing"],
+    ["Notice", "One week or more"],
   ],
 };
 
@@ -121,39 +121,43 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* 3 — THE BUYOUT: full image with an overlaid line, then a lopsided split */}
-      <section id="buyout" className="evbuy ev-anchor">
-        <div className="evbuy__full bleed">
-          <Frame
-            src="/img/firewood.jpg"
-            alt="Glowing coals and ash, the fire built up for the night"
-            ratio="2.4 / 1"
-            light={["50%", "58%"]}
-            sizes="100vw"
-          />
-          <p className="evbuy__stmt">The whole room, every table.</p>
+      {/* 3 — THE LONG TABLE: twin image band, full-width copy, facts as a row */}
+      <section id="long-table" className="evlong ev-anchor">
+        <div className="wrap evlong__head">
+          <h2>The Long Table</h2>
+          <p className="evlong__desc">
+            A communal table in the main room, set apart for your group but
+            still part of the night. Good for a birthday, a work dinner that
+            isn&rsquo;t a boardroom, or any group who wants the room around
+            them rather than a door closed on it. Same menu as everyone else,
+            same fire, just more elbow room.
+          </p>
         </div>
-        <div className="wrap evbuy__cols">
-          <div className="evbuy__major">
-            <h2>The Buyout</h2>
-            <p>
-              Your night, your guest list. We open the door only for your people
-              and cook the way we always do &mdash; over one fire &mdash; but
-              everything else is yours. Stretch the wine to a longer format, add
-              a course, move the start time. Beyond that we keep it simple.
-              It&rsquo;s still Ferrant, just closed to everyone else.
-            </p>
-          </div>
-          <aside className="evbuy__minor">
-            <ul className="evspec">
-              {buyout.facts.map(([k, v]) => (
-                <li key={k}>
-                  <span className="k">{k}</span>
-                  <span className="v">{v}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
+        <div className="evlong__strip bleed">
+          <Frame
+            src="/img/table-candle.jpg"
+            alt="Candlelit tables set in the dining room"
+            ratio="4 / 5"
+            light={["46%", "40%"]}
+            sizes="(min-width: 40rem) 50vw, 100vw"
+          />
+          <Frame
+            src="/img/room-dim.jpg"
+            alt="The main dining room, warm pendant lights over the bar"
+            ratio="4 / 5"
+            light={["55%", "35%"]}
+            sizes="(min-width: 40rem) 50vw, 100vw"
+          />
+        </div>
+        <div className="wrap">
+          <ul className="evspec evlong__facts">
+            {longTable.facts.map(([k, v]) => (
+              <li key={k}>
+                <span className="k">{k}</span>
+                <span className="v">{v}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

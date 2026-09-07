@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FireHero } from "@/components/FireHero";
 import { Frame } from "@/components/Frame";
+import { CtaVideo } from "@/components/CtaVideo";
 
 export default function Home() {
   return (
@@ -63,6 +64,8 @@ export default function Home() {
       </section>
 
       <section className="callout">
+        <CtaVideo />
+        <div className="callout__scrim" aria-hidden="true" />
         <div className="wrap band callout__in">
           <h2>Come sit by the fire.</h2>
           <Link href="/reservations" className="act">
