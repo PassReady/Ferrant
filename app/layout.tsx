@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Zilla_Slab, Space_Grotesk } from "next/font/google";
+import { Zilla_Slab, Space_Grotesk, Special_Elite, Niconne } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -11,12 +11,28 @@ const display = Zilla_Slab({
   variable: "--font-display",
 });
 
-// home page only — scoped in globals.css via .home, not used site-wide
+// home page only — scoped in globals.css via .home, not used site-wide.
+// body copy stays Space Grotesk; headings/title use Special Elite (below);
+// the chef quote uses Niconne (below) — three separate overrides, not one.
 const homeFont = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-home",
+});
+
+const homeDisplay = Special_Elite({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-home-display",
+});
+
+const quoteFont = Niconne({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-quote",
 });
 
 const text = localFont({
@@ -51,7 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${display.variable} ${text.variable} ${homeFont.variable}`}
+      className={`${display.variable} ${text.variable} ${homeFont.variable} ${homeDisplay.variable} ${quoteFont.variable}`}
     >
       <body>{children}</body>
     </html>

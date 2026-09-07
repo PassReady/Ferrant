@@ -715,7 +715,7 @@ button {
    type (headings and body copy alike) without touching every selector
    or affecting any other page on the site */
 .home {
-  --font-display: var(--font-home);
+  --font-display: var(--font-home-display);
   --font-text: var(--font-home);
 }
 
@@ -784,7 +784,9 @@ button {
 .firesq__beat {
   grid-area: 1 / 1;
   align-self: start;
-  font-family: var(--font-display), Georgia, serif;
+  /* body copy, not a heading — stays on --font-text so it doesn't
+     inherit whatever display/heading face the page is using */
+  font-family: var(--font-text), Georgia, serif;
   font-size: var(--d-3);
   font-weight: 500;
   line-height: 1.28;
@@ -992,9 +994,10 @@ button {
   text-align: center;
 }
 .chefquote__text {
-  font-size: var(--d-2);
-  font-weight: 600;
-  line-height: 1.22;
+  font-family: var(--font-quote), cursive;
+  font-size: var(--d-1);
+  font-weight: 400;
+  line-height: 1.3;
   color: var(--flame);
 }
 .chefquote__attr {
