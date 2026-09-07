@@ -31,8 +31,8 @@ the anchor: iron and heat, not a farmhouse.
 - **Heat is rare.** The room is warm near-black (`--forge #0C0B0A`, never pure `#000`).
   Ember `#C0402A` and flame `#E8A24A` appear only where something is hot: the hero glow,
   the one primary action per screen, focus rings, the mark on the menu.
-- **Type:** Fraunces (display — warm, sharp, set large) with Hanken Grotesk (body/UI —
-  quiet). Both self-hosted via `next/font`.
+- **Type:** Zilla Slab (display — heavy, worked, set large: fire and iron, not wine bar)
+  with General Sans (body/UI — quiet). Loaded via `next/font`.
 
 Full palette and scale in `app/globals.css` `:root`.
 

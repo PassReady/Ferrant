@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Scroll-linked word illumination. Each word starts dim and warms to bone as the
- * block moves up through the viewport. prefers-reduced-motion: everything lit.
+ * Staggered word reveal. The block sits hidden until it crosses into view,
+ * then each word rises and warms in turn — a wave that runs once and stays.
+ * Not a scroll-linked opacity fade; a real entrance.
+ * prefers-reduced-motion: shown immediately, no motion.
  */
 export function RevealText({
   children,
@@ -14,47 +16,35 @@ export function RevealText({
   as?: "p" | "div";
 }) {
   const ref = useRef<HTMLElement>(null);
+  const [shown, setShown] = useState(false);
   const words = children.split(/(\s+)/); // keep whitespace tokens
-  const wordCount = words.filter((w) => w.trim().length).length;
-  const [lit, setLit] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setLit(wordCount);
+      setShown(true);
       return;
     }
-
-    let raf = 0;
-    const update = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        const vh = window.innerHeight;
-        // progress: starts once the block's top rises past 88% of the
-        // viewport, completes as its bottom clears the middle
-        const start = vh * 0.88;
-        const end = vh * 0.46;
-        const p = (start - r.top) / (start - end + r.height * 0.7);
-        const clamped = Math.max(0, Math.min(1, p));
-        setLit(Math.round(clamped * wordCount));
-      });
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-      cancelAnimationFrame(raf);
-    };
-  }, [wordCount]);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setShown(true);
+            io.disconnect();
+          }
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   let wi = -1;
   return (
     // @ts-expect-error dynamic tag
-    <Tag ref={ref} className="reveal">
+    <Tag ref={ref} className={`reveal${shown ? " is-shown" : ""}`}>
       {words.map((w, i) => {
         if (!w.trim()) return <span key={i}>{w}</span>;
         wi += 1;
@@ -62,7 +52,7 @@ export function RevealText({
           <span
             key={i}
             className="reveal__w"
-            data-lit={wi < lit ? "true" : "false"}
+            style={{ ["--wi" as string]: wi }}
           >
             {w}
           </span>

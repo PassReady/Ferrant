@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces } from "next/font/google";
+import { Zilla_Slab } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const display = Fraunces({
+// headings — a heavy, worked slab. reads as fire and iron, not wine bar.
+const display = Zilla_Slab({
   subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-display",
 });

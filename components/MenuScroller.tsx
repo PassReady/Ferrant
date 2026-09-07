@@ -28,7 +28,7 @@ export function MenuScroller() {
         });
         if (best >= 0) setActive(best);
       },
-      { rootMargin: "-38% 0px -38% 0px", threshold: [0, 0.5, 1] },
+      { rootMargin: "-30% 0px -30% 0px", threshold: [0, 0.5, 1] },
     );
     rowRefs.current.forEach((el) => el && io.observe(el));
     return () => io.disconnect();
@@ -79,6 +79,7 @@ export function MenuScroller() {
               key={d.id}
               className="menu2__row"
               data-active={i === active ? "true" : "false"}
+              data-dist={Math.min(3, Math.abs(i - active))}
               data-i={i}
               ref={(el) => {
                 rowRefs.current[i] = el;

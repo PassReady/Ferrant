@@ -33,26 +33,30 @@ export default function StoryPage() {
           </div>
         </section>
 
-        <figure className="story-figure bleed">
+        <div className="story-over bleed">
           <Frame
             src="/img/firewood.jpg"
             alt="Glowing coals under a bed of ash, flame moving through"
-            caption="The fire is lit hours before anyone arrives."
             ratio="21 / 9"
             light={["50%", "56%"]}
             sizes="100vw"
           />
-        </figure>
+          <p className="story-over__line">Lit hours before anyone arrives.</p>
+        </div>
 
         <section className="wrap">
-          <div className="column story-body">
+          <p className="story-pull column">
+            One menu a night. The whole room eats it together.
+          </p>
+          <div
+            className="column story-body"
+            style={{ marginTop: "clamp(1.5rem,4vw,2.5rem)" }}
+          >
             <RevealText>
-              Twelve seats, one seating, seven o’clock. We cook one menu and the
-              whole room eats it together, at roughly the same pace. It changes
-              every week because the fire changes — how hard the coals are
-              running, what it’s hot enough for that night, what came in from the
-              market and the boats that morning. Some weeks it’s eight courses,
-              some weeks it’s ten. We don’t decide far in advance.
+              It changes every week because the fire changes — how hard the coals
+              are running, what it’s hot enough for that night, what came in from
+              the market and the boats that morning. Some weeks it’s eight
+              courses, some weeks it’s ten. We don’t decide far in advance.
             </RevealText>
           </div>
         </section>
@@ -87,16 +91,16 @@ export default function StoryPage() {
           </div>
         </section>
 
-        <figure className="story-figure bleed">
+        <div className="story-over bleed">
           <Frame
             src="/img/room-dim.jpg"
             alt="The dark dining room, one warm light over the bar"
-            caption="The room, before service."
             ratio="21 / 9"
             light={["58%", "44%"]}
             sizes="100vw"
           />
-        </figure>
+          <p className="story-over__line">The room, before service.</p>
+        </div>
       </div>
 
       <section

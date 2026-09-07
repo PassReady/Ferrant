@@ -62,7 +62,6 @@ export default function ReservationsPage() {
         <Frame
           src="/img/door-warm.jpg"
           alt="The unmarked door on Sable Lane at night, one warm light above it"
-          caption="Sable Lane, after dark."
           ratio="3 / 4"
           light={["40%", "40%"]}
           className="resv__img"

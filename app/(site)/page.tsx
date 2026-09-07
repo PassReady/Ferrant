@@ -34,7 +34,6 @@ export default function Home() {
       <Frame
         src="/img/chef-grill.jpg"
         alt="A whole fish grilling over embers, smoke rising off the bars"
-        caption="The pass faces the room. You watch the fish go on."
         ratio="21 / 9"
         sizes="100vw"
         position="center 58%"
