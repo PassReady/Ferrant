@@ -38,20 +38,20 @@ export const categoryImages: Record<Category, CategoryImage[]> = {
     { src: "/img/menu/entree-mushroom2.jpg", alt: "Mushroom toast with beetroot" },
   ],
   Mains: [
-    { src: "/img/menu/main-fish.jpg", alt: "Whole fish grilling over open coals" },
-    { src: "/img/menu/main-shortrib.jpg", alt: "Glazed short rib, sliced" },
-    { src: "/img/menu/main-lamb.jpg", alt: "Wood-roasted lamb, sliced on a board" },
-    { src: "/img/menu/main-chicken.jpg", alt: "Whole roasted chicken in a pan" },
+    { src: "/img/menu/main-fish2.jpg", alt: "Whole grilled fish with herbs on a plate" },
+    { src: "/img/menu/main-shortrib2.jpg", alt: "Slow-cooked beef short rib with sauce" },
+    { src: "/img/menu/main-lamb2.jpg", alt: "Pulled lamb shoulder with fresh herbs" },
+    { src: "/img/menu/main-chicken2.jpg", alt: "Roasted chicken with potatoes" },
   ],
   Sides: [
-    { src: "/img/menu/side-greens.jpg", alt: "Charred broccolini, close up" },
-    { src: "/img/menu/side-potatoes.jpg", alt: "Roasted potatoes with herbs" },
-    { src: "/img/menu/side-corn.jpg", alt: "Charred corn cob" },
+    { src: "/img/menu/side-greens2.jpg", alt: "Charred broccoli in a bowl" },
+    { src: "/img/menu/side-potatoes2.jpg", alt: "Baked potato split open with butter" },
+    { src: "/img/menu/side-corn2.jpg", alt: "Grilled corn cobs with dipping sauces" },
   ],
   Desserts: [
-    { src: "/img/menu/dessert-stonefruit.jpg", alt: "Fire-roasted stone fruit with ice cream" },
-    { src: "/img/menu/dessert-tart.jpg", alt: "Chocolate tart, sliced" },
-    { src: "/img/menu/dessert-custard.jpg", alt: "Baked custard, plated" },
+    { src: "/img/menu/dessert-stonefruit2.jpg", alt: "Roasted stone fruit with ice cream and berries" },
+    { src: "/img/menu/dessert-tart2.jpg", alt: "Chocolate tart with a ganache lattice" },
+    { src: "/img/menu/dessert-custard2.jpg", alt: "Baked custard with caramel" },
   ],
 };
 

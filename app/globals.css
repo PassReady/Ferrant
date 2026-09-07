@@ -1538,10 +1538,16 @@ button {
   /* a square, not a full-viewport-height strip — sits just below the
      tabs bar and stays there as the list scrolls past. The tabs bar
      can't paint over it either way: .menu3__tabsrow is confined to the
-     list column, so it never extends into this one. */
+     list column, so it never extends into this one. It bleeds past the
+     page's usual right gutter to the true edge of the browser — on a
+     wide screen the wrap's own max-width/padding would otherwise leave
+     a dead margin beside it that isn't part of the image at all. */
   .menu3__panel {
     position: sticky;
     top: calc(var(--nav-h) + 4.75rem);
+    margin-right: calc(
+      -1 * max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter)))
+    );
   }
 }
 
