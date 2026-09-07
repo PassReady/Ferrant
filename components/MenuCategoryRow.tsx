@@ -24,20 +24,18 @@ export function MenuCategoryRow({
 
   return (
     <section id={catId(category)} className="menu3__catrow">
-      <div className="menu3__cat">
-        <h2 className="menu3__catheading">{category}</h2>
-        <ol className="menu3__dishes">
-          {dishes.map((d) => (
-            <li key={d.id} className="menu3__row">
-              <div className="menu3__rowhead">
-                <h3>{d.name}</h3>
-                {d.price ? <span className="menu3__price">{d.price}</span> : null}
-              </div>
-              <p>{d.description}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <h2 className="menu3__catheading">{category}</h2>
+      <ol className="menu3__dishes">
+        {dishes.map((d) => (
+          <li key={d.id} className="menu3__row">
+            <div className="menu3__rowhead">
+              <h3>{d.name}</h3>
+              {d.price ? <span className="menu3__price">{d.price}</span> : null}
+            </div>
+            <p>{d.description}</p>
+          </li>
+        ))}
+      </ol>
 
       <div className="menu3__panel">
         <div className="menu3__frame">
