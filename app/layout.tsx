@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Fraunces, Hanken_Grotesk } from "next/font/google";
+import { Fraunces } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -11,14 +10,19 @@ const display = Fraunces({
   variable: "--font-display",
 });
 
-const text = Hanken_Grotesk({
-  subsets: ["latin"],
-  display: "swap",
+const text = localFont({
+  src: [
+    { path: "./fonts/GeneralSans-Light.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/GeneralSans-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/GeneralSans-Medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/GeneralSans-Semibold.woff2", weight: "600", style: "normal" },
+  ],
   variable: "--font-text",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ferrant.au"),
+  metadataBase: new URL("https://ferrant.vercel.app"),
   title: {
     default: "Ferrant — live fire, twelve seats, one seating",
     template: "%s — Ferrant",
@@ -37,14 +41,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${display.variable} ${text.variable}`}>
-      <body>
-        <a className="skip" href="#main">
-          Skip to content
-        </a>
-        <Nav />
-        <main id="main">{children}</main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

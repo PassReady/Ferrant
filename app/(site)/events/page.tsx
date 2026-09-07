@@ -110,7 +110,7 @@ export default function EventsPage() {
           and a price.
         </p>
         <p style={{ marginTop: "1.75rem" }}>
-          <Link href="/contact" className="act">
+          <Link href="/reservations" className="act">
             Start an event enquiry
           </Link>
         </p>

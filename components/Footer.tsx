@@ -28,7 +28,7 @@ export function Footer() {
           <p className="dim">Dinner, one seating at 7pm</p>
           <p className="dim">Wednesday to Saturday</p>
           <p className="dim">Private events Sunday to Tuesday</p>
-          <Link href="/contact" className="link" style={{ marginTop: "0.9rem", display: "inline-block" }}>
+          <Link href="/reservations" className="link" style={{ marginTop: "0.9rem", display: "inline-block" }}>
             Book a night
           </Link>
         </div>
