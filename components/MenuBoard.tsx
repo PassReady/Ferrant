@@ -79,21 +79,23 @@ export function MenuBoard() {
         <p className="phead__sub">{menu.intro}</p>
       </section>
 
-      <div className="menu3__tabs wrap" role="tablist" aria-label="Menu categories">
-        <div className="menu3__tabgroup">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c}
-              type="button"
-              role="tab"
-              aria-selected={c === active}
-              data-active={c === active}
-              className="menu3__tab"
-              onClick={() => scrollToCategory(c)}
-            >
-              {c}
-            </button>
-          ))}
+      <div className="menu3__tabsrow wrap">
+        <div className="menu3__tabs" role="tablist" aria-label="Menu categories">
+          <div className="menu3__tabgroup">
+            {CATEGORIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                role="tab"
+                aria-selected={c === active}
+                data-active={c === active}
+                className="menu3__tab"
+                onClick={() => scrollToCategory(c)}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

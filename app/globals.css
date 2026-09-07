@@ -1374,14 +1374,24 @@ button {
 .menu3__head h1 {
   font-size: var(--d-1);
 }
-.menu3__tabs {
+/* the sticky positioning context sits inside .wrap (constrained + guttered)
+   so the visible bar below can never bleed past the dish-list column into
+   the image column, at any viewport width */
+.menu3__tabsrow {
   position: sticky;
   top: var(--nav-h);
   z-index: 5;
+}
+@media (min-width: 58rem) {
+  .menu3__tabsrow {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+  }
+}
+.menu3__tabs {
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 0 var(--gutter) 0.9rem;
-  margin: 0 calc(-1 * var(--gutter));
+  padding-bottom: 0.9rem;
   background: color-mix(in oklab, var(--forge) 94%, transparent);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
@@ -1393,13 +1403,6 @@ button {
   display: flex;
   gap: clamp(1.1rem, 3vw, 2rem);
   justify-content: center;
-}
-/* line the tab group up over the dish-list column, not the full width */
-@media (min-width: 58rem) {
-  .menu3__tabs {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-  }
 }
 .menu3__tab {
   flex: none;
@@ -1471,12 +1474,13 @@ button {
   max-width: 52ch;
 }
 .menu3__panel {
-  display: grid;
-  gap: 0.9rem;
+  position: relative;
 }
 .menu3__frame {
   position: relative;
+  width: 100%;
   aspect-ratio: 4 / 3;
+  min-height: 20rem;
   overflow: hidden;
   background: var(--scale);
 }
@@ -1484,11 +1488,21 @@ button {
   object-fit: cover;
   filter: brightness(0.88) contrast(1.06) saturate(0.9) sepia(0.06);
 }
+/* the carousel floats over the bottom of the image instead of sitting in
+   its own row below it, so the photo itself can run full-bleed */
 .menu3__carousel {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 4vw, 2rem);
+  transform: translateX(-50%);
+  z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: color-mix(in oklab, var(--forge) 60%, transparent);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--line);
 }
 .menu3__arrow {
   font-size: 1.3rem;
@@ -1522,24 +1536,22 @@ button {
     grid-template-columns: 1.3fr 1fr;
     align-items: start;
   }
-  /* the panel occupies the sticky viewport height *below* the tabs bar so
-     its content — centered by the flex column below — sits level with
-     whatever dish text is alongside it, without the opaque tabs bar
-     painting over the top of the image (it did when this started at
-     top: 0, the same screen region the sticky tabs bar occupies) */
+  /* the image now fills its column edge to edge, top to bottom of the
+     viewport, instead of a small centred card — the tabs bar can never
+     paint over it since .menu3__tabsrow is confined to the list column */
   .menu3__panel {
     position: sticky;
-    top: calc(var(--nav-h) + 4.75rem);
-    height: calc(100svh - var(--nav-h) - 4.75rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.1rem;
+    top: 0;
+    height: 100svh;
   }
   .menu3__frame {
-    aspect-ratio: 4 / 5;
-    width: 100%;
-    max-height: 72svh;
+    height: 100%;
+    min-height: 0;
+    /* the base rule's aspect-ratio, combined with this definite height,
+       was being used to derive an oversized intrinsic width — which grid
+       then honoured as the column's min size, blowing the whole board out
+       past the viewport. Not needed once height is explicit. */
+    aspect-ratio: auto;
   }
 }
 
