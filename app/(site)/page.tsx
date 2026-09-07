@@ -42,6 +42,18 @@ export default function Home() {
         </div>
       </section>
 
+      {/* section 4 — a plain, quiet pause between two image-heavy sections:
+          no photo, no button, just the quote */}
+      <section className="chefquote">
+        <div className="wrap chefquote__in">
+          <p className="chefquote__text">
+            &ldquo;Every kitchen has a room the guests never see. Ours
+            doesn&rsquo;t. Come and watch the fire do the work.&rdquo;
+          </p>
+          <p className="chefquote__attr">Head chef, Ferrant</p>
+        </div>
+      </section>
+
       <section className="callout">
         <CtaVideo src="/video/cta-sear.mp4" poster="/img/meat-fire.jpg" />
         <div className="callout__scrim" aria-hidden="true" />

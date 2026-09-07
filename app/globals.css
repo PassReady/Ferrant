@@ -978,6 +978,34 @@ button {
   }
 }
 
+/* home — a deliberately plain pause between the two image-heavy
+   sections either side of it: no photo, no button, generous space
+   above and below so it reads as a considered break, not a strip */
+.chefquote {
+  background: var(--forge);
+  border-top: 1px solid var(--line);
+  padding-block: clamp(5rem, 13vw, 9rem);
+}
+.chefquote__in {
+  max-width: 50rem;
+  margin-inline: auto;
+  text-align: center;
+}
+.chefquote__text {
+  font-size: var(--d-2);
+  font-weight: 600;
+  line-height: 1.22;
+  color: var(--flame);
+}
+.chefquote__attr {
+  margin-top: 1.75rem;
+  font-size: var(--t--1);
+  font-weight: 500;
+  color: var(--ash);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* home — booking band */
 .callout {
   position: relative;
