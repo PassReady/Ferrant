@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Frame } from "@/components/Frame";
-import { CtaVideo } from "@/components/CtaVideo";
 import { EnquiryFlow } from "@/components/EnquiryFlow";
 
 export const metadata: Metadata = {
@@ -40,6 +39,19 @@ const longTable = {
   ],
 };
 
+function SpecGrid({ facts }: { facts: string[][] }) {
+  return (
+    <ul className="evspec">
+      {facts.map(([k, v]) => (
+        <li key={k}>
+          <span className="k">{k}</span>
+          <span className="v">{v}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function EventsPage() {
   return (
     <>
@@ -74,35 +86,18 @@ export default function EventsPage() {
             your pace. A birthday, a work dinner that isn&rsquo;t a boardroom,
             anyone who wants to watch the whole thing happen.
           </p>
-          <ul className="evspec">
-            {chefsTable.facts.map(([k, v]) => (
-              <li key={k}>
-                <span className="k">{k}</span>
-                <span className="v">{v}</span>
-              </li>
-            ))}
-          </ul>
+          <SpecGrid facts={chefsTable.facts} />
           <div className="evspec__cta">
             <EnquiryFlow space="The Chef's Table" />
           </div>
         </div>
       </section>
 
-      {/* 2 — THE FIRESIDE ROOM: spec pinned in a sidebar, prose scrolls past */}
+      {/* 2 — THE FIRESIDE ROOM: heading, then image+prose, spec+cta last —
+          same mobile order as the other two; spec+cta pinned on desktop */}
       <section id="fireside-room" className="wrap evsplit ev-anchor">
-        <div className="evsplit__aside">
+        <div className="evsplit__heading">
           <h2>The Fireside Room</h2>
-          <ul className="evspec">
-            {fireside.facts.map(([k, v]) => (
-              <li key={k}>
-                <span className="k">{k}</span>
-                <span className="v">{v}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="evspec__cta">
-            <EnquiryFlow space="The Fireside Room" />
-          </div>
         </div>
         <div className="evsplit__flow">
           <p>
@@ -127,9 +122,15 @@ export default function EventsPage() {
             other way around.
           </p>
         </div>
+        <div className="evsplit__specwrap">
+          <SpecGrid facts={fireside.facts} />
+          <div className="evspec__cta">
+            <EnquiryFlow space="The Fireside Room" />
+          </div>
+        </div>
       </section>
 
-      {/* 3 — THE LONG TABLE: twin image band, full-width copy, facts as a row */}
+      {/* 3 — THE LONG TABLE: heading+desc, placeholder image, spec+cta last */}
       <section id="long-table" className="evlong ev-anchor">
         <div className="wrap evlong__head">
           <h2>The Long Table</h2>
@@ -141,44 +142,22 @@ export default function EventsPage() {
             same fire, just more elbow room.
           </p>
         </div>
-        <div className="evlong__strip bleed">
-          <Frame
-            src="/img/long-table-set.jpg"
-            alt="A long communal restaurant table, set for a group with no one seated yet"
-            ratio="4 / 5"
-            light={["50%", "38%"]}
-            sizes="(min-width: 40rem) 50vw, 100vw"
-          />
-          <Frame
-            src="/img/room-dim.jpg"
-            alt="The main dining room, warm pendant lights over the bar"
-            ratio="4 / 5"
-            light={["55%", "35%"]}
-            sizes="(min-width: 40rem) 50vw, 100vw"
-          />
+        <div className="evlong__placeholder bleed" role="img" aria-label="Photo placeholder">
+          <span>Photo placeholder &mdash; long table image to come</span>
         </div>
         <div className="wrap">
-          <ul className="evspec evlong__facts">
-            {longTable.facts.map(([k, v]) => (
-              <li key={k}>
-                <span className="k">{k}</span>
-                <span className="v">{v}</span>
-              </li>
-            ))}
-          </ul>
+          <SpecGrid facts={longTable.facts} />
           <div className="evspec__cta">
             <EnquiryFlow space="The Long Table" />
           </div>
         </div>
       </section>
 
-      <section className="ev-close callout">
-        <CtaVideo src="/video/cta-skewer.mp4" poster="/img/meat-fire.jpg" />
-        <div className="callout__scrim" aria-hidden="true" />
+      <section className="ev-close">
         <div className="wrap band">
           <p className="lede measure">
-            Tell us the date and the number, and we&rsquo;ll come back with a
-            plan and a price.
+            Whichever space suits, tell us the date and the numbers and
+            we&rsquo;ll take it from there.
           </p>
           <p style={{ marginTop: "1.75rem" }}>
             <Link href="/reservations" className="act">

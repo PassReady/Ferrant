@@ -917,10 +917,17 @@ button {
   scroll-margin-top: calc(var(--nav-h) + 1rem);
 }
 
-/* shared: the spec pair, styled per-layout — label always block + a real
-   margin above its value, so the two can never run together on one line */
+/* shared: the spec pair — a fixed 2-col x 3-row grid (Seats/Where,
+   Food/From, Notice alone) identical across all three spaces, regardless
+   of value length. Label always block + a real margin above its value. */
 .evspec {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
 }
 .evspec .k {
   display: block;
@@ -936,8 +943,10 @@ button {
   font-size: var(--t-1);
   font-weight: 500;
 }
+/* fixed, generous gap below the grid, left-aligned with the heading above
+   it — identical on all three spaces */
 .evspec__cta {
-  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+  margin-top: 2.5rem;
 }
 
 /* — 1 · THE CHEF'S TABLE — photo fills the screen, everything sits on it — */
@@ -993,41 +1002,18 @@ button {
   color: var(--bone);
   font-size: var(--t-1);
 }
-.evhero .evspec {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-@media (max-width: 40rem) {
-  .evhero .evspec {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-}
 
-/* — 2 · THE FIRESIDE ROOM — spec pinned, prose scrolls past it — */
+/* — 2 · THE FIRESIDE ROOM — heading, then image+prose, spec+cta last;
+   same DOM order on mobile as the other two spaces. On desktop the
+   heading and the spec+cta column sit left via grid-template-areas
+   (independent of source order), with the spec+cta block pinned. — */
 .evsplit {
   padding-block: clamp(4rem, 10vw, 8rem);
   display: grid;
   gap: 2.5rem;
 }
-.evsplit__aside h2 {
+.evsplit__heading h2 {
   font-size: var(--d-2);
-}
-.evsplit__aside .evspec {
-  margin-top: 1.75rem;
-  display: grid;
-  gap: 1rem;
-}
-.evsplit__aside .evspec li {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--line-soft);
-}
-.evsplit__aside .evspec li:last-child {
-  border-bottom: 0;
 }
 .evsplit__flow {
   display: grid;
@@ -1044,18 +1030,16 @@ button {
 @media (min-width: 54rem) {
   .evsplit {
     grid-template-columns: 20rem 1fr;
+    grid-template-areas: "heading flow" "spec flow";
+    align-content: start;
     gap: clamp(3rem, 7vw, 6rem);
-    align-items: start;
   }
-  .evsplit__aside {
-    position: sticky;
-    top: calc(var(--nav-h) + 2.5rem);
+  .evsplit__heading {
+    grid-area: heading;
   }
   .evsplit__flow {
+    grid-area: flow;
     gap: clamp(2.5rem, 6vw, 4.5rem);
-  }
-  .evsplit__flow p {
-    font-size: var(--t-1);
   }
   .evsplit__flow p:first-child {
     font-size: var(--d-3);
@@ -1063,11 +1047,15 @@ button {
     max-width: 20ch;
     color: var(--bone);
   }
+  .evsplit__specwrap {
+    grid-area: spec;
+    position: sticky;
+    top: calc(var(--nav-h) + 2.5rem);
+    align-self: start;
+  }
 }
 
-/* — 3 · THE LONG TABLE — twin image band, full-width copy above,
-   facts laid out as a row beneath (like place settings) — neither the
-   overlay nor the sticky-sidebar treatment used by the other two — */
+/* — 3 · THE LONG TABLE — heading+desc, a placeholder image, spec+cta last — */
 .evlong {
   padding-bottom: clamp(4rem, 10vw, 8rem);
 }
@@ -1083,27 +1071,25 @@ button {
   color: var(--bone);
   max-width: 52ch;
 }
-.evlong__strip {
-  display: grid;
-  gap: 2px;
-  background: var(--line);
+.evlong__placeholder {
+  aspect-ratio: 21 / 9;
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
-}
-@media (min-width: 40rem) {
-  .evlong__strip {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-.evlong__facts {
+  border: 1px dashed var(--line);
+  background: var(--scale);
   display: grid;
-  gap: 1.25rem;
-  padding-top: clamp(1.5rem, 4vw, 2rem);
-  border-top: 1px solid var(--line);
+  place-items: center;
+  padding: 2rem;
+  text-align: center;
 }
-@media (min-width: 44rem) {
-  .evlong__facts {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1.5rem 2rem;
+.evlong__placeholder span {
+  color: var(--ash);
+  font-size: var(--t--1);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+@media (max-width: 40rem) {
+  .evlong__placeholder {
+    aspect-ratio: 4 / 3;
   }
 }
 
