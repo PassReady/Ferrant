@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMenu, menuActions } from "@/lib/store";
-import { imageLibrary } from "@/lib/menu";
+import { CATEGORIES, type Category } from "@/lib/menu";
 
 const USER = "demo";
 const PASS = "Ferrant2026";
@@ -16,7 +16,7 @@ export function AdminApp() {
   const [p, setP] = useState("");
   const [err, setErr] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
-  const [pickerFor, setPickerFor] = useState<string | null>(null);
+  const [filter, setFilter] = useState<Category | "All">("All");
 
   useEffect(() => {
     try {
@@ -47,7 +47,7 @@ export function AdminApp() {
       <div className="admin__auth">
         <div className="admin__card admin__login">
           <h1>Ferrant CMS</h1>
-          <p>Demo backend. Manage the weekly menu and the images it uses.</p>
+          <p>Demo backend. Manage the à la carte menu.</p>
           <form onSubmit={login}>
             <label>
               Username
@@ -76,12 +76,14 @@ export function AdminApp() {
     );
   }
 
+  const visible = menu.dishes.filter((d) => filter === "All" || d.category === filter);
+
   return (
     <div className="admin__wrap">
       <header className="admin__top">
         <div>
           <strong>Ferrant CMS</strong>
-          <span className="admin__crumb">Weekly menu</span>
+          <span className="admin__crumb">Menu</span>
         </div>
         <div className="admin__topact">
           <span className={`admin__saved${savedFlash ? " is-on" : ""}`}>
@@ -117,36 +119,14 @@ export function AdminApp() {
 
       <div className="admin__main">
         <section className="admin__card">
-          <h2>This week</h2>
-          <div className="admin__grid2">
-            <label>
-              Week label
-              <input
-                value={menu.week}
-                onChange={(e) => {
-                  menuActions.setMeta({ week: e.target.value });
-                  flash();
-                }}
-              />
-            </label>
-            <label>
-              Price note
-              <input
-                value={menu.priceNote}
-                onChange={(e) => {
-                  menuActions.setMeta({ priceNote: e.target.value });
-                  flash();
-                }}
-              />
-            </label>
-          </div>
+          <h2>Menu intro</h2>
           <label>
-            Wine pairing note
+            Body copy, shown above the category tabs
             <textarea
               rows={2}
-              value={menu.wine}
+              value={menu.intro}
               onChange={(e) => {
-                menuActions.setMeta({ wine: e.target.value });
+                menuActions.setIntro(e.target.value);
                 flash();
               }}
             />
@@ -155,30 +135,41 @@ export function AdminApp() {
 
         <section className="admin__card">
           <div className="admin__cardhead">
-            <h2>Courses ({menu.dishes.length})</h2>
+            <h2>Dishes ({visible.length})</h2>
             <button
               className="admin__primary"
               onClick={() => {
-                menuActions.addDish();
+                menuActions.addDish(filter === "All" ? "Bites" : filter);
                 flash();
               }}
             >
-              + Add course
+              + Add dish
             </button>
           </div>
 
-          <ul className="admin__dishes">
-            {menu.dishes.map((d, i) => (
-              <li key={d.id} className="admin__dish">
-                <button
-                  className="admin__thumb"
-                  onClick={() => setPickerFor(d.id)}
-                  title="Change image"
-                  style={{ backgroundImage: `url(${d.image})` }}
-                >
-                  <span>Change image</span>
-                </button>
+          <div className="admin__filter">
+            <button
+              className="admin__chip"
+              data-active={filter === "All"}
+              onClick={() => setFilter("All")}
+            >
+              All
+            </button>
+            {CATEGORIES.map((c) => (
+              <button
+                key={c}
+                className="admin__chip"
+                data-active={filter === c}
+                onClick={() => setFilter(c)}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
 
+          <ul className="admin__dishes">
+            {visible.map((d, i) => (
+              <li key={d.id} className="admin__dish admin__dish--flat">
                 <div className="admin__dishfields">
                   <div className="admin__grid2">
                     <label>
@@ -192,17 +183,35 @@ export function AdminApp() {
                       />
                     </label>
                     <label>
-                      Price <span className="admin__opt">(optional)</span>
-                      <input
-                        value={d.price}
-                        placeholder="e.g. supplement +$20"
+                      Category
+                      <select
+                        value={d.category}
                         onChange={(e) => {
-                          menuActions.updateDish(d.id, { price: e.target.value });
+                          menuActions.updateDish(d.id, {
+                            category: e.target.value as Category,
+                          });
                           flash();
                         }}
-                      />
+                      >
+                        {CATEGORIES.map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </select>
                     </label>
                   </div>
+                  <label>
+                    Price <span className="admin__opt">(optional)</span>
+                    <input
+                      value={d.price}
+                      placeholder="e.g. supplement +$8"
+                      onChange={(e) => {
+                        menuActions.updateDish(d.id, { price: e.target.value });
+                        flash();
+                      }}
+                    />
+                  </label>
                   <label>
                     Description
                     <textarea
@@ -234,7 +243,7 @@ export function AdminApp() {
                       menuActions.move(d.id, 1);
                       flash();
                     }}
-                    disabled={i === menu.dishes.length - 1}
+                    disabled={i === visible.length - 1}
                     aria-label="Move down"
                   >
                     ↓
@@ -247,7 +256,7 @@ export function AdminApp() {
                         flash();
                       }
                     }}
-                    aria-label="Remove course"
+                    aria-label="Remove dish"
                   >
                     Remove
                   </button>
@@ -259,57 +268,10 @@ export function AdminApp() {
 
         <p className="admin__foot">
           Changes save to this browser and appear on the menu page immediately.
-          Sample data only — refresh with “Reset” any time.
+          Sample data only — refresh with “Reset” any time. Category photography
+          is fixed per tab, not per dish.
         </p>
       </div>
-
-      {pickerFor && (
-        <div
-          className="admin__picker"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setPickerFor(null);
-          }}
-        >
-          <div className="admin__pickerpanel">
-            <div className="admin__pickerhead">
-              <h3>Choose an image</h3>
-              <button onClick={() => setPickerFor(null)}>Close</button>
-            </div>
-            <div className="admin__pickergrid">
-              {imageLibrary.map((img) => (
-                <button
-                  key={img.src}
-                  className="admin__pickitem"
-                  style={{ backgroundImage: `url(${img.src})` }}
-                  onClick={() => {
-                    menuActions.updateDish(pickerFor, { image: img.src });
-                    flash();
-                    setPickerFor(null);
-                  }}
-                >
-                  <span>{img.label}</span>
-                </button>
-              ))}
-            </div>
-            <label className="admin__pickurl">
-              Or paste an image URL
-              <input
-                placeholder="https://…"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    const v = (e.target as HTMLInputElement).value.trim();
-                    if (v) {
-                      menuActions.updateDish(pickerFor, { image: v });
-                      flash();
-                      setPickerFor(null);
-                    }
-                  }
-                }}
-              />
-            </label>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

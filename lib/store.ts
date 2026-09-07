@@ -1,9 +1,9 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { seedMenu, type MenuState, type Dish } from "./menu";
+import { seedMenu, type MenuState, type Dish, type Category } from "./menu";
 
-const KEY = "ferrant.menu.v2";
+const KEY = "ferrant.menu.v3";
 
 /**
  * A tiny localStorage-backed store shared by the Menu page and the demo admin.
@@ -74,8 +74,8 @@ export function useMenu(): MenuState {
 const uid = () => "d" + Math.random().toString(36).slice(2, 8);
 
 export const menuActions = {
-  setMeta(patch: Partial<Pick<MenuState, "week" | "priceNote" | "wine">>) {
-    state = { ...state, ...patch };
+  setIntro(intro: string) {
+    state = { ...state, intro };
     persist();
   },
   updateDish(id: string, patch: Partial<Dish>) {
@@ -85,13 +85,13 @@ export const menuActions = {
     };
     persist();
   },
-  addDish() {
+  addDish(category: Category) {
     const dish: Dish = {
       id: uid(),
-      name: "New course",
+      category,
+      name: "New dish",
       price: "",
       description: "Describe what it is and how the fire cooked it.",
-      image: "/img/charcoal-fire.jpg",
     };
     state = { ...state, dishes: [...state.dishes, dish] };
     persist();
@@ -102,11 +102,19 @@ export const menuActions = {
     persist();
   },
   move(id: string, dir: -1 | 1) {
-    const i = state.dishes.findIndex((d) => d.id === id);
+    // reorders within the dish's own category so the visible tab list moves as expected
+    const cat = state.dishes.find((d) => d.id === id)?.category;
+    if (!cat) return;
+    const ids = state.dishes.filter((d) => d.category === cat).map((d) => d.id);
+    const i = ids.indexOf(id);
     const j = i + dir;
-    if (i < 0 || j < 0 || j >= state.dishes.length) return;
-    const next = [...state.dishes];
-    [next[i], next[j]] = [next[j], next[i]];
+    if (i < 0 || j < 0 || j >= ids.length) return;
+    [ids[i], ids[j]] = [ids[j], ids[i]];
+    const byId = new Map(state.dishes.map((d) => [d.id, d]));
+    let cursor = 0;
+    const next = state.dishes.map((d) =>
+      d.category === cat ? byId.get(ids[cursor++])! : d,
+    );
     state = { ...state, dishes: next };
     persist();
   },

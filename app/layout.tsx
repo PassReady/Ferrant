@@ -25,15 +25,15 @@ const text = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ferrant.vercel.app"),
   title: {
-    default: "Ferrant — live fire, twelve seats, one seating",
+    default: "Ferrant — one fire, every dish",
     template: "%s — Ferrant",
   },
   description:
-    "A chef's-table restaurant in Fitzroy built around one fire. Twelve seats, one seating a night, one menu that changes every week with the flame.",
+    "A fire-cooking restaurant in Fitzroy. Everything on the menu is cooked over one wood fire. Dinner nightly, Tuesday to Sunday.",
   openGraph: {
     title: "Ferrant",
     description:
-      "A chef's-table restaurant built around one fire. Twelve seats, one seating, one menu a week.",
+      "A fire-cooking restaurant in Fitzroy — bites through to dessert, cooked over one wood fire. Dinner nightly.",
     type: "website",
     images: ["/img/charcoal-fire.jpg"],
   },

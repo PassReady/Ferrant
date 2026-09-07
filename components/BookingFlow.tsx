@@ -7,9 +7,9 @@ const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
 ];
-// open for dinner Wed–Sat (one seating); closed Sun/Mon/Tue
-const OPEN_DOW = new Set([3, 4, 5, 6]);
-const SLOTS = ["6:45", "7:00", "7:15"];
+// dinner nightly Tue–Sun; closed Monday (the night events use the room)
+const OPEN_DOW = new Set([0, 2, 3, 4, 5, 6]);
+const SLOTS = ["5:30", "6:00", "6:30", "7:00", "7:30", "8:00", "8:30"];
 
 function startOfDay(d: Date) {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -82,7 +82,7 @@ export function BookingFlow() {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<0 | 1 | 2>(0);
   const [date, setDate] = useState<Date | null>(null);
-  const [slot, setSlot] = useState(SLOTS[1]);
+  const [slot, setSlot] = useState(SLOTS[3]);
   const [party, setParty] = useState(2);
   const [details, setDetails] = useState({ name: "", email: "", phone: "" });
   const [ref, setRef] = useState("");
@@ -112,7 +112,7 @@ export function BookingFlow() {
   function reset() {
     setStep(0);
     setDate(null);
-    setSlot(SLOTS[1]);
+    setSlot(SLOTS[3]);
     setParty(2);
     setDetails({ name: "", email: "", phone: "" });
     setRef("");
@@ -170,8 +170,8 @@ export function BookingFlow() {
               <div className="modal__body">
                 <h2 className="modal__h">Choose a night</h2>
                 <p className="modal__sub">
-                  One seating a night, Wednesday to Saturday. Twelve seats — if
-                  your date is full we&rsquo;ll offer the nearest.
+                  Dinner nightly, Tuesday to Sunday. If your night is full
+                  we&rsquo;ll offer the nearest.
                 </p>
 
                 <div className="cal__months">
@@ -225,9 +225,9 @@ export function BookingFlow() {
                       </span>
                       <button
                         type="button"
-                        onClick={() => setParty((p) => Math.min(12, p + 1))}
+                        onClick={() => setParty((p) => Math.min(8, p + 1))}
                         aria-label="More"
-                        disabled={party >= 12}
+                        disabled={party >= 8}
                       >
                         +
                       </button>

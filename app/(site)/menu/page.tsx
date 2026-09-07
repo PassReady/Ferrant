@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { MenuScroller } from "@/components/MenuScroller";
+import { MenuBoard } from "@/components/MenuBoard";
 
 export const metadata: Metadata = {
   title: "Menu",
   description:
-    "This week's tasting menu at Ferrant — eight courses, all cooked over one fire. Set price, with an optional wine pairing.",
+    "The à la carte menu at Ferrant — bites through to dessert, everything cooked over one wood fire.",
 };
 
 export default function MenuPage() {
-  return <MenuScroller />;
+  return <MenuBoard />;
 }

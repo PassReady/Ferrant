@@ -3,9 +3,9 @@ import { BookingFlow } from "@/components/BookingFlow";
 import { Frame } from "@/components/Frame";
 
 export const metadata: Metadata = {
-  title: "Reservations",
+  title: "Reserve a table",
   description:
-    "Book a table at Ferrant, Fitzroy. One seating a night at 7pm, Wednesday to Saturday. Twelve seats.",
+    "Book a table at Ferrant, Fitzroy. Dinner nightly from 5:30pm, Tuesday to Sunday.",
 };
 
 export default function ReservationsPage() {
@@ -13,15 +13,15 @@ export default function ReservationsPage() {
     <section className="wrap phead">
       <div className="resv">
         <div className="resv__lead">
-          <h1>Reservations</h1>
+          <h1>Reserve a table</h1>
           <p className="phead__sub">
-            One seating a night at 7pm, Wednesday to Saturday. Twelve seats, so
-            weekends book out weeks ahead — midweek is easier, and often better.
+            Dinner nightly from 5:30pm, Tuesday to Sunday. Bar seats are
+            walk-in only &mdash; for a table, book ahead below.
           </p>
           <div className="resv__cta">
             <BookingFlow />
             <p className="dim">
-              Groups of more than eight, or a private night, go through{" "}
+              Large groups, or a private night, go through{" "}
               <a className="link" href="mailto:events@ferrant.au">
                 events@ferrant.au
               </a>
@@ -40,8 +40,8 @@ export default function ReservationsPage() {
             <div>
               <dt>Hours</dt>
               <dd>
-                One seating, 7pm. Wednesday to Saturday. Private events Sunday to
-                Tuesday.
+                Dinner nightly from 5:30pm, Tuesday to Sunday. Private events
+                on Monday.
               </dd>
             </div>
             <div>

@@ -7,8 +7,7 @@ export function Footer() {
         <div>
           <div className="foot__mark">Ferrant</div>
           <p className="dim" style={{ marginTop: "0.9rem", maxWidth: "30ch" }}>
-            One fire, twelve seats, one seating a night. The menu changes every
-            Wednesday.
+            One fire, every dish. Fitzroy, dinner nightly.
           </p>
         </div>
 
@@ -25,9 +24,9 @@ export function Footer() {
 
         <div>
           <h4>Hours</h4>
-          <p className="dim">Dinner, one seating at 7pm</p>
-          <p className="dim">Wednesday to Saturday</p>
-          <p className="dim">Private events Sunday to Tuesday</p>
+          <p className="dim">Dinner nightly from 5:30pm</p>
+          <p className="dim">Tuesday to Sunday</p>
+          <p className="dim">Private events on Monday</p>
           <Link href="/reservations" className="link" style={{ marginTop: "0.9rem", display: "inline-block" }}>
             Book a night
           </Link>

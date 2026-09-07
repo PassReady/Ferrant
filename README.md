@@ -1,7 +1,7 @@
 # Ferrant
 
-A portfolio demo site for a fictional live-fire chef's-table restaurant. Built to agency
-standard as a sales asset. **Ferrant is not a real business.**
+A portfolio demo site for a fictional fire-cooking restaurant. Built to agency standard as a
+sales asset. **Ferrant is not a real business.**
 
 Next.js 16 (App Router, TypeScript), no CSS framework — hand-written CSS with a small token
 system. Deploys to Vercel with zero config.
@@ -16,9 +16,10 @@ npm run build   # production build
 
 ## The concept
 
-One fire, lit before service. Twelve seats, one seating a night, one tasting menu that
-changes every Wednesday. The pass is open and faces the room. The audience is people booking
-a special-occasion dinner or a small private event.
+A fire-cooking restaurant in Fitzroy, Melbourne — everything on the menu is cooked over one
+wood fire. Normal-capacity, nightly service with a full à la carte menu (Bites / Entrées /
+Mains / Sides / Desserts), not a single-sitting exclusive format. Dinner nightly from 5:30pm,
+Tuesday to Sunday; private events use the room on Monday, the night it's otherwise closed.
 
 ## Design language — firelight, not a dark theme
 
@@ -30,9 +31,11 @@ the anchor: iron and heat, not a farmhouse.
   through one shared grade (`components/Frame.tsx`) — darkened, warm-shifted, vignetted.
 - **Heat is rare.** The room is warm near-black (`--forge #0C0B0A`, never pure `#000`).
   Ember `#C0402A` and flame `#E8A24A` appear only where something is hot: the hero glow,
-  the one primary action per screen, focus rings, the mark on the menu.
+  the one primary action per screen, focus rings, the mega-menu icons.
 - **Type:** Zilla Slab (display — heavy, worked, set large: fire and iron, not wine bar)
   with General Sans (body/UI — quiet). Loaded via `next/font`.
+- **Density:** copy is paired directly beside the image it describes (Story, Events, Home)
+  rather than left floating alone on black — no two sections repeat the same structure.
 
 Full palette and scale in `app/globals.css` `:root`.
 
@@ -40,19 +43,25 @@ Full palette and scale in `app/globals.css` `:root`.
 
 | Route | Notes |
 |---|---|
-| `/` | Hero is the fire itself. One orchestrated load animation: the fire comes up over ~2s, then a slow breath on the glow only. `prefers-reduced-motion` loads it already lit. |
-| `/story` | A centred essay, first person, broken by two full-bleed images. |
-| `/events` | The most photographic page — full-bleed image bands. Three private-event options read top to bottom like choosing. |
-| `/menu` | This week's menu as one running document: course, then how it was cooked. Set price stated once; wine pairing is an addendum, not a parallel column. |
-| `/contact` | Underline-field enquiry form (name, date, party, occasion). No backend — on submit it transitions in place to a confirmation state. |
+| `/` | Full-screen looping fire video hero, letter-by-letter wordmark, parallax on scroll. Two image-paired sections below (mirrored layouts), then a reserve CTA band. |
+| `/story` | Heading + three rows, each pairing a paragraph (staggered word reveal) with a photo, alternating sides. |
+| `/events` | Three private-event offerings, three different layouts: full-bleed photo with the copy overlaid (Chef's Table), a sticky spec sidebar beside scrolling prose (Fireside Room), an asymmetric split with an overlaid statement image (Buyout). |
+| `/menu` | Category tabs (Bites/Entrées/Mains/Sides/Desserts). Dish list beside a click-through image carousel (dots + arrows) of photography for that category — not scroll-linked. |
+| `/reservations` | OpenTable-style booking modal: two-month calendar (Tue–Sun open), arrival slots, party stepper, confirmation screen. No backend. |
+| `/admin` | Demo CMS (`demo` / `Ferrant2026`). Edit the menu intro and each dish (name, category, price, description); state lives in `lib/store.ts` (localStorage), shared live with `/menu`. |
+
+Nav uses a mega menu on hover/click for **Menu** and **Event Spaces** (a full panel below the
+bar with icon + label + blurb per link) — driven by React state in `components/Nav.tsx`, not
+CSS `:hover`/`:focus-within`, so it can't get stuck open after a client-side navigation.
 
 ## Placeholders to swap at build
 
-- **Photography** is stock (Unsplash), chosen dark and graded to a single look. Replace with
-  the venue's own shoot; the `Frame` grade will keep it consistent.
-- **Copy** — menu, story, event descriptions, the founder (Ada Ferrant), the Fitzroy
-  laneway address, phone and email — is written for the concept. All fictional.
-- The booking form sends nothing.
+- **Photography** is stock (Unsplash), chosen dark and graded to a single look, plus
+  categorically-matched dish photography under `public/img/menu/`. Replace with the venue's
+  own shoot; the `Frame` grade will keep it consistent.
+- **Copy** — menu, story, event descriptions, the founder (Ada Ferrant), the Fitzroy laneway
+  address, phone and email — is written for the concept. All fictional.
+- The booking flow and CMS send/save nothing outside the browser.
 
 ## Accessibility
 

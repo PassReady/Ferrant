@@ -92,14 +92,15 @@ export function FireHero() {
             </span>
           ))}
         </h1>
+        <p className="hero__sub">One fire. Every dish.</p>
         <p className="hero__line">
-          Twelve seats around one fire. One menu a night, cooked in flame, ember
-          and smoke.
+          A Fitzroy kitchen built around a single wood fire &mdash; nothing on
+          the menu is cooked any other way.
         </p>
         <div className="hero__meta">
-          <span>Twelve seats</span>
-          <span>One seating, 7pm</span>
           <span>Fitzroy</span>
+          <span>Dinner nightly</span>
+          <span>Bites to dessert</span>
         </div>
       </div>
 

@@ -5,7 +5,7 @@ import { Frame } from "@/components/Frame";
 export const metadata: Metadata = {
   title: "Event Spaces",
   description:
-    "Private events at Ferrant — the chef's table, the fireside room for up to ten, or a full buyout of all twelve seats.",
+    "Private events at Ferrant — the chef's table, the fireside room for up to ten, or a full buyout of the whole restaurant.",
 };
 
 const chefsTable = {
@@ -30,7 +30,7 @@ const fireside = {
 
 const buyout = {
   facts: [
-    ["Seats", "Up to twelve, the whole room"],
+    ["Seats", "Every table, the whole room"],
     ["Where", "The entire restaurant"],
     ["Food", "The menu, built with you"],
     ["Price", "Per event — we'll quote the date"],
@@ -44,14 +44,14 @@ export default function EventsPage() {
       <section className="wrap phead">
         <h1>Take the room for a night</h1>
         <p className="phead__sub">
-          We host private events on the nights we&rsquo;re closed to the public,
-          Sunday through Tuesday. Same fire, same kitchen, same one menu &mdash;
-          cooked for your group instead of the room. Three ways to do it.
+          We host private events on Monday, the night we&rsquo;re closed to the
+          public. Same fire, same kitchen, same menu &mdash; cooked for your
+          group instead of the room. Three ways to do it.
         </p>
       </section>
 
       {/* 1 — THE CHEF'S TABLE: photo fills the screen, text sits on it */}
-      <section className="evhero">
+      <section id="chefs-table" className="evhero ev-anchor">
         <div className="evhero__bg">
           <Frame
             src="/img/fire-person.jpg"
@@ -84,7 +84,7 @@ export default function EventsPage() {
       </section>
 
       {/* 2 — THE FIRESIDE ROOM: spec pinned in a sidebar, prose scrolls past */}
-      <section className="wrap evsplit">
+      <section id="fireside-room" className="wrap evsplit ev-anchor">
         <div className="evsplit__aside">
           <h2>The Fireside Room</h2>
           <ul className="evspec">
@@ -122,7 +122,7 @@ export default function EventsPage() {
       </section>
 
       {/* 3 — THE BUYOUT: full image with an overlaid line, then a lopsided split */}
-      <section className="evbuy">
+      <section id="buyout" className="evbuy ev-anchor">
         <div className="evbuy__full bleed">
           <Frame
             src="/img/firewood.jpg"
@@ -131,16 +131,16 @@ export default function EventsPage() {
             light={["50%", "58%"]}
             sizes="100vw"
           />
-          <p className="evbuy__stmt">The whole room, all twelve seats.</p>
+          <p className="evbuy__stmt">The whole room, every table.</p>
         </div>
         <div className="wrap evbuy__cols">
           <div className="evbuy__major">
             <h2>The Buyout</h2>
             <p>
               Your night, your guest list. We open the door only for your people
-              and cook the way we always do &mdash; one menu, one seating &mdash;
-              but everything else is yours. Stretch the wine to a longer format,
-              add a course, move the start time. Beyond that we keep it simple.
+              and cook the way we always do &mdash; over one fire &mdash; but
+              everything else is yours. Stretch the wine to a longer format, add
+              a course, move the start time. Beyond that we keep it simple.
               It&rsquo;s still Ferrant, just closed to everyone else.
             </p>
           </div>
