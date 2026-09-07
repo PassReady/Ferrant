@@ -97,16 +97,7 @@ export function FireHero() {
           A Fitzroy kitchen built around a single wood fire &mdash; nothing on
           the menu is cooked any other way.
         </p>
-        <div className="hero__meta">
-          <span>Fitzroy</span>
-          <span>Dinner nightly</span>
-          <span>Bites to dessert</span>
-        </div>
       </div>
-
-      <span className="hero__cue" aria-hidden="true">
-        Scroll
-      </span>
     </section>
   );
 }

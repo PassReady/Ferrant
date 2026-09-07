@@ -324,7 +324,7 @@ button {
 }
 .nav__item > a {
   display: inline-block;
-  font-size: var(--t--1);
+  font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1rem);
   letter-spacing: 0.03em;
   color: var(--ash);
   padding: 0.5rem 0;
@@ -686,45 +686,6 @@ button {
 .hero.is-lit .hero__line {
   opacity: 0.94;
 }
-.hero__meta {
-  margin-top: 2.4rem;
-  display: flex;
-  gap: 1.4rem 2.4rem;
-  flex-wrap: wrap;
-  font-size: var(--t--1);
-  color: var(--ash);
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  opacity: 0;
-  transition: opacity 1s var(--ease) 1.25s;
-}
-.hero.is-lit .hero__meta {
-  opacity: 1;
-}
-.hero__meta span {
-  color: color-mix(in oklab, var(--bone) 78%, transparent);
-}
-.hero__cue {
-  position: absolute;
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.66rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--ash-dim);
-  opacity: 0;
-  transition: opacity 1s var(--ease) 1.6s;
-  animation: cue 2.6s ease-in-out 3s infinite;
-}
-.hero.is-lit .hero__cue {
-  opacity: 1;
-}
-@keyframes cue {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 4px); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero {
     min-height: 90svh;
@@ -735,9 +696,7 @@ button {
   .hero__glow,
   .hero__char,
   .hero__sub,
-  .hero__line,
-  .hero__meta,
-  .hero__cue {
+  .hero__line {
     opacity: 1;
     transform: none;
     animation: none;
@@ -813,6 +772,7 @@ button {
 .firesq__in h2 {
   font-size: var(--d-2);
   max-width: 13ch;
+  color: var(--flame);
 }
 /* all three beats share one grid cell — the block's height is set by
    whichever is tallest, and only the active one is visible, so nothing
@@ -932,7 +892,9 @@ button {
 .marquee__seg {
   flex: none;
   white-space: nowrap;
-  padding-inline: 1em;
+  /* no padding here — the string itself already ends in " · ", so
+     padding on top of that left a visible gap of dead space at the
+     seam where the two duplicated segments meet */
   font-family: var(--font-display), Georgia, serif;
   font-weight: 700;
   font-size: clamp(1.4rem, 4.6vw, 2.75rem);
@@ -999,6 +961,7 @@ button {
 .dinner__card h2 {
   font-size: var(--d-2);
   max-width: 12ch;
+  color: var(--flame);
 }
 .dinner__card .prose {
   margin-top: 1.1rem;

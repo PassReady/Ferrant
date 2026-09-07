@@ -36,8 +36,8 @@ export default function Home() {
               with what the fire and the market give us that week.
             </p>
           </div>
-          <Link href="/reservations" className="act">
-            Reserve a table
+          <Link href="/menu" className="act">
+            View our menu
           </Link>
         </div>
       </section>
