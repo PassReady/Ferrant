@@ -68,7 +68,7 @@ export function MenuBoard() {
         <p className="phead__sub">{menu.intro}</p>
       </section>
 
-      <div className="menu3__tabsrow wrap">
+      <div className="menu3__tabsrow">
         <div className="menu3__tabs" role="tablist" aria-label="Menu categories">
           <div className="menu3__tabgroup">
             {CATEGORIES.map((c) => (
@@ -88,7 +88,7 @@ export function MenuBoard() {
         </div>
       </div>
 
-      <div className="wrap menu3__board">
+      <div className="menu3__board">
         {CATEGORIES.map((cat) => (
           <MenuCategoryRow
             key={cat}

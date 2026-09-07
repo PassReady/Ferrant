@@ -1374,13 +1374,15 @@ button {
 .menu3__head h1 {
   font-size: var(--d-1);
 }
-/* the sticky positioning context sits inside .wrap (constrained + guttered)
-   so the visible bar below can never bleed past the dish-list column into
-   the image column, at any viewport width */
+/* full-bleed, not .wrap — the list column and its tabs should run out to
+   the true left edge (just a gutter of breathing room) to match the photo
+   column bleeding to the true right edge, instead of both sitting inside
+   .wrap's centered, capped column with dead space on either side */
 .menu3__tabsrow {
   position: sticky;
   top: var(--nav-h);
   z-index: 5;
+  padding-inline: var(--gutter);
 }
 @media (min-width: 58rem) {
   .menu3__tabsrow {
@@ -1424,6 +1426,7 @@ button {
 }
 .menu3__board {
   padding-block: clamp(2rem, 5vw, 3rem);
+  padding-inline: var(--gutter);
   display: grid;
   gap: clamp(3rem, 7vw, 4.5rem);
 }
@@ -1558,15 +1561,13 @@ button {
        height instead of centering a small fixed-ratio box inside it */
     min-height: 30rem;
   }
-  /* the image bleeds out to the true right edge of the browser (the
-     wrap's own max-width/padding would otherwise leave a dead margin
-     down the right side, same fix as before — see git history) and
-     fills the full height of its row rather than a fixed aspect-ratio
-     box, so each photo genuinely owns its side of the row. */
+  /* the image bleeds out to the true right edge of the browser — cancel
+     just the board's own right gutter, now that the board itself runs
+     full-bleed rather than sitting inside .wrap — and fills the full
+     height of its row rather than a fixed aspect-ratio box, so each
+     photo genuinely owns its side of the row. */
   .menu3__panel {
-    margin-right: calc(
-      -1 * max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter)))
-    );
+    margin-right: calc(-1 * var(--gutter));
   }
   .menu3__frame {
     width: 100%;
