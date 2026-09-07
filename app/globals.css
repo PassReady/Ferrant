@@ -751,6 +751,15 @@ button {
   }
 }
 
+/* home page only — every rule elsewhere reads its font from these two
+   custom properties, so re-pointing them here swaps the whole page's
+   type (headings and body copy alike) without touching every selector
+   or affecting any other page on the site */
+.home {
+  --font-display: var(--font-home);
+  --font-text: var(--font-home);
+}
+
 /* home — section 2: a pinned scroll sequence. The image holds still (as
    its own column at desktop) while three short beats replace each other
    below the heading, driven by scroll position rather than all three
@@ -774,7 +783,19 @@ button {
   position: relative;
   min-height: 40vh;
 }
-.firesq__media img {
+/* one photo per beat, stacked and cross-faded together with the text —
+   only the active one is opaque, so the swap reads as part of the same
+   scroll-driven change rather than a second, unrelated animation */
+.firesq__photo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease);
+}
+.firesq__photo[data-active="true"] {
+  opacity: 1;
+}
+.firesq__photo img {
   object-fit: cover;
   filter: brightness(0.72) contrast(1.08) saturate(0.92);
 }
@@ -782,10 +803,12 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 1.5rem;
   padding: clamp(2.5rem, 6vw, 4.5rem) var(--gutter);
   background: var(--forge);
+  text-align: center;
 }
 .firesq__in h2 {
   font-size: var(--d-2);
@@ -855,6 +878,20 @@ button {
        the same bug hitting the menu page twice already). */
     min-height: 0;
     aspect-ratio: 4 / 3;
+  }
+  /* no scroll-linked crossfade here — all three beats are already shown
+     at once, so only the first photo is shown, statically */
+  .firesq__photo {
+    display: none;
+  }
+  .firesq__photo:first-child {
+    display: block;
+    position: static;
+    opacity: 1;
+  }
+  .firesq__in {
+    align-items: flex-start;
+    text-align: left;
   }
   .firesq__beats {
     display: block;

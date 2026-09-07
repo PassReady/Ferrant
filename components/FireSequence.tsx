@@ -4,21 +4,42 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const BEATS = [
-  <>There&rsquo;s no gas line at Ferrant and no combi oven in the back.</>,
-  <>
-    One wood fire does everything &mdash; it bakes the bread, sears the fish,
-    chars the vegetables, and finishes the dessert.
-  </>,
-  <>If it can&rsquo;t be cooked over flame, it isn&rsquo;t on the menu.</>,
+  {
+    text: (
+      <>There&rsquo;s no gas line at Ferrant and no combi oven in the back.</>
+    ),
+    src: "/img/oven-fire.jpg",
+    alt: "Flames and embers inside the wood-fired hearth",
+  },
+  {
+    text: (
+      <>
+        One wood fire does everything, from baking the bread and searing the
+        fish to charring the vegetables and finishing the dessert.
+      </>
+    ),
+    src: "/img/fire-skewer.jpg",
+    alt: "A skewer of meat lifted from the glowing coals, smoke rising",
+  },
+  {
+    text: <>If it can&rsquo;t be cooked over flame, it isn&rsquo;t on the menu.</>,
+    src: "/img/fire-flambe.jpg",
+    alt: "A cook working beside a rising flame in a dark kitchen",
+    // biased up and away from the burner ring visible at the very
+    // bottom of the source photo — keeps the frame reading as fire and
+    // hands, not stovetop equipment
+    position: "center 25%",
+  },
 ];
 
 /**
- * A pinned scroll sequence, not another image-beside-text block: the fire
- * image holds still on one side while three short beats replace each other
- * on the other, tied to scroll position rather than all three sitting on
- * the page at once. Below 54rem there's no room for a pinned split, so it
- * degrades to the image once followed by all three beats stacked normally
- * (see the media query in globals.css) — same copy, no scroll-jacking.
+ * A pinned scroll sequence, not another image-beside-text block: at
+ * desktop, one side holds still while three short beats — each with its
+ * own photo — replace each other on the other side, tied to scroll
+ * position rather than all three sitting on the page at once. Below
+ * 54rem there's no room for a pinned split, so it degrades to the first
+ * photo followed by all three beats stacked normally (see the media
+ * query in globals.css) — same copy, no scroll-jacking.
  */
 export function FireSequence() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -58,12 +79,22 @@ export function FireSequence() {
     <section className="firesq" ref={sectionRef}>
       <div className="firesq__pin">
         <div className="firesq__media">
-          <Image
-            src="/img/oven-fire.jpg"
-            alt="Flames and embers inside the wood-fired hearth"
-            fill
-            sizes="(min-width: 54rem) 50vw, 100vw"
-          />
+          {BEATS.map((beat, i) => (
+            <div
+              key={beat.src}
+              className="firesq__photo"
+              data-active={i === active}
+            >
+              <Image
+                src={beat.src}
+                alt={beat.alt}
+                fill
+                sizes="(min-width: 54rem) 50vw, 100vw"
+                priority={i === 0}
+                style={beat.position ? { objectPosition: beat.position } : undefined}
+              />
+            </div>
+          ))}
         </div>
         <div className="firesq__in">
           <h2>Cooked over one fire, start to finish</h2>
@@ -75,7 +106,7 @@ export function FireSequence() {
                 data-active={i === active}
                 aria-hidden={i !== active}
               >
-                {beat}
+                {beat.text}
               </p>
             ))}
           </div>

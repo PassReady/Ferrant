@@ -7,7 +7,7 @@ import { CtaVideo } from "@/components/CtaVideo";
 
 export default function Home() {
   return (
-    <>
+    <div className="home">
       <FireHero />
 
       {/* section 2 — pinned scroll sequence, not another image-beside-text block */}
@@ -52,6 +52,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }

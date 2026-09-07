@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Zilla_Slab } from "next/font/google";
+import { Zilla_Slab, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -9,6 +9,14 @@ const display = Zilla_Slab({
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-display",
+});
+
+// home page only — scoped in globals.css via .home, not used site-wide
+const homeFont = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-home",
 });
 
 const text = localFont({
@@ -41,7 +49,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${text.variable}`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${text.variable} ${homeFont.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
