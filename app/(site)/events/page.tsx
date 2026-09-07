@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Frame } from "@/components/Frame";
 import { EnquiryFlow } from "@/components/EnquiryFlow";
+import { CtaVideo } from "@/components/CtaVideo";
 
 export const metadata: Metadata = {
   title: "Event Spaces",
@@ -142,8 +143,14 @@ export default function EventsPage() {
             same fire, just more elbow room.
           </p>
         </div>
-        <div className="evlong__placeholder bleed" role="img" aria-label="Photo placeholder">
-          <span>Photo placeholder &mdash; long table image to come</span>
+        <div className="evlong__photo bleed">
+          <Frame
+            src="/img/long-table-set.jpg"
+            alt="A long banquet table set with candles and plates, no one seated yet"
+            ratio="21 / 9"
+            light={["50%", "40%"]}
+            sizes="100vw"
+          />
         </div>
         <div className="wrap">
           <SpecGrid facts={longTable.facts} />
@@ -153,7 +160,9 @@ export default function EventsPage() {
         </div>
       </section>
 
-      <section className="ev-close">
+      <section className="ev-close callout">
+        <CtaVideo src="/video/cta-skewer.mp4" poster="/img/meat-fire.jpg" />
+        <div className="callout__scrim" aria-hidden="true" />
         <div className="wrap band">
           <p className="lede measure">
             Whichever space suits, tell us the date and the numbers and

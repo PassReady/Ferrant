@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Frame } from "@/components/Frame";
 import { RevealText } from "@/components/RevealText";
+import { CtaVideo } from "@/components/CtaVideo";
 
 export const metadata: Metadata = {
   title: "Our Story",
@@ -83,18 +84,22 @@ export default function StoryPage() {
         </div>
       </div>
 
-      <section className="wrap story-close-wrap">
-        <div className="column story-close">
-          <p>
-            Come hungry, sit close to the heat, and give us the night.
-            We&rsquo;ll take it from there.
-          </p>
-          <cite>Ada Ferrant, chef and owner</cite>
-          <p style={{ marginTop: "2.25rem", fontFamily: "var(--font-text)" }}>
-            <Link href="/reservations" className="act">
-              Reserve a table
-            </Link>
-          </p>
+      <section className="story-close-wrap callout">
+        <CtaVideo src="/video/cta-bread.mp4" poster="/img/oven-fire.jpg" />
+        <div className="callout__scrim" aria-hidden="true" />
+        <div className="wrap band">
+          <div className="column story-close">
+            <p>
+              Come hungry, sit close to the heat, and give us the night.
+              We&rsquo;ll take it from there.
+            </p>
+            <cite>Ada Ferrant, chef and owner</cite>
+            <p style={{ marginTop: "2.25rem", fontFamily: "var(--font-text)" }}>
+              <Link href="/reservations" className="act">
+                Reserve a table
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
     </>

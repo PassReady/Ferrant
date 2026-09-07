@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useMenu } from "@/lib/store";
 import { CATEGORIES, categoryImages, type Category } from "@/lib/menu";
+import { CtaVideo } from "@/components/CtaVideo";
 
 const catId = (c: Category) => `cat-${c.toLowerCase().replace(/[^a-z]+/g, "-")}`;
 
@@ -170,11 +171,16 @@ export function MenuBoard() {
         </div>
       </div>
 
-      <div className="wrap menu3__foot">
-        <Link href="/reservations" className="act">
-          Reserve a table
-        </Link>
-      </div>
+      <section className="menu3__foot callout">
+        <CtaVideo src="/video/cta-grill.mp4" poster="/img/charcoal-fire.jpg" />
+        <div className="callout__scrim" aria-hidden="true" />
+        <div className="wrap band callout__in">
+          <h2>Save your seat by the fire.</h2>
+          <Link href="/reservations" className="act">
+            Reserve a table
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

@@ -1071,24 +1071,14 @@ button {
   color: var(--bone);
   max-width: 52ch;
 }
-.evlong__placeholder {
-  aspect-ratio: 21 / 9;
+.evlong__photo {
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
-  border: 1px dashed var(--line);
-  background: var(--scale);
-  display: grid;
-  place-items: center;
-  padding: 2rem;
-  text-align: center;
 }
-.evlong__placeholder span {
-  color: var(--ash);
-  font-size: var(--t--1);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.evlong__photo .frame {
+  aspect-ratio: 21 / 9;
 }
 @media (max-width: 40rem) {
-  .evlong__placeholder {
+  .evlong__photo .frame {
     aspect-ratio: 4 / 3;
   }
 }
@@ -1460,13 +1450,15 @@ button {
     grid-template-columns: 1.3fr 1fr;
     align-items: start;
   }
-  /* the panel occupies the full sticky viewport height so its content —
-     centered by the flex column below — sits level with whatever dish
-     text is currently alongside it, not pinned to the top of the screen */
+  /* the panel occupies the sticky viewport height *below* the tabs bar so
+     its content — centered by the flex column below — sits level with
+     whatever dish text is alongside it, without the opaque tabs bar
+     painting over the top of the image (it did when this started at
+     top: 0, the same screen region the sticky tabs bar occupies) */
   .menu3__panel {
     position: sticky;
-    top: 0;
-    height: 100svh;
+    top: calc(var(--nav-h) + 4.75rem);
+    height: calc(100svh - var(--nav-h) - 4.75rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
