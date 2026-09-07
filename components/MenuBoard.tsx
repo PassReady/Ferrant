@@ -79,19 +79,21 @@ export function MenuBoard() {
       </section>
 
       <div className="menu3__tabs wrap" role="tablist" aria-label="Menu categories">
-        {CATEGORIES.map((c) => (
-          <button
-            key={c}
-            type="button"
-            role="tab"
-            aria-selected={c === active}
-            data-active={c === active}
-            className="menu3__tab"
-            onClick={() => scrollToCategory(c)}
-          >
-            {c}
-          </button>
-        ))}
+        <div className="menu3__tabgroup">
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              type="button"
+              role="tab"
+              aria-selected={c === active}
+              data-active={c === active}
+              className="menu3__tab"
+              onClick={() => scrollToCategory(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="wrap menu3__board">

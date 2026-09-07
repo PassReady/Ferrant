@@ -3,11 +3,19 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Looping background video for the reserve CTA band. Same play-retry
- * pattern as FireHero — muted autoplay isn't always self-triggering with
- * preload="auto" alone, so we nudge it on mount and again on tab focus.
+ * Looping background video for a full-width CTA band above the footer.
+ * Same play-retry pattern as FireHero — muted autoplay isn't always
+ * self-triggering with preload="auto" alone, so we nudge it on mount and
+ * again on tab focus. Each footer CTA passes its own clip + poster so no
+ * two bands (or the hero) repeat the same footage.
  */
-export function CtaVideo() {
+export function CtaVideo({
+  src,
+  poster,
+}: {
+  src: string;
+  poster: string;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -26,10 +34,10 @@ export function CtaVideo() {
       loop
       playsInline
       preload="auto"
-      poster="/img/meat-fire.jpg"
+      poster={poster}
       aria-hidden="true"
     >
-      <source src="/video/cta-sear.mp4" type="video/mp4" />
+      <source src={src} type="video/mp4" />
     </video>
   );
 }

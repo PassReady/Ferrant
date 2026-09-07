@@ -917,17 +917,27 @@ button {
   scroll-margin-top: calc(var(--nav-h) + 1rem);
 }
 
-/* shared: the spec pair, styled per-layout */
+/* shared: the spec pair, styled per-layout — label always block + a real
+   margin above its value, so the two can never run together on one line */
 .evspec {
   list-style: none;
 }
 .evspec .k {
+  display: block;
   color: var(--ash);
   font-size: var(--t--1);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
 }
 .evspec .v {
+  display: block;
   color: var(--bone);
+  font-size: var(--t-1);
+  font-weight: 500;
+}
+.evspec__cta {
+  margin-top: clamp(1.5rem, 4vw, 2.25rem);
 }
 
 /* — 1 · THE CHEF'S TABLE — photo fills the screen, everything sits on it — */
@@ -987,13 +997,15 @@ button {
   margin-top: clamp(2rem, 5vw, 3rem);
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem 2.75rem;
+  gap: 1.5rem 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--line);
 }
-.evhero .evspec li {
-  display: grid;
-  gap: 0.2rem;
+@media (max-width: 40rem) {
+  .evhero .evspec {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }
 
 /* — 2 · THE FIRESIDE ROOM — spec pinned, prose scrolls past it — */
@@ -1011,8 +1023,6 @@ button {
   gap: 1rem;
 }
 .evsplit__aside .evspec li {
-  display: grid;
-  gap: 0.25rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--line-soft);
 }
@@ -1093,7 +1103,7 @@ button {
 @media (min-width: 44rem) {
   .evlong__facts {
     grid-template-columns: repeat(5, 1fr);
-    gap: 1.5rem;
+    gap: 1.5rem 2rem;
   }
 }
 
@@ -1320,8 +1330,6 @@ button {
   position: sticky;
   top: var(--nav-h);
   z-index: 5;
-  display: flex;
-  gap: clamp(1.1rem, 3vw, 2rem);
   overflow-x: auto;
   scrollbar-width: none;
   padding: 0 var(--gutter) 0.9rem;
@@ -1332,6 +1340,18 @@ button {
 }
 .menu3__tabs::-webkit-scrollbar {
   display: none;
+}
+.menu3__tabgroup {
+  display: flex;
+  gap: clamp(1.1rem, 3vw, 2rem);
+  justify-content: center;
+}
+/* line the tab group up over the dish-list column, not the full width */
+@media (min-width: 58rem) {
+  .menu3__tabs {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+  }
 }
 .menu3__tab {
   flex: none;
@@ -1454,9 +1474,22 @@ button {
     grid-template-columns: 1.3fr 1fr;
     align-items: start;
   }
+  /* the panel occupies the full sticky viewport height so its content —
+     centered by the flex column below — sits level with whatever dish
+     text is currently alongside it, not pinned to the top of the screen */
   .menu3__panel {
     position: sticky;
-    top: calc(var(--nav-h) + 3.5rem);
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.1rem;
+  }
+  .menu3__frame {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    max-height: 72svh;
   }
 }
 

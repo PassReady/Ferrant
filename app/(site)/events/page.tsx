@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Frame } from "@/components/Frame";
+import { CtaVideo } from "@/components/CtaVideo";
+import { EnquiryFlow } from "@/components/EnquiryFlow";
 
 export const metadata: Metadata = {
   title: "Event Spaces",
@@ -80,6 +82,9 @@ export default function EventsPage() {
               </li>
             ))}
           </ul>
+          <div className="evspec__cta">
+            <EnquiryFlow space="The Chef's Table" />
+          </div>
         </div>
       </section>
 
@@ -95,6 +100,9 @@ export default function EventsPage() {
               </li>
             ))}
           </ul>
+          <div className="evspec__cta">
+            <EnquiryFlow space="The Fireside Room" />
+          </div>
         </div>
         <div className="evsplit__flow">
           <p>
@@ -135,10 +143,10 @@ export default function EventsPage() {
         </div>
         <div className="evlong__strip bleed">
           <Frame
-            src="/img/table-candle.jpg"
-            alt="Candlelit tables set in the dining room"
+            src="/img/long-table-set.jpg"
+            alt="A long communal restaurant table, set for a group with no one seated yet"
             ratio="4 / 5"
-            light={["46%", "40%"]}
+            light={["50%", "38%"]}
             sizes="(min-width: 40rem) 50vw, 100vw"
           />
           <Frame
@@ -158,10 +166,15 @@ export default function EventsPage() {
               </li>
             ))}
           </ul>
+          <div className="evspec__cta">
+            <EnquiryFlow space="The Long Table" />
+          </div>
         </div>
       </section>
 
-      <section className="ev-close">
+      <section className="ev-close callout">
+        <CtaVideo src="/video/cta-skewer.mp4" poster="/img/meat-fire.jpg" />
+        <div className="callout__scrim" aria-hidden="true" />
         <div className="wrap band">
           <p className="lede measure">
             Tell us the date and the number, and we&rsquo;ll come back with a

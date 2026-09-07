@@ -62,8 +62,8 @@ export default function StoryPage() {
         <div className="story-row">
           <div className="story-row__media">
             <Frame
-              src="/img/grill-night.jpg"
-              alt="A flare of flame at the pass at night"
+              src="/img/firewood.jpg"
+              alt="Glowing embers on the grill, ready for the next dish"
               ratio="5 / 4"
               light={["54%", "48%"]}
               sizes="(min-width: 54rem) 42vw, 100vw"

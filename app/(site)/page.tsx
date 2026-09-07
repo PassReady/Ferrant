@@ -64,7 +64,7 @@ export default function Home() {
       </section>
 
       <section className="callout">
-        <CtaVideo />
+        <CtaVideo src="/video/cta-sear.mp4" poster="/img/meat-fire.jpg" />
         <div className="callout__scrim" aria-hidden="true" />
         <div className="wrap band callout__in">
           <h2>Come sit by the fire.</h2>
