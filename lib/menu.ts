@@ -26,16 +26,16 @@ export type CategoryImage = { src: string; alt: string };
 /** 3–4 categorically accurate photos per tab, stepped through with the carousel. */
 export const categoryImages: Record<Category, CategoryImage[]> = {
   Bites: [
-    { src: "/img/menu/bites-oysters.jpg", alt: "Oysters on ice with lemon" },
-    { src: "/img/menu/bites-sourdough.jpg", alt: "Dark sourdough loaves, flour-dusted" },
-    { src: "/img/menu/bites-marrow.jpg", alt: "Roasted bone marrow on a board" },
-    { src: "/img/menu/bites-flatbread.jpg", alt: "Charred flatbread, stacked" },
+    { src: "/img/menu/bites-mussels.jpg", alt: "Oysters on ice, close up" },
+    { src: "/img/menu/bites-sourdough2.jpg", alt: "Charred sourdough with cultured butter" },
+    { src: "/img/menu/bites-marrow2.jpg", alt: "Roasted bone marrow, close up" },
+    { src: "/img/menu/bites-flatbread2.jpg", alt: "Wood-fired flatbread, torn" },
   ],
   Entrées: [
-    { src: "/img/menu/entree-scallop.jpg", alt: "Seared scallops, plated" },
-    { src: "/img/menu/entree-leeks.jpg", alt: "Whole trimmed leeks" },
-    { src: "/img/menu/entree-kingfish.jpg", alt: "Kingfish fillets on a board" },
-    { src: "/img/menu/entree-mushroom.jpg", alt: "Glazed grilled mushrooms" },
+    { src: "/img/menu/entree-scallop2.jpg", alt: "Scallop and sea urchin on the shell" },
+    { src: "/img/menu/entree-fish2.jpg", alt: "Seared fish fillet with charred vegetables" },
+    { src: "/img/menu/entree-dish2.jpg", alt: "Thinly sliced fish with radish and herbs" },
+    { src: "/img/menu/entree-mushroom2.jpg", alt: "Mushroom toast with beetroot" },
   ],
   Mains: [
     { src: "/img/menu/main-fish.jpg", alt: "Whole fish grilling over open coals" },
