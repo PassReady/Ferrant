@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 const BEATS = [
   {
+    heading: <>No gas. No shortcuts.</>,
     text: (
       <>There&rsquo;s no gas line at Ferrant and no combi oven in the back.</>
     ),
@@ -12,16 +13,18 @@ const BEATS = [
     alt: "Flames and embers inside the wood-fired hearth",
   },
   {
+    heading: <>One fire does it all.</>,
     text: (
       <>
-        One wood fire does everything, from baking the bread and searing the
-        fish to charring the vegetables and finishing the dessert.
+        One wood fire does everything: it bakes the bread, sears the fish,
+        chars the vegetables, and finishes the dessert.
       </>
     ),
     src: "/img/fire-skewer.jpg",
     alt: "A skewer of meat lifted from the glowing coals, smoke rising",
   },
   {
+    heading: <>No flame, no menu.</>,
     text: <>If it can&rsquo;t be cooked over flame, it isn&rsquo;t on the menu.</>,
     src: "/img/fire-flambe.jpg",
     alt: "A cook working beside a rising flame in a dark kitchen",
@@ -104,17 +107,17 @@ export function FireSequence() {
           <div className="firesq__watermark" aria-hidden="true">
             <Image src="/img/ferrant-flame-mark.png" alt="" fill sizes="22rem" />
           </div>
-          <h2>Cooked over one fire, start to finish</h2>
-          <div className="firesq__beats">
+          <div className="firesq__copy">
             {BEATS.map((beat, i) => (
-              <p
+              <div
                 key={i}
-                className="firesq__beat"
+                className="firesq__beatgroup"
                 data-active={i === active}
                 aria-hidden={i !== active}
               >
-                {beat.text}
-              </p>
+                <h2 className="firesq__heading">{beat.heading}</h2>
+                <p className="firesq__beat">{beat.text}</p>
+              </div>
             ))}
           </div>
           <div className="firesq__dots" aria-hidden="true">

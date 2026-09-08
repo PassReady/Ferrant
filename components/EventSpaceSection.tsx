@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Image from "next/image";
 import { Frame } from "@/components/Frame";
 import { EnquiryFlow } from "@/components/EnquiryFlow";
 
@@ -59,6 +60,9 @@ export function EventSpaceSection({
             </div>
 
             <div className="flipcard__face flipcard__back">
+              <div className="flipcard__watermark" aria-hidden="true">
+                <Image src="/img/ferrant-flame-mark.png" alt="" fill sizes="18rem" />
+              </div>
               <button
                 type="button"
                 className="flipcard__close"

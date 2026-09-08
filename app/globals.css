@@ -848,21 +848,34 @@ button {
 .firesq__watermark img {
   object-fit: cover;
 }
-.firesq__in h2 {
+/* heading + body change together as one beat — each is its own
+   statement, not a fixed caption under a repeated title. All three
+   groups share one grid cell (height set by whichever is tallest)
+   and cross-fade as a unit, so heading and body always move in sync */
+.firesq__copy {
+  position: relative;
+  display: grid;
+}
+.firesq__beatgroup {
+  grid-area: 1 / 1;
+  align-self: start;
+  opacity: 0;
+  transform: translateY(0.85rem);
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+  pointer-events: none;
+}
+.firesq__beatgroup[data-active="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.firesq__heading {
   font-size: var(--d-2);
   max-width: 13ch;
   color: var(--flame);
 }
-/* all three beats share one grid cell — the block's height is set by
-   whichever is tallest, and only the active one is visible, so nothing
-   jumps as they cross-fade in place */
-.firesq__beats {
-  position: relative;
-  display: grid;
-}
 .firesq__beat {
-  grid-area: 1 / 1;
-  align-self: start;
+  margin-top: 1.5rem;
   /* body copy, not a heading — stays on --font-text so it doesn't
      inherit whatever display/heading face the page is using */
   font-family: var(--font-text), Georgia, serif;
@@ -871,15 +884,6 @@ button {
   line-height: 1.28;
   color: var(--bone);
   max-width: 20ch;
-  opacity: 0;
-  transform: translateY(0.85rem);
-  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
-  pointer-events: none;
-}
-.firesq__beat[data-active="true"] {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
 }
 .firesq__dots {
   display: flex;
@@ -938,29 +942,33 @@ button {
     align-items: flex-start;
     text-align: left;
   }
-  .firesq__beats {
+  /* all three heading+body pairs shown at once, stacked in order —
+     no crossfade, no scroll-jacking */
+  .firesq__copy {
     display: block;
   }
-  .firesq__beat {
+  .firesq__beatgroup {
     position: static;
     opacity: 1;
     transform: none;
     pointer-events: auto;
+    margin-top: 2.25em;
+  }
+  .firesq__beatgroup:first-child {
+    margin-top: 0;
+  }
+  .firesq__beat {
     max-width: none;
     /* body copy on mobile — matches the hero's body line instead of
        the oversized desktop pull-quote size */
     font-size: var(--t-1);
-    margin-top: 1.1em;
-  }
-  .firesq__beat:first-child {
-    margin-top: 0;
   }
   .firesq__dots {
     display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .firesq__beat {
+  .firesq__beatgroup {
     transition: none;
   }
 }
@@ -1080,7 +1088,11 @@ button {
   padding-block: clamp(5rem, 13vw, 9rem);
 }
 .chefquote__in {
-  max-width: 50rem;
+  /* deliberately wider than the site's usual 74rem reading measure —
+     at this font size a normal reading column wraps to 5 short lines;
+     letting it run wider (still gutter-padded via .wrap) gets closer
+     to 2-3 lines without shrinking the type */
+  max-width: 100rem;
   margin-inline: auto;
   text-align: center;
 }
@@ -1408,6 +1420,10 @@ button {
 }
 .flipcard__back {
   transform: rotateY(180deg);
+  /* own stacking context, so the watermark's negative z-index means
+     "above this face's background, below its text" — matches the
+     same pattern used for the homepage pinned-scroll watermark */
+  isolation: isolate;
   background: var(--scale);
   border: 1px solid var(--line);
   padding: clamp(1.5rem, 4vw, 2rem);
@@ -1416,6 +1432,22 @@ button {
   flex-direction: column;
   justify-content: center;
   overflow-y: auto;
+}
+/* quiet background texture on the card back, not another focal point —
+   large and centred, low enough opacity to read as texture */
+.flipcard__watermark {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;
+  aspect-ratio: 1041 / 991;
+  opacity: 0.07;
+  pointer-events: none;
+}
+.flipcard__watermark img {
+  object-fit: contain;
 }
 /* single column on the (now card-sized) back face — a 2-up grid wrapped
    too aggressively at this width */
