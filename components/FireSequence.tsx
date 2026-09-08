@@ -101,6 +101,9 @@ export function FireSequence() {
           ))}
         </div>
         <div className="firesq__in">
+          <div className="firesq__watermark" aria-hidden="true">
+            <Image src="/img/ferrant-logo-flame.png" alt="" fill sizes="22rem" />
+          </div>
           <h2>Cooked over one fire, start to finish</h2>
           <div className="firesq__beats">
             {BEATS.map((beat, i) => (
