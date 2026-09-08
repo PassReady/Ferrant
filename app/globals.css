@@ -1210,36 +1210,134 @@ button {
 }
 
 /* ============================================================
-   STORY — dense, image-paired rows (Spirit House reference: text
-   sits directly beside the photo it describes, not on its own)
+   STORY — three deliberately different full-width treatments, not
+   the same image-beside-text block repeated three times
    ============================================================ */
-.story-phead {
-  padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+
+/* section 1 — a cinematic band, then an oversized editorial block
+   stacked directly beneath it (not overlaid, not paired beside it) */
+.story-hero__media .frame {
+  aspect-ratio: 4 / 3;
 }
-.story-rows {
-  display: grid;
-  gap: clamp(1.75rem, 5vw, 3rem);
-  padding-bottom: clamp(2.5rem, 6vw, 4rem);
+@media (min-width: 48rem) {
+  .story-hero__media .frame {
+    aspect-ratio: 16 / 7;
+  }
 }
-.story-row {
-  display: grid;
-  gap: clamp(1.25rem, 3.5vw, 2rem);
-  align-items: center;
+.story-hero__body {
+  padding-block: clamp(2.5rem, 7vw, 4.5rem);
 }
-.story-row__media .frame {
-  aspect-ratio: 5 / 4;
+.story-hero__body h1 {
+  font-size: var(--d-hero);
+  max-width: 16ch;
+}
+.story-hero__body .reveal {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: var(--font-text), sans-serif;
+  font-size: var(--d-3);
+  font-weight: 400;
+  line-height: 1.42;
+  color: var(--ash);
+  max-width: 62ch;
+}
+
+/* section 2 — full-bleed photo, the copy as a small offset card
+   instead of sitting in its own paired column */
+.story-banner {
+  position: relative;
+  min-height: clamp(26rem, 68vw, 40rem);
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--line);
+}
+.story-banner__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.story-banner__media img {
+  object-fit: cover;
+  filter: brightness(0.6) contrast(1.1) saturate(0.95);
+}
+.story-banner__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      100deg,
+      rgba(12, 11, 10, 0.15) 0%,
+      rgba(12, 11, 10, 0.6) 55%,
+      rgba(12, 11, 10, 0.94) 100%
+    ),
+    linear-gradient(0deg, rgba(12, 11, 10, 0.5) 0%, transparent 40%);
+}
+.story-banner__card {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(2rem, 6vw, 3.5rem);
+}
+.story-banner__card .reveal {
+  font-family: var(--font-text), sans-serif;
+  font-size: var(--t-1);
+  color: var(--bone);
 }
 @media (min-width: 54rem) {
-  .story-row {
-    grid-template-columns: 0.9fr 1.1fr;
-  }
-  .story-row--rev {
-    grid-template-columns: 1.1fr 0.9fr;
-  }
-  .story-row--rev .story-row__media {
-    order: 1;
+  .story-banner__card {
+    left: auto;
+    width: min(28rem, 40vw);
   }
 }
+
+/* section 3 — full-bleed embers with the strongest line pulled out on
+   its own, supporting text smaller beneath it — a third, different
+   composition again (centred statement, not a corner card) */
+.story-pull {
+  position: relative;
+  min-height: clamp(28rem, 72vw, 42rem);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--line);
+}
+.story-pull__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.story-pull__media img {
+  object-fit: cover;
+  filter: brightness(0.55) contrast(1.12) saturate(0.9);
+}
+.story-pull__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    120% 100% at 50% 45%,
+    rgba(12, 11, 10, 0.25) 0%,
+    rgba(12, 11, 10, 0.88) 100%
+  );
+}
+.story-pull__in {
+  padding-block: clamp(3rem, 8vw, 5rem);
+  max-width: 54rem;
+  text-align: center;
+}
+.story-pull__quote {
+  font-size: var(--d-1);
+  line-height: 1.16;
+}
+.story-pull__in .reveal {
+  margin-top: 1.5rem;
+  font-family: var(--font-text), sans-serif;
+  font-size: var(--t-1);
+  color: var(--bone);
+  max-width: 48ch;
+  margin-inline: auto;
+}
+
 .story-close-wrap {
   padding-block: clamp(2rem, 5vw, 3.5rem) var(--band);
   border-top: 1px solid var(--line);
