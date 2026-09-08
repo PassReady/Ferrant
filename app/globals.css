@@ -835,17 +835,18 @@ button {
    so it reads as texture, not a second competing focal point */
 .firesq__watermark {
   position: absolute;
+  inset: 0;
   z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(92%, 36rem);
-  aspect-ratio: 2528 / 1696;
+  overflow: hidden;
   opacity: 0.14;
   pointer-events: none;
 }
+/* cover, not contain — the mark should fill the whole panel top to
+   bottom; it has generous empty margin either side of the flame in
+   the source file, so cropping the sides trims that margin rather
+   than the flame or the wordmark itself */
 .firesq__watermark img {
-  object-fit: contain;
+  object-fit: cover;
 }
 .firesq__in h2 {
   font-size: var(--d-2);
@@ -1026,8 +1027,10 @@ button {
   position: absolute;
   inset: 0;
   z-index: -1;
+  /* dark at the top now, fading out toward the bottom — flipped to
+     match the card moving from bottom-left to top-left */
   background: linear-gradient(
-      180deg,
+      0deg,
       rgba(12, 11, 10, 0.1) 0%,
       rgba(12, 11, 10, 0.28) 46%,
       rgba(12, 11, 10, 0.94) 100%
@@ -1043,7 +1046,10 @@ button {
   position: absolute;
   left: var(--gutter);
   right: var(--gutter);
-  bottom: clamp(2rem, 6vw, 3.5rem);
+  /* the fixed nav bar overlays the top of whatever section is in
+     view — clear it explicitly, since this card (unlike a
+     bottom-anchored one) sits close enough to the top to collide */
+  top: calc(var(--nav-h) + clamp(1rem, 4vw, 2rem));
 }
 .dinner__card h2 {
   font-size: var(--d-2);
