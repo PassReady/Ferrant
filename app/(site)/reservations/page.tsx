@@ -64,8 +64,8 @@ export default function ReservationsPage() {
           <Image
             src="/img/ferrant-flame-mark.png"
             alt="The Ferrant flame mark"
-            width={1041}
-            height={991}
+            width={508}
+            height={773}
             sizes="(min-width: 54rem) 24rem, 70vw"
           />
         </div>
