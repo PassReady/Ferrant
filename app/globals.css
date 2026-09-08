@@ -1577,6 +1577,14 @@ button {
 .flipcard[data-flipped="true"] .flipcard__inner {
   transform: rotateY(180deg);
 }
+/* belt and suspenders on top of backface-visibility (below): mobile
+   Safari doesn't reliably cull this button on its own — it can stay
+   visibly rendered, mirrored, through the back of the card — so hide
+   it outright once flipped, driven by state rather than 3D culling */
+.flipcard[data-flipped="true"] .flipcard__see {
+  visibility: hidden;
+  pointer-events: none;
+}
 .flipcard__face {
   position: absolute;
   inset: 0;
