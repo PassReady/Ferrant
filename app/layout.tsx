@@ -56,10 +56,15 @@ export const metadata: Metadata = {
     "A fire-cooking restaurant in Fitzroy. Everything on the menu is cooked over one wood fire. Dinner nightly, Tuesday to Sunday.",
   openGraph: {
     title: "Ferrant",
-    description:
-      "A fire-cooking restaurant in Fitzroy — bites through to dessert, cooked over one wood fire. Dinner nightly.",
+    description: "A fire-cooking restaurant in Fitzroy. One wood fire, every dish.",
     type: "website",
-    images: ["/img/charcoal-fire.jpg"],
+    images: [{ url: "/img/og-card.jpg", width: 1200, height: 630, alt: "Ferrant" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ferrant",
+    description: "A fire-cooking restaurant in Fitzroy. One wood fire, every dish.",
+    images: ["/img/og-card.jpg"],
   },
 };
 

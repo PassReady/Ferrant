@@ -95,6 +95,15 @@ export function BookingFlow() {
     return d;
   }, [today]);
 
+  // arriving from the nav's "Book Now" (which links to /reservations?book=1)
+  // opens the calendar straight away instead of landing on the page
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("book")) {
+      setOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {

@@ -269,7 +269,7 @@ export function Nav() {
           </a>
 
           <Link
-            href="/reservations"
+            href="/reservations?book=1"
             className="nav__book"
             onClick={() => setMobileOpen(false)}
           >

@@ -1602,7 +1602,11 @@ button {
   background: linear-gradient(to top, rgba(12, 11, 10, 0.82), transparent);
   pointer-events: none;
 }
-/* "See more" — a clearly-a-button pill, high contrast against any photo */
+/* "See more" — a clearly-a-button pill, high contrast against any photo.
+   backface-visibility: hidden is set again here, not just on the parent
+   .flipcard__face — mobile Safari/WebKit has a long-standing bug where it
+   fails to cull a position: absolute descendant on its own, leaving it
+   visibly rendered (mirrored) through the back of the flipped card. */
 .flipcard__see {
   position: absolute;
   left: 1.1rem;
@@ -1621,6 +1625,8 @@ button {
   letter-spacing: 0.02em;
   box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.75);
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .flipcard__see span {
   width: 0.42em;
