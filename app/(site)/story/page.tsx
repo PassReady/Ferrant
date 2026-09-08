@@ -36,59 +36,67 @@ export default function StoryPage() {
         </div>
       </section>
 
-      {/* section 1, "the forge" — side by side, image left */}
-      <section className="wrap story-sec story-sec--side">
-        <div className="story-sec__media">
-          <Frame
-            src="/img/forge-smith.jpg"
-            alt="A blacksmith working hot iron at the forge, sparks flying"
-            light={["38%", "55%"]}
-            sizes="(min-width: 54rem) 50vw, 100vw"
-          />
-        </div>
-        <div className="story-sec__copy">
-          <span className="story-sec__tag">The forge</span>
-          <h2>Before it fed people, it fed horses.</h2>
-          <RevealText>
-            12 Sable Lane was a smithy &mdash; the forge that shod horses
-            and repaired the ironwork for the surrounding lanes. When
-            Ferrant took the building over, the old forge chimney was
-            still standing. Rather than pull it out, the kitchen was
-            built around it. The fire that once bent iron now bakes
-            bread and sears fish, in exactly the same spot it&rsquo;s
-            always burned.
-          </RevealText>
-        </div>
-      </section>
+      {/* section 1, "the forge" — side by side, image left. Pinned in
+          place (see .story-pin-wrap) so "the rule" can slide up and
+          cover it as the user scrolls on. */}
+      <div className="story-pin-wrap">
+        <section className="wrap story-sec story-sec--side">
+          <div className="story-sec__media">
+            <Frame
+              src="/img/forge-smith.jpg"
+              alt="A blacksmith working hot iron at the forge, sparks flying"
+              light={["38%", "55%"]}
+              sizes="(min-width: 54rem) 50vw, 100vw"
+            />
+          </div>
+          <div className="story-sec__copy">
+            <span className="story-sec__tag">The forge</span>
+            <h2>Before it fed people, it fed horses.</h2>
+            <RevealText>
+              12 Sable Lane was a smithy &mdash; the forge that shod horses
+              and repaired the ironwork for the surrounding lanes. When
+              Ferrant took the building over, the old forge chimney was
+              still standing. Rather than pull it out, the kitchen was
+              built around it. The fire that once bent iron now bakes
+              bread and sears fish, in exactly the same spot it&rsquo;s
+              always burned.
+            </RevealText>
+          </div>
+        </section>
+      </div>
 
       {/* section 2, "the rule" — a wide image band above a full-width
-          editorial text block, not a paired column */}
-      <section className="story-sec story-sec--stack">
-        <div className="story-sec__media">
-          <Frame
-            src="/img/oven-fire.jpg"
-            alt="Flames and embers inside the wood-fired hearth"
-            light={["50%", "48%"]}
-            sizes="100vw"
-          />
-        </div>
-        <div className="wrap story-sec__copy">
-          <span className="story-sec__tag">The rule</span>
-          <h2>One fire does the job of five.</h2>
-          <RevealText>
-            There&rsquo;s no gas line at Ferrant and no combi oven in
-            the back. One wood fire does everything &mdash; bakes the
-            bread, sears the fish, chars the vegetables, finishes the
-            dessert. If it can&rsquo;t be cooked over flame, it
-            isn&rsquo;t on the menu. Not a gimmick &mdash; the kitchen
-            genuinely doesn&rsquo;t have another option.
-          </RevealText>
-        </div>
-      </section>
+          editorial text block. Slides up to cover "the forge" above,
+          then pins in place itself so "the ritual" can cover it in
+          turn. */}
+      <div className="story-pin-wrap">
+        <section className="story-sec story-sec--stack">
+          <div className="story-sec__media">
+            <Frame
+              src="/img/oven-fire.jpg"
+              alt="Flames and embers inside the wood-fired hearth"
+              light={["50%", "48%"]}
+              sizes="100vw"
+            />
+          </div>
+          <div className="wrap story-sec__copy">
+            <span className="story-sec__tag">The rule</span>
+            <h2>One fire does the job of five.</h2>
+            <RevealText>
+              There&rsquo;s no gas line at Ferrant and no combi oven in
+              the back. One wood fire does everything &mdash; bakes the
+              bread, sears the fish, chars the vegetables, finishes the
+              dessert. If it can&rsquo;t be cooked over flame, it
+              isn&rsquo;t on the menu. Not a gimmick &mdash; the kitchen
+              genuinely doesn&rsquo;t have another option.
+            </RevealText>
+          </div>
+        </section>
+      </div>
 
-      {/* section 3, "the ritual" — full-bleed photo, offset card: the
-          most different of the three, an overlay rather than a
-          paired column */}
+      {/* section 3, "the ritual" — full-bleed photo, offset card.
+          Slides up to cover "the rule" above; nothing needs to pin it
+          in turn, so it's a plain section from here. */}
       <section className="story-sec story-sec--banner">
         <div className="story-sec__media">
           <Image
@@ -112,23 +120,23 @@ export default function StoryPage() {
         </div>
       </section>
 
-      {/* section 4 — the strongest line pulled into a standalone
-          statement, supporting text smaller beneath it */}
-      <section className="story-pull">
-        <div className="story-pull__media">
-          <Image
+      {/* section 4, "the room" — back to a plain side-by-side layout
+          (same treatment as "the forge") rather than another full-bleed
+          band, so the page doesn't run three full-bleed sections in a
+          row into the closing video. No scroll animation on this one. */}
+      <section className="wrap story-sec story-sec--side">
+        <div className="story-sec__media">
+          <Frame
             src="/img/firewood.jpg"
             alt="Glowing embers, ready for the next dish"
-            fill
-            sizes="100vw"
+            light={["50%", "50%"]}
+            sizes="(min-width: 54rem) 50vw, 100vw"
           />
         </div>
-        <div className="story-pull__scrim" aria-hidden="true" />
-        <div className="wrap story-pull__in">
-          <h2 className="story-pull__quote">
-            Dinner here is something you watch as much as eat.
-          </h2>
-          <RevealText as="div">
+        <div className="story-sec__copy">
+          <span className="story-sec__tag">The room</span>
+          <h2>Dinner here is something you watch as much as eat.</h2>
+          <RevealText>
             An open kitchen with the pass facing straight into the room
             means there&rsquo;s no wall between the fire and the tables
             &mdash; the flare when fat hits the coals, the bread coming

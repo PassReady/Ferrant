@@ -870,12 +870,11 @@ button {
   opacity: 0.14;
   pointer-events: none;
 }
-/* cover, not contain — the mark should fill the whole panel top to
-   bottom; it has generous empty margin either side of the flame in
-   the source file, so cropping the sides trims that margin rather
-   than the flame or the wordmark itself */
+/* contain, not cover — this mark is the flame + full "Ferrant"
+   wordmark stacked vertically; cover was scaling it up to fill the
+   panel and cropping the wordmark off the bottom */
 .firesq__watermark img {
-  object-fit: cover;
+  object-fit: contain;
 }
 /* heading + body change together as one beat — each is its own
    statement, not a fixed caption under a repeated title. All three
@@ -1286,7 +1285,39 @@ button {
   max-width: 46ch;
 }
 
-/* section 1, "the forge" — side by side, image left */
+/* forge and rule each pin in place (full viewport height, held with
+   position:sticky inside a taller spacer) so the section that follows
+   can genuinely slide up and cover them, rather than the covered
+   section simply scrolling away underneath it. Tablet+ only — this
+   kind of pinned scroll effect is unreliable on mobile viewports. */
+@media (min-width: 54rem) {
+  .story-pin-wrap {
+    position: relative;
+    height: 200vh;
+  }
+  .story-pin-wrap > section {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    background: var(--forge);
+  }
+  /* a sticky section always releases exactly one viewport before the
+     next one arrives (a structural property of position: sticky, not
+     a tunable gap) — pulling each following cover layer up by most of
+     that viewport closes the gap into a real overlap, so the incoming
+     layer visibly slides over the still-pinned one instead of the two
+     just meeting edge to edge. This only moves the (empty) wrapper /
+     the incoming section itself — it never touches either section's
+     own content, so nothing gets compressed or cropped. */
+  .story-pin-wrap + .story-pin-wrap,
+  .story-pin-wrap + .story-sec--banner {
+    margin-top: -70vh;
+    position: relative;
+  }
+}
+
+/* section 1, "the forge" — side by side, image left. Reused as-is for
+   the closing "the room" section further down the page. */
 .story-sec--side {
   display: grid;
   gap: clamp(1.75rem, 5vw, 3rem);
@@ -1306,7 +1337,6 @@ button {
    editorial text block, not a side-by-side column */
 .story-sec--stack {
   padding-bottom: clamp(3rem, 7vw, 5rem);
-  border-top: 1px solid var(--line);
 }
 .story-sec--stack .story-sec__media .frame {
   aspect-ratio: 16 / 9;
@@ -1317,22 +1347,33 @@ button {
 .story-sec--stack .story-sec__copy .reveal {
   max-width: 56ch;
 }
+@media (min-width: 54rem) {
+  /* this section pins for a full viewport height (see .story-pin-wrap)
+     — a 16:9 band at full width would alone be taller than that at
+     most desktop sizes, leaving no room for the heading/paragraph
+     below it, so it's letterboxed much wider here specifically */
+  .story-sec--stack .story-sec__media .frame {
+    aspect-ratio: 32 / 9;
+  }
+  .story-sec--stack .story-sec__copy {
+    padding-top: clamp(1.5rem, 3vw, 2rem);
+  }
+}
 
 /* section 3, "the ritual" — full-bleed photo, offset card, the most
-   different of the three (overlay rather than a paired column) */
+   different of the three (overlay rather than a paired column). Slides
+   up over "the rule" as it scrolls into place (see .story-pin-wrap) —
+   no pin of its own, since nothing needs to cover it in turn. */
 .story-sec--banner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   min-height: clamp(26rem, 66vw, 38rem);
   overflow: hidden;
   isolation: isolate;
-  border-top: 1px solid var(--line);
 }
 @media (min-width: 54rem) {
-  /* slides up to cover the tail of "the rule" as it scrolls into place */
   .story-sec--banner {
-    margin-top: clamp(-16rem, -20vw, -10rem);
-    border-top: none;
+    min-height: 100vh;
   }
 }
 .story-sec--banner .story-sec__media {
@@ -1378,75 +1419,9 @@ button {
   }
 }
 
-/* section 3 — full-bleed embers with the strongest line pulled out on
-   its own, supporting text smaller beneath it — a third, different
-   composition again (centred statement, not a corner card) */
-.story-pull {
-  position: relative;
-  z-index: 3;
-  min-height: clamp(28rem, 72vw, 42rem);
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  isolation: isolate;
-  border-top: 1px solid var(--line);
-}
-@media (min-width: 54rem) {
-  /* slides up to cover the tail of "the ritual" as it scrolls into place */
-  .story-pull {
-    margin-top: clamp(-12rem, -16vw, -8rem);
-    border-top: none;
-  }
-}
-.story-pull__media {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-.story-pull__media img {
-  object-fit: cover;
-  filter: brightness(0.55) contrast(1.12) saturate(0.9);
-}
-.story-pull__scrim {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    120% 100% at 50% 45%,
-    rgba(12, 11, 10, 0.25) 0%,
-    rgba(12, 11, 10, 0.88) 100%
-  );
-}
-.story-pull__in {
-  padding-block: clamp(3rem, 8vw, 5rem);
-  max-width: 54rem;
-  text-align: center;
-}
-.story-pull__quote {
-  font-size: var(--d-1);
-  line-height: 1.16;
-}
-.story-pull__in .reveal {
-  margin-top: 1.5rem;
-  font-family: var(--font-text), sans-serif;
-  font-size: var(--t-1);
-  color: var(--bone);
-  max-width: 48ch;
-  margin-inline: auto;
-}
-
 .story-close-wrap {
-  position: relative;
-  z-index: 4;
   padding-block: clamp(2rem, 5vw, 3.5rem) var(--band);
   border-top: 1px solid var(--line);
-}
-@media (min-width: 54rem) {
-  /* slides up to cover the tail of the pull-quote as it scrolls into place */
-  .story-close-wrap {
-    margin-top: clamp(-10rem, -14vw, -6rem);
-    border-top: none;
-  }
 }
 .story-close p {
   font-family: var(--font-display), Georgia, serif;
