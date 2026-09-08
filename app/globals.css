@@ -1322,10 +1322,18 @@ button {
    different of the three (overlay rather than a paired column) */
 .story-sec--banner {
   position: relative;
+  z-index: 2;
   min-height: clamp(26rem, 66vw, 38rem);
   overflow: hidden;
   isolation: isolate;
   border-top: 1px solid var(--line);
+}
+@media (min-width: 54rem) {
+  /* slides up to cover the tail of "the rule" as it scrolls into place */
+  .story-sec--banner {
+    margin-top: clamp(-16rem, -20vw, -10rem);
+    border-top: none;
+  }
 }
 .story-sec--banner .story-sec__media {
   position: absolute;
@@ -1354,10 +1362,19 @@ button {
   right: var(--gutter);
   bottom: clamp(2rem, 6vw, 3.5rem);
 }
+.story-sec--banner .story-sec__card h2 {
+  margin-top: 0.6rem;
+  font-size: var(--d-2);
+  max-width: 14ch;
+}
 @media (min-width: 54rem) {
   .story-sec--banner .story-sec__card {
-    left: auto;
-    width: min(30rem, 42vw);
+    left: clamp(3rem, 10vw, 7rem);
+    right: auto;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(30rem, 38vw);
   }
 }
 
@@ -1366,12 +1383,20 @@ button {
    composition again (centred statement, not a corner card) */
 .story-pull {
   position: relative;
+  z-index: 3;
   min-height: clamp(28rem, 72vw, 42rem);
   display: flex;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
   border-top: 1px solid var(--line);
+}
+@media (min-width: 54rem) {
+  /* slides up to cover the tail of "the ritual" as it scrolls into place */
+  .story-pull {
+    margin-top: clamp(-12rem, -16vw, -8rem);
+    border-top: none;
+  }
 }
 .story-pull__media {
   position: absolute;
@@ -1411,8 +1436,17 @@ button {
 }
 
 .story-close-wrap {
+  position: relative;
+  z-index: 4;
   padding-block: clamp(2rem, 5vw, 3.5rem) var(--band);
   border-top: 1px solid var(--line);
+}
+@media (min-width: 54rem) {
+  /* slides up to cover the tail of the pull-quote as it scrolls into place */
+  .story-close-wrap {
+    margin-top: clamp(-10rem, -14vw, -6rem);
+    border-top: none;
+  }
 }
 .story-close p {
   font-family: var(--font-display), Georgia, serif;

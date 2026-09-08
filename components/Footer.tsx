@@ -7,7 +7,7 @@ export function Footer() {
       <div className="foot__grid">
         <div className="foot__brand">
           <Image
-            src="/img/ferrant-flame-mark.png"
+            src="/img/ferrant-flame-icon.png"
             alt=""
             width={508}
             height={773}

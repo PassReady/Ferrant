@@ -61,7 +61,7 @@ export function EventSpaceSection({
 
             <div className="flipcard__face flipcard__back">
               <div className="flipcard__watermark" aria-hidden="true">
-                <Image src="/img/ferrant-flame-mark.png" alt="" fill sizes="18rem" />
+                <Image src="/img/ferrant-flame-icon.png" alt="" fill sizes="18rem" />
               </div>
               <button
                 type="button"

@@ -62,7 +62,7 @@ export default function ReservationsPage() {
 
         <div className="resv__logo">
           <Image
-            src="/img/ferrant-flame-mark.png"
+            src="/img/ferrant-flame-icon.png"
             alt="The Ferrant flame mark"
             width={508}
             height={773}
