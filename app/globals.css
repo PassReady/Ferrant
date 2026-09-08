@@ -992,6 +992,21 @@ button {
     display: none;
   }
 }
+/* true mobile only — narrower than the tablet-width fallback above,
+   which stays left-aligned at its own (larger) heading size */
+@media (max-width: 36rem) {
+  .firesq__in {
+    align-items: center;
+    text-align: center;
+  }
+  .firesq__heading {
+    /* the tablet size + its 13ch cap wrapped the longer headings
+       ("No gas. No shortcuts.") to two lines here — shrink to fit
+       on one, and drop the cap so it doesn't force a wrap anyway */
+    font-size: clamp(1.15rem, 5.2vw, 1.6rem);
+    max-width: none;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .firesq__beatgroup {
     transition: none;
@@ -2000,14 +2015,43 @@ button {
   color: var(--bone);
   max-width: 44ch;
 }
+.resv__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 3rem);
+  background: var(--scale);
+  border: 1px solid var(--line);
+}
+.resv__logo img {
+  width: 100%;
+  max-width: 18rem;
+  height: auto;
+}
 @media (min-width: 54rem) {
   .resv {
     grid-template-columns: 1fr 24rem;
   }
-  .resv__img {
+  .resv__logo {
     position: sticky;
     top: calc(var(--nav-h) + 2rem);
+    aspect-ratio: 3 / 4;
   }
+}
+
+/* full-width map between the facts block and the footer */
+.resv__map {
+  border-top: 1px solid var(--line);
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+.resv__map iframe {
+  display: block;
+  width: 100%;
+  height: clamp(20rem, 45vw, 28rem);
+  border: 1px solid var(--line);
+  /* nudge the standard light embed a little closer to the site's dark
+     palette without inverting it into illegibility */
+  filter: grayscale(0.25) contrast(1.05) brightness(0.92);
 }
 
 /* ============================================================

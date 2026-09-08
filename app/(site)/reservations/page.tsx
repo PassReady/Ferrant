@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { BookingFlow } from "@/components/BookingFlow";
-import { Frame } from "@/components/Frame";
 
 export const metadata: Metadata = {
   title: "Reserve a table",
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 
 export default function ReservationsPage() {
   return (
-    <section className="wrap phead">
+    <>
+      <section className="wrap phead">
       <div className="resv">
         <div className="resv__lead">
           <h1>Reserve a table</h1>
@@ -59,15 +60,26 @@ export default function ReservationsPage() {
           </dl>
         </div>
 
-        <Frame
-          src="/img/door-warm.jpg"
-          alt="The unmarked door on Sable Lane at night, one warm light above it"
-          ratio="3 / 4"
-          light={["40%", "40%"]}
-          className="resv__img"
-          sizes="(min-width: 54rem) 24rem, 100vw"
-        />
+        <div className="resv__logo">
+          <Image
+            src="/img/ferrant-flame-mark.png"
+            alt="The Ferrant flame mark"
+            width={1041}
+            height={991}
+            sizes="(min-width: 54rem) 24rem, 70vw"
+          />
+        </div>
       </div>
-    </section>
+      </section>
+
+      <section className="resv__map">
+        <iframe
+          title="Ferrant's neighbourhood — Fitzroy VIC 3065 (Sable Lane is a fictional street; this map is centred on real-world Fitzroy)"
+          src="https://www.google.com/maps?q=-37.7975,144.9780&z=16&output=embed"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </section>
+    </>
   );
 }
