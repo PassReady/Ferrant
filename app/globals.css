@@ -83,15 +83,22 @@ body::before {
   );
 }
 
+/* every heading, on every page — hard-pointed at the Special Elite
+   font directly rather than through --font-display, so it doesn't
+   depend on (or get tangled with) that variable's home-only override,
+   which other non-heading display-styled elements (wordmark, mega
+   labels, menu tabs) still read for their own, unrelated font choice */
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-display), "Roboto Slab", "Rockwell", Georgia, serif;
+  font-family: var(--font-home-display), "Roboto Slab", "Rockwell", Georgia,
+    serif;
   font-weight: 600;
   line-height: 1.08;
   letter-spacing: -0.012em;
   text-wrap: balance;
+  color: var(--flame);
 }
 h1 {
   font-weight: 700;
@@ -399,12 +406,13 @@ button {
    ============================================================ */
 .mega {
   position: absolute;
-  top: 100%;
-  right: var(--gutter);
+  top: calc(100% + 0.6rem);
+  right: 0;
   width: min(20rem, calc(100vw - 2 * var(--gutter)));
   background: var(--flame);
   box-shadow: 0 16px 32px rgba(12, 11, 10, 0.4);
   animation: megaIn 0.18s var(--ease);
+  z-index: 1;
 }
 @keyframes megaIn {
   from {
@@ -1102,7 +1110,6 @@ button {
 .callout h2 {
   font-size: var(--d-2);
   max-width: 16ch;
-  color: var(--bone);
 }
 
 /* ============================================================

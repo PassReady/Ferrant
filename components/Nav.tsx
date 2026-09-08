@@ -139,8 +139,6 @@ export function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [openId]);
 
-  const activeItem = items.find((it) => it.href === openId && it.mega);
-
   return (
     <header
       ref={headerRef}
@@ -204,6 +202,43 @@ export function Nav() {
                       ))}
                     </div>
                   )}
+
+                  {/* the mega panel — a compact dropdown anchored to this
+                      specific item (position:relative on .nav__item), not
+                      a shared panel pinned to one edge of the header.
+                      Shown only while openId matches this item; closes on
+                      mouse leaving the header, on Escape, and on every
+                      route change (see the effect above). */}
+                  {it.mega && it.href === openId && (
+                    <div className="mega" role="region" aria-label={`${it.label} menu`}>
+                      <div className="mega__grid">
+                        {it.mega.map((sub) => (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            className="mega__item"
+                            onClick={() => setOpenId(null)}
+                          >
+                            <svg
+                              className="mega__icon"
+                              viewBox="0 0 16 16"
+                              width="20"
+                              height="20"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.1"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              {sub.icon}
+                            </svg>
+                            <span className="mega__label">{sub.label}</span>
+                            <span className="mega__blurb">{sub.blurb}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </li>
               );
             })}
@@ -234,41 +269,6 @@ export function Nav() {
           </button>
         </div>
       </div>
-
-      {/* the mega panel — a compact anchored dropdown, not a
-          per-item tooltip. Shown only while openId matches a mega item;
-          closes on mouse leaving the header, on Escape, and on every
-          route change (see the effect above). */}
-      {activeItem && (
-        <div className="mega" role="region" aria-label={`${activeItem.label} menu`}>
-          <div className="mega__grid">
-            {activeItem.mega!.map((sub) => (
-              <Link
-                key={sub.href}
-                href={sub.href}
-                className="mega__item"
-                onClick={() => setOpenId(null)}
-              >
-                <svg
-                  className="mega__icon"
-                  viewBox="0 0 16 16"
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  {sub.icon}
-                </svg>
-                <span className="mega__label">{sub.label}</span>
-                <span className="mega__blurb">{sub.blurb}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
     </header>
   );
 }
