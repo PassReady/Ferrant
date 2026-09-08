@@ -21,7 +21,7 @@ export type MenuState = {
   dishes: Dish[];
 };
 
-export type CategoryImage = { src: string; alt: string };
+export type CategoryImage = { src: string; alt: string; position?: string };
 
 export const catId = (c: Category) => `cat-${c.toLowerCase().replace(/[^a-z]+/g, "-")}`;
 
@@ -40,7 +40,14 @@ export const categoryImages: Record<Category, CategoryImage[]> = {
     { src: "/img/menu/entree-mushroom2.jpg", alt: "Mushroom toast with beetroot" },
   ],
   Mains: [
-    { src: "/img/menu/main-fish2.jpg", alt: "Whole grilled fish with herbs on a plate" },
+    {
+      src: "/img/menu/main-fish2.jpg",
+      alt: "Whole grilled fish with herbs on a plate",
+      // the fish runs corner to corner in the source photo (head at
+      // bottom-left, tail at top-right) — a plain centre crop clips
+      // both ends, so bias down slightly to keep the head intact
+      position: "50% 60%",
+    },
     { src: "/img/menu/main-shortrib2.jpg", alt: "Slow-cooked beef short rib with sauce" },
     { src: "/img/menu/main-lamb2.jpg", alt: "Pulled lamb shoulder with fresh herbs" },
     { src: "/img/menu/main-chicken2.jpg", alt: "Roasted chicken with potatoes" },
@@ -66,7 +73,7 @@ export const seedMenu: MenuState = {
       id: "d1",
       category: "Bites",
       name: "Oysters, ember cream",
-      price: "",
+      price: "$10",
       description:
         "Natural, thirty seconds over the coals. Cream smoked in the same fire, chives.",
     },
@@ -74,7 +81,7 @@ export const seedMenu: MenuState = {
       id: "d2",
       category: "Bites",
       name: "Sourdough, burnt lemon butter",
-      price: "",
+      price: "$12",
       description:
         "Baked on the hearthstones, served warm. Butter cultured and finished with burnt lemon and sea salt.",
     },
@@ -82,7 +89,7 @@ export const seedMenu: MenuState = {
       id: "d3",
       category: "Bites",
       name: "Marrow, roasted in the bone",
-      price: "",
+      price: "$16",
       description:
         "Whole bones roasted directly in the embers, burnt lemon, herb salt, grilled sourdough to scrape it onto.",
     },
@@ -90,7 +97,7 @@ export const seedMenu: MenuState = {
       id: "d4",
       category: "Bites",
       name: "Charred flatbread, whipped tallow",
-      price: "",
+      price: "$14",
       description:
         "Blistered against the fire wall, torn at the table, tallow whipped with roasted garlic.",
     },
@@ -99,7 +106,7 @@ export const seedMenu: MenuState = {
       id: "d5",
       category: "Entrées",
       name: "Scallop, pork fat, dried seaweed",
-      price: "",
+      price: "$24",
       description:
         "Grilled in the shell over hard heat, cured pork fat melted across it, dried seaweed.",
     },
@@ -107,7 +114,7 @@ export const seedMenu: MenuState = {
       id: "d6",
       category: "Entrées",
       name: "Leeks, black butter, hazelnut",
-      price: "",
+      price: "$18",
       description:
         "Buried whole in the embers until they collapse, butter cooked to brown-black, hazelnut.",
     },
@@ -115,7 +122,7 @@ export const seedMenu: MenuState = {
       id: "d7",
       category: "Entrées",
       name: "Kingfish, chilli, cumquat",
-      price: "",
+      price: "$22",
       description:
         "Lightly charred over coals, roasted chilli paste, cumquat, basil.",
     },
@@ -123,7 +130,7 @@ export const seedMenu: MenuState = {
       id: "d8",
       category: "Entrées",
       name: "Flatbread, mushrooms, aged beef fat",
-      price: "",
+      price: "$19",
       description:
         "Cooked against the fire wall until it blisters, mushrooms grilled dry, aged beef fat, thyme.",
     },
@@ -132,7 +139,7 @@ export const seedMenu: MenuState = {
       id: "d9",
       category: "Mains",
       name: "Whole fish, fennel",
-      price: "",
+      price: "$48",
       description:
         "Whatever came in that morning, grilled on the bone over embers, fennel charred then dressed raw.",
     },
@@ -140,7 +147,7 @@ export const seedMenu: MenuState = {
       id: "d10",
       category: "Mains",
       name: "Short rib, three days",
-      price: "",
+      price: "$52",
       description:
         "Slow over low coals for three days, finished hard against direct flame, jus reduced over the fire.",
     },
@@ -148,7 +155,7 @@ export const seedMenu: MenuState = {
       id: "d11",
       category: "Mains",
       name: "Lamb shoulder, wood-roasted",
-      price: "",
+      price: "$46",
       description:
         "Cooked whole over indirect heat for six hours, pulled at the table, chimichurri, pickled onion.",
     },
@@ -156,7 +163,7 @@ export const seedMenu: MenuState = {
       id: "d12",
       category: "Mains",
       name: "Whole chicken, spatchcocked",
-      price: "",
+      price: "$44",
       description:
         "Butterflied and grilled flat over open flame, garlic and herb butter basted throughout.",
     },
@@ -165,14 +172,14 @@ export const seedMenu: MenuState = {
       id: "d13",
       category: "Sides",
       name: "Charred greens, chilli oil",
-      price: "",
+      price: "$12",
       description: "Whatever's in season, quickly charred, finished with chilli oil and lemon.",
     },
     {
       id: "d14",
       category: "Sides",
       name: "Coals potatoes",
-      price: "",
+      price: "$11",
       description:
         "Cooked directly in the embers, split and dressed with cultured butter and herbs.",
     },
@@ -180,7 +187,7 @@ export const seedMenu: MenuState = {
       id: "d15",
       category: "Sides",
       name: "Grilled corn, smoked butter",
-      price: "",
+      price: "$10",
       description: "Charred over open flame, brushed with butter smoked in the same fire.",
     },
     // — Desserts —
@@ -188,7 +195,7 @@ export const seedMenu: MenuState = {
       id: "d16",
       category: "Desserts",
       name: "Fire-roasted stone fruit",
-      price: "",
+      price: "$16",
       description:
         "Whatever's ripest, roasted directly in the embers, mascarpone, honeycomb.",
     },
@@ -196,14 +203,14 @@ export const seedMenu: MenuState = {
       id: "d17",
       category: "Desserts",
       name: "Smoked chocolate tart",
-      price: "",
+      price: "$17",
       description: "Chocolate ganache smoked over the fire before setting, burnt-caramel crust.",
     },
     {
       id: "d18",
       category: "Desserts",
       name: "Ember-baked custard",
-      price: "",
+      price: "$15",
       description: "Set slowly beside the coals rather than in an oven, dusted with charred sugar.",
     },
   ],

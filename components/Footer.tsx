@@ -1,10 +1,18 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
     <footer className="foot">
       <div className="foot__grid">
         <div>
+          <Image
+            src="/img/ferrant-flame-mark.png"
+            alt=""
+            width={40}
+            height={38}
+            className="foot__logo"
+          />
           <div className="foot__mark">Ferrant</div>
           <p className="dim" style={{ marginTop: "0.9rem", maxWidth: "30ch" }}>
             One fire, every dish. Fitzroy, dinner nightly.
@@ -35,7 +43,13 @@ export function Footer() {
 
       <div className="foot__base">
         <span>Ferrant, Fitzroy. A fictional restaurant, built as a design demo.</span>
-        <span>Instagram</span>
+        <a
+          href="https://instagram.com/ferrant.fitzroy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
       </div>
     </footer>
   );

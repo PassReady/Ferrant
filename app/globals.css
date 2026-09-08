@@ -352,6 +352,19 @@ button {
 .nav__item > a[aria-current="page"] {
   box-shadow: inset 0 -1px 0 var(--ember);
 }
+.nav__insta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ash);
+  transition: color 0.2s var(--ease);
+}
+.nav--solid .nav__insta {
+  color: color-mix(in oklab, var(--bone) 62%, transparent);
+}
+.nav__insta:hover {
+  color: var(--bone);
+}
 .nav__book {
   flex: none;
   display: inline-flex;
@@ -590,6 +603,12 @@ button {
 .foot__grid a:hover {
   color: var(--bone);
 }
+.foot__logo {
+  display: block;
+  width: 2rem;
+  height: auto;
+  margin-bottom: 0.75rem;
+}
 .foot__mark {
   font-family: var(--font-display), Georgia, serif;
   font-size: 2rem;
@@ -607,6 +626,12 @@ button {
   gap: 0.5rem;
   font-size: var(--t--1);
   color: var(--ash-dim);
+}
+.foot__base a {
+  transition: color 0.2s var(--ease);
+}
+.foot__base a:hover {
+  color: var(--bone);
 }
 @media (max-width: 44rem) {
   .foot__grid {
@@ -1791,6 +1816,7 @@ button {
   font-weight: 700;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--ember);
+  text-align: center;
 }
 /* two-up so a category's dishes fill the column's width instead of
    running down it as a single narrow list */
@@ -1825,7 +1851,7 @@ button {
   gap: 1rem;
 }
 .menu3__rowhead h3 {
-  font-size: var(--d-3);
+  font-size: var(--t-1);
   font-weight: 600;
 }
 .menu3__price {
@@ -1886,8 +1912,8 @@ button {
   gap: 0.5rem;
 }
 .menu3__dot {
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.7rem;
+  height: 0.7rem;
   border-radius: 50%;
   background: var(--line);
   transition: background 0.2s var(--ease);

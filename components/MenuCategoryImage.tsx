@@ -23,6 +23,7 @@ export function MenuCategoryImage({ images }: { images: CategoryImage[] }) {
           alt={shown.alt}
           fill
           sizes="(min-width: 58rem) 38vw, 100vw"
+          style={shown.position ? { objectPosition: shown.position } : undefined}
         />
         <span className="frame__grade" aria-hidden="true" />
       </div>
