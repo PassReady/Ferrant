@@ -1918,8 +1918,40 @@ button {
    MENU — one continuous scrollspy list beside a click-through carousel
    ============================================================ */
 .menu3__head {
-  padding-top: clamp(3rem, 7vw, 5rem);
-  padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  position: relative;
+  isolation: isolate;
+  min-height: 46vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: clip;
+}
+.menu3__head-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.menu3__head-bg > figure,
+.menu3__head-bg .frame {
+  height: 100%;
+}
+.menu3__head-bg .frame {
+  aspect-ratio: auto;
+}
+.menu3__head-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      75deg,
+      rgba(12, 11, 10, 0.9) 0%,
+      rgba(12, 11, 10, 0.55) 45%,
+      rgba(12, 11, 10, 0.15) 75%
+    ),
+    linear-gradient(to top, rgba(12, 11, 10, 0.85), transparent 55%);
+}
+.menu3__head-in {
+  width: 100%;
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 4vw, 2.5rem);
 }
 .menu3__head h1 {
   font-size: var(--d-1);
@@ -2137,20 +2169,21 @@ button {
   }
   /* the image bleeds out to the true right edge of the browser — cancel
      just the board's own right gutter, now that the board itself runs
-     full-bleed rather than sitting inside .wrap — and fills the full
-     height of its row rather than a fixed aspect-ratio box, so each
-     photo genuinely owns its side of the row. */
+     full-bleed rather than sitting inside .wrap. Anchored to the top
+     of the row rather than stretched, now that the frame has its own
+     fixed ratio (below) instead of matching the row's height. */
   .menu3__panel {
     margin-right: calc(-1 * var(--gutter));
+    align-self: start;
   }
   .menu3__frame {
     width: 100%;
-    height: 100%;
-    /* must be explicit: aspect-ratio combined with a definite height
-       gets used to derive an oversized intrinsic width, which grid then
-       honours as the column's minimum size and blows the board out
-       past the viewport (bit us once already — see git history). */
-    aspect-ratio: auto;
+    /* fixed 4:3, not stretched to the row's own height — a short
+       category (few dishes) next to a wide screen was stretching this
+       into an extreme letterbox (up to ~3:1), and no ordinary food
+       photo (shot 4:3/3:2/square) survives object-fit: cover at that
+       ratio without losing its subject off the top or bottom edge. */
+    aspect-ratio: 4 / 3;
   }
 }
 

@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { seedMenu, type MenuState, type Dish, type Category } from "./menu";
 
-const KEY = "ferrant.menu.v3";
+const KEY = "ferrant.menu.v4";
 
 /**
  * A tiny localStorage-backed store shared by the Menu page and the demo admin.

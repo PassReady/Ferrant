@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMenu } from "@/lib/store";
 import { CATEGORIES, catId, categoryImages, type Category } from "@/lib/menu";
 import { CtaVideo } from "@/components/CtaVideo";
+import { Frame } from "@/components/Frame";
 import { MenuCategoryRow } from "@/components/MenuCategoryRow";
 
 /**
@@ -61,9 +62,21 @@ export function MenuBoard() {
 
   return (
     <div className="menu3">
-      <section className="wrap menu3__head">
-        <h1>The Menu</h1>
-        <p className="phead__sub">{menu.intro}</p>
+      <section className="menu3__head">
+        <div className="menu3__head-bg">
+          <Frame
+            src="/img/menu-hero.jpg"
+            alt="An artfully plated dish, seen from above"
+            light={["50%", "45%"]}
+            priority
+            sizes="100vw"
+          />
+        </div>
+        <div className="menu3__head-scrim" aria-hidden="true" />
+        <div className="wrap menu3__head-in">
+          <h1>The Menu</h1>
+          <p className="phead__sub">{menu.intro}</p>
+        </div>
       </section>
 
       <div className="menu3__tabsrow">
