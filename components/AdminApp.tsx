@@ -1,79 +1,80 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useMenu, menuActions } from "@/lib/store";
-import { CATEGORIES, type Category } from "@/lib/menu";
+import { useCallback, useRef, useState } from "react";
+import { seedMenu, CATEGORIES, type Category, type Dish, type MenuState } from "@/lib/menu";
 
-const USER = "demo";
-const PASS = "Ferrant2026";
-const SESSION_KEY = "ferrant.admin.session";
+/**
+ * Open demo backend — no login, nothing persisted.
+ *
+ * Every control works against a draft held in this component only: a visitor can
+ * type, add, reorder and delete, see the result immediately, and refresh to get
+ * the sample data back. Nothing is written to storage and the public menu page
+ * reads `seedMenu` directly, so the live site can't be changed from here.
+ * Each action also raises a toast saying so.
+ */
+
+const uid = () => "d" + Math.random().toString(36).slice(2, 8);
 
 export function AdminApp() {
-  const menu = useMenu();
-  const [authed, setAuthed] = useState(false);
-  const [u, setU] = useState("");
-  const [p, setP] = useState("");
-  const [err, setErr] = useState(false);
-  const [savedFlash, setSavedFlash] = useState(false);
+  const [menu, setMenu] = useState<MenuState>(seedMenu);
   const [filter, setFilter] = useState<Category | "All">("All");
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<number | undefined>(undefined);
 
-  useEffect(() => {
-    try {
-      setAuthed(sessionStorage.getItem(SESSION_KEY) === "1");
-    } catch {}
+  const notify = useCallback((message = "Demo only, changes aren't saved.") => {
+    setToast(message);
+    window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(null), 2600);
   }, []);
 
-  function login(e: React.FormEvent) {
-    e.preventDefault();
-    if (u.trim() === USER && p === PASS) {
-      setAuthed(true);
-      try {
-        sessionStorage.setItem(SESSION_KEY, "1");
-      } catch {}
-    } else {
-      setErr(true);
-    }
+  const patchDish = (id: string, patch: Partial<Dish>) =>
+    setMenu((m) => ({
+      ...m,
+      dishes: m.dishes.map((d) => (d.id === id ? { ...d, ...patch } : d)),
+    }));
+
+  function addDish() {
+    const category: Category = filter === "All" ? "Bites" : filter;
+    setMenu((m) => ({
+      ...m,
+      dishes: [
+        ...m.dishes,
+        {
+          id: uid(),
+          category,
+          name: "New dish",
+          price: "",
+          description: "Describe what it is and how the fire cooked it.",
+        },
+      ],
+    }));
+    notify();
   }
 
-  function flash() {
-    setSavedFlash(true);
-    window.clearTimeout((flash as any)._t);
-    (flash as any)._t = window.setTimeout(() => setSavedFlash(false), 1400);
+  function removeDish(id: string, name: string) {
+    setMenu((m) => ({ ...m, dishes: m.dishes.filter((d) => d.id !== id) }));
+    notify(`“${name}” removed from the draft. Demo only, changes aren't saved.`);
   }
 
-  if (!authed) {
-    return (
-      <div className="admin__auth">
-        <div className="admin__card admin__login">
-          <h1>Ferrant CMS</h1>
-          <p>Demo backend. Manage the à la carte menu.</p>
-          <form onSubmit={login}>
-            <label>
-              Username
-              <input value={u} onChange={(e) => setU(e.target.value)} autoFocus />
-            </label>
-            <label>
-              Password
-              <input
-                type="password"
-                value={p}
-                onChange={(e) => setP(e.target.value)}
-              />
-            </label>
-            {err && <p className="admin__err">That didn&rsquo;t match. Try the credentials on the right.</p>}
-            <button type="submit">Sign in</button>
-          </form>
-          <p className="admin__hint">
-            <span>Username</span> <code>demo</code>
-            <span>Password</span> <code>Ferrant2026</code>
-          </p>
-          <Link href="/" className="admin__exit">
-            ← Back to the site
-          </Link>
-        </div>
-      </div>
-    );
+  // reorders within the dish's own category so the visible tab list moves as expected
+  function move(id: string, dir: -1 | 1) {
+    setMenu((m) => {
+      const cat = m.dishes.find((d) => d.id === id)?.category;
+      if (!cat) return m;
+      const ids = m.dishes.filter((d) => d.category === cat).map((d) => d.id);
+      const i = ids.indexOf(id);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= ids.length) return m;
+      [ids[i], ids[j]] = [ids[j], ids[i]];
+      const byId = new Map(m.dishes.map((d) => [d.id, d]));
+      let cursor = 0;
+      return {
+        ...m,
+        dishes: m.dishes.map((d) => (d.category === cat ? byId.get(ids[cursor++])! : d)),
+      };
+    });
+    notify();
   }
 
   const visible = menu.dishes.filter((d) => filter === "All" || d.category === filter);
@@ -86,36 +87,30 @@ export function AdminApp() {
           <span className="admin__crumb">Menu</span>
         </div>
         <div className="admin__topact">
-          <span className={`admin__saved${savedFlash ? " is-on" : ""}`}>
-            Saved
-          </span>
           <Link href="/menu" target="_blank" className="admin__link">
             View menu page ↗
           </Link>
           <button
             className="admin__ghost"
             onClick={() => {
-              if (confirm("Reset the menu to the sample data?")) {
-                menuActions.reset();
-                flash();
-              }
+              setMenu(seedMenu);
+              notify("Draft reset to the sample data.");
             }}
           >
             Reset to sample data
           </button>
-          <button
-            className="admin__ghost"
-            onClick={() => {
-              try {
-                sessionStorage.removeItem(SESSION_KEY);
-              } catch {}
-              setAuthed(false);
-            }}
-          >
-            Sign out
-          </button>
+          <Link href="/" className="admin__ghost admin__ghost--link">
+            Back to the site
+          </Link>
         </div>
       </header>
+
+      <p className="admin__demo">
+        <span className="admin__demotag">Demo</span>
+        This is the menu backend, open for anyone to look through. Type, add,
+        reorder and delete as much as you like. Nothing is saved and the public
+        site is never touched, so a refresh puts it all back.
+      </p>
 
       <div className="admin__main">
         <section className="admin__card">
@@ -125,10 +120,8 @@ export function AdminApp() {
             <textarea
               rows={2}
               value={menu.intro}
-              onChange={(e) => {
-                menuActions.setIntro(e.target.value);
-                flash();
-              }}
+              onChange={(e) => setMenu((m) => ({ ...m, intro: e.target.value }))}
+              onBlur={() => notify()}
             />
           </label>
         </section>
@@ -136,13 +129,7 @@ export function AdminApp() {
         <section className="admin__card">
           <div className="admin__cardhead">
             <h2>Dishes ({visible.length})</h2>
-            <button
-              className="admin__primary"
-              onClick={() => {
-                menuActions.addDish(filter === "All" ? "Bites" : filter);
-                flash();
-              }}
-            >
+            <button className="admin__primary" onClick={addDish}>
               + Add dish
             </button>
           </div>
@@ -176,10 +163,8 @@ export function AdminApp() {
                       Name
                       <input
                         value={d.name}
-                        onChange={(e) => {
-                          menuActions.updateDish(d.id, { name: e.target.value });
-                          flash();
-                        }}
+                        onChange={(e) => patchDish(d.id, { name: e.target.value })}
+                        onBlur={() => notify()}
                       />
                     </label>
                     <label>
@@ -187,10 +172,8 @@ export function AdminApp() {
                       <select
                         value={d.category}
                         onChange={(e) => {
-                          menuActions.updateDish(d.id, {
-                            category: e.target.value as Category,
-                          });
-                          flash();
+                          patchDish(d.id, { category: e.target.value as Category });
+                          notify();
                         }}
                       >
                         {CATEGORIES.map((c) => (
@@ -206,10 +189,8 @@ export function AdminApp() {
                     <input
                       value={d.price}
                       placeholder="e.g. supplement +$8"
-                      onChange={(e) => {
-                        menuActions.updateDish(d.id, { price: e.target.value });
-                        flash();
-                      }}
+                      onChange={(e) => patchDish(d.id, { price: e.target.value })}
+                      onBlur={() => notify()}
                     />
                   </label>
                   <label>
@@ -217,32 +198,18 @@ export function AdminApp() {
                     <textarea
                       rows={2}
                       value={d.description}
-                      onChange={(e) => {
-                        menuActions.updateDish(d.id, {
-                          description: e.target.value,
-                        });
-                        flash();
-                      }}
+                      onChange={(e) => patchDish(d.id, { description: e.target.value })}
+                      onBlur={() => notify()}
                     />
                   </label>
                 </div>
 
                 <div className="admin__dishact">
-                  <button
-                    onClick={() => {
-                      menuActions.move(d.id, -1);
-                      flash();
-                    }}
-                    disabled={i === 0}
-                    aria-label="Move up"
-                  >
+                  <button onClick={() => move(d.id, -1)} disabled={i === 0} aria-label="Move up">
                     ↑
                   </button>
                   <button
-                    onClick={() => {
-                      menuActions.move(d.id, 1);
-                      flash();
-                    }}
+                    onClick={() => move(d.id, 1)}
                     disabled={i === visible.length - 1}
                     aria-label="Move down"
                   >
@@ -250,12 +217,7 @@ export function AdminApp() {
                   </button>
                   <button
                     className="admin__del"
-                    onClick={() => {
-                      if (confirm(`Remove “${d.name}”?`)) {
-                        menuActions.removeDish(d.id);
-                        flash();
-                      }
-                    }}
+                    onClick={() => removeDish(d.id, d.name)}
                     aria-label="Remove dish"
                   >
                     Remove
@@ -267,10 +229,14 @@ export function AdminApp() {
         </section>
 
         <p className="admin__foot">
-          Changes save to this browser and appear on the menu page immediately.
-          Sample data only — refresh with “Reset” any time. Category photography
-          is fixed per tab, not per dish.
+          A working preview of how the menu would be managed day to day. On a live
+          build this saves to the site in one click. Category photography is fixed
+          per tab, not per dish.
         </p>
+      </div>
+
+      <div className="admin__toast" role="status" aria-live="polite" data-on={!!toast}>
+        {toast}
       </div>
     </div>
   );

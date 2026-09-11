@@ -48,7 +48,7 @@ Full palette and scale in `app/globals.css` `:root`.
 | `/events` | Three private-event offerings, three different layouts: full-bleed photo with the copy overlaid (Chef's Table), a sticky spec sidebar beside scrolling prose (Fireside Room), a twin image band with full-width copy and a five-column fact row (The Long Table). |
 | `/menu` | One continuous scrollspy list, grouped under category headings (Bites/Entrées/Mains/Sides/Desserts). The tab bar and the sticky image carousel both track whichever category is in view as you scroll; tabs are also click-to-smooth-scroll. Carousel photos (3–4 per category, categorically matched) step manually via dots/arrows. |
 | `/reservations` | OpenTable-style booking modal: two-month calendar (Tue–Sun open), arrival slots, party stepper, confirmation screen. No backend. Reached only via the **Restaurant** mega menu now, not a standalone nav item. |
-| `/admin` | Demo CMS (`demo` / `Ferrant2026`). Edit the menu intro and each dish (name, category, price, description); state lives in `lib/store.ts` (localStorage), shared live with `/menu`. |
+| `/admin` | Open demo CMS, no login. Linked from the nav with a "Demo" pill. Edit the menu intro and each dish (name, category, price, description), add, reorder and delete. Everything runs on a draft held in `AdminApp` state only: nothing persists and `/menu` renders `seedMenu` from `lib/menu.ts`, so the public site cannot be changed from here. Every action raises a "Demo only, changes aren't saved" toast. |
 
 Nav order is Our Story / Event Spaces / Restaurant / Admin. **Restaurant** and **Event
 Spaces** open a mega menu on hover/click (a full panel below the bar with icon + label +

@@ -27,6 +27,7 @@
   line-height: 1.25;
 }
 .admin input,
+.admin select,
 .admin textarea {
   font: inherit;
   width: 100%;
@@ -37,6 +38,7 @@
   padding: 0.5rem 0.65rem;
 }
 .admin input:focus,
+.admin select:focus,
 .admin textarea:focus {
   outline: 2px solid var(--a-accent);
   outline-offset: 1px;
@@ -50,6 +52,7 @@
   margin-bottom: 0.4rem;
 }
 .admin label input,
+.admin label select,
 .admin label textarea {
   margin-top: 0.3rem;
 }
@@ -58,75 +61,67 @@
   cursor: pointer;
 }
 
-/* login */
-.admin__auth {
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
-}
+/* card shell */
 .admin__card {
   background: var(--a-panel);
   border: 1px solid var(--a-line);
   border-radius: 12px;
   padding: clamp(1.5rem, 4vw, 2.25rem);
 }
-.admin__login {
-  width: min(24rem, 100%);
-}
-.admin__login h1 {
-  font-size: 1.35rem;
-}
-.admin__login > p {
-  color: var(--a-mut);
-  margin: 0.4rem 0 1.5rem;
-  font-size: 0.9rem;
-}
-.admin__login form {
-  display: grid;
-  gap: 1rem;
-}
-.admin__login button[type="submit"] {
-  margin-top: 0.25rem;
-  padding: 0.6rem 1rem;
-  background: var(--a-ink);
-  color: #fff;
-  border: 0;
-  border-radius: 6px;
-  font-weight: 500;
-}
-.admin__err {
-  color: var(--a-accent);
-  font-size: 0.85rem;
-}
-.admin__hint {
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px dashed var(--a-line);
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.35rem 0.75rem;
-  font-size: 0.85rem;
-  color: var(--a-mut);
-  align-items: center;
-}
-.admin__hint code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  background: var(--a-bg);
+
+/* open-demo banner + toast — there is no login on this backend */
+.admin__demo {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  max-width: 52rem;
+  margin: 0 0 1.75rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--a-panel);
   border: 1px solid var(--a-line);
-  border-radius: 4px;
-  padding: 0.1rem 0.4rem;
-  color: var(--a-ink);
-  justify-self: start;
-}
-.admin__exit {
-  display: inline-block;
-  margin-top: 1.25rem;
+  border-left: 3px solid var(--a-accent);
+  border-radius: 8px;
+  font-size: 0.88rem;
   color: var(--a-mut);
-  font-size: 0.85rem;
 }
-.admin__exit:hover {
-  color: var(--a-ink);
+.admin__demotag {
+  flex: none;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--a-accent);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.12rem 0.5rem;
+}
+.admin__toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 20;
+  max-width: min(26rem, calc(100vw - 2rem));
+  padding: 0.7rem 1rem;
+  background: var(--a-ink);
+  color: #f7f6f3;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translate(-50%, 0.6rem);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+.admin__toast[data-on="true"] {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin__toast {
+    transition: opacity 0.01ms;
+    transform: translate(-50%, 0);
+  }
 }
 
 /* app shell */
@@ -159,14 +154,9 @@
   gap: 0.75rem;
   flex-wrap: wrap;
 }
-.admin__saved {
-  font-size: 0.8rem;
-  color: #2e7d32;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.admin__saved.is-on {
-  opacity: 1;
+.admin__ghost--link {
+  display: inline-block;
+  text-decoration: none;
 }
 .admin__link {
   font-size: 0.85rem;

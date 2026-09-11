@@ -14,6 +14,8 @@ type SubItem = {
 type Item = {
   href: string;
   label: string;
+  /** small pill after the label — marks the open demo backend */
+  tag?: string;
   mega?: SubItem[];
 };
 
@@ -92,7 +94,7 @@ const items: Item[] = [
       },
     ],
   },
-  { href: "/admin", label: "Admin" },
+  { href: "/admin", label: "Admin", tag: "Demo" },
 ];
 
 export function Nav() {
@@ -185,6 +187,7 @@ export function Nav() {
                     }}
                   >
                     {it.label}
+                    {it.tag && <span className="nav__tag">{it.tag}</span>}
                   </Link>
 
                   {/* mobile-only: sub-items shown inline, no hover available */}

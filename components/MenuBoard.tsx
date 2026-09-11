@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useMenu } from "@/lib/store";
-import { CATEGORIES, catId, categoryImages, type Category } from "@/lib/menu";
+import { CATEGORIES, catId, categoryImages, seedMenu, type Category } from "@/lib/menu";
 import { CtaVideo } from "@/components/CtaVideo";
 import { Frame } from "@/components/Frame";
 import { MenuCategoryRow } from "@/components/MenuCategoryRow";
@@ -17,7 +16,7 @@ import { MenuCategoryRow } from "@/components/MenuCategoryRow";
  * it doesn't drive the images, those only change when clicked.
  */
 export function MenuBoard() {
-  const menu = useMenu();
+  const menu = seedMenu;
   const [active, setActive] = useState<Category>(CATEGORIES[0]);
   const activeRef = useRef(active);
   activeRef.current = active;
