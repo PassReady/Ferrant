@@ -322,6 +322,160 @@
   color: var(--a-accent) !important;
   border-color: var(--a-accent) !important;
 }
+
+/* the dish just added: a brief ring so it is obvious where it landed */
+.admin__dish[data-fresh="true"] {
+  border-color: var(--a-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--a-accent) 18%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .admin__dish {
+    transition: border-color 0.4s, box-shadow 0.4s;
+  }
+}
+
+/* menu photography: one row of thumbnails per category */
+.admin__photogroup + .admin__photogroup {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--a-line);
+}
+.admin__photohead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+.admin__photohead h3 {
+  font-size: 0.95rem;
+}
+.admin__photos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 1rem;
+}
+.admin__photo {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+.admin__photoframe {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--a-line);
+  background: var(--a-bg);
+}
+.admin__photoframe img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.admin__photoact {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem;
+  background: linear-gradient(to top, rgba(12, 11, 10, 0.78), rgba(12, 11, 10, 0));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.admin__photo:hover .admin__photoact,
+.admin__photoact:focus-within {
+  opacity: 1;
+}
+@media (hover: none) {
+  .admin__photoact {
+    opacity: 1;
+  }
+}
+.admin__photoact button {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-radius: 5px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+.admin__photoact button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.24);
+}
+.admin__photoact button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.admin__photoact .admin__del {
+  margin-left: auto;
+  font-size: 0.7rem;
+}
+.admin__photoact .admin__del:hover {
+  background: var(--a-accent);
+  border-color: var(--a-accent) !important;
+  color: #fff !important;
+}
+.admin__photo label {
+  font-size: 0.72rem;
+}
+.admin__photo input[type="text"],
+.admin__photo label input {
+  font-size: 0.82rem;
+  padding: 0.35rem 0.5rem;
+}
+
+/* the add tile matches a thumbnail's footprint */
+.admin__photo--add {
+  align-content: stretch;
+}
+label.admin__upload {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.2rem;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  border: 1px dashed var(--a-line);
+  border-radius: 8px;
+  background: var(--a-panel);
+  cursor: pointer;
+  text-align: center;
+  padding: 0.5rem;
+  transition: border-color 0.25s, background 0.25s;
+}
+label.admin__upload:hover,
+label.admin__upload:focus-within {
+  border-color: var(--a-accent);
+  background: var(--a-bg);
+}
+.admin__uploadmark {
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--a-accent);
+}
+.admin__uploadlabel {
+  font-weight: 500;
+  color: var(--a-ink);
+  font-size: 0.85rem;
+}
+.admin__upload input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.admin__empty {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--a-mut);
+}
 .admin__foot {
   color: var(--a-mut);
   font-size: 0.85rem;
