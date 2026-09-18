@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { Arrow } from "@/components/Btn";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -99,14 +101,16 @@ const items: Item[] = [
 
 export function Nav() {
   const pathname = usePathname();
-  const onHome = pathname === "/";
-  const [solid, setSolid] = useState(!onHome);
+  // pages that open on a full photo or footage hero: the bar sits clear
+  // over it, then turns to frosted glass once the page moves
+  const overHero = ["/", "/story", "/menu", "/events"].includes(pathname);
+  const [solid, setSolid] = useState(!overHero);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!onHome) {
+    if (!overHero) {
       setSolid(true);
       return;
     }
@@ -114,7 +118,7 @@ export function Nav() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        setSolid(window.scrollY > window.innerHeight * 0.68);
+        setSolid(window.scrollY > 40);
       });
     };
     onScroll();
@@ -123,7 +127,7 @@ export function Nav() {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, [onHome]);
+  }, [overHero]);
 
   // the mega panel and the mobile drawer must never survive a navigation —
   // this is what kept the old hover dropdown open on every page
@@ -148,8 +152,9 @@ export function Nav() {
       onMouseLeave={() => setOpenId(null)}
     >
       <div className="nav__in">
-        <Link href="/" className="wordmark" onClick={() => setMobileOpen(false)}>
-          Ferrant
+        <Link href="/" className="wordmark" onClick={() => setMobileOpen(false)} aria-label="Ferrant, home">
+          <Image src="/img/ferrant-flame-icon.png" alt="" width={508} height={773} className="wordmark__icon" priority />
+          <span>Ferrant</span>
         </Link>
 
         <div className="nav__right">
@@ -186,7 +191,14 @@ export function Nav() {
                       setMobileOpen(false);
                     }}
                   >
-                    {it.label}
+                    <span className="roll" aria-hidden="true">
+                      {it.label.split("").map((ch, i) => (
+                        <span key={i} className="roll__ch" data-ch={ch === " " ? " " : ch} style={{ ["--ci" as string]: i }}>
+                          {ch === " " ? " " : ch}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="sr-only">{it.label}</span>
                     {it.tag && <span className="nav__tag">{it.tag}</span>}
                   </Link>
 
@@ -273,10 +285,11 @@ export function Nav() {
 
           <Link
             href="/reservations?book=1"
-            className="nav__book"
+            className="btn btn--primary btn--sm nav__book"
             onClick={() => setMobileOpen(false)}
           >
-            Book Now
+            <span className="btn__label"><span className="btn__roll" data-text="Reserve">Reserve</span></span>
+            <span className="btn__disc"><Arrow /></span>
           </Link>
 
           <button

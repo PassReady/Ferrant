@@ -1,69 +1,58 @@
-import Link from "next/link";
-import Image from "next/image";
-import { FireHero } from "@/components/FireHero";
-import { FireSequence } from "@/components/FireSequence";
-import { FireMarquee } from "@/components/FireMarquee";
-import { CtaVideo } from "@/components/CtaVideo";
+import { Curtain } from "@/components/Curtain";
+import { HomeHero } from "@/components/HomeHero";
+import { Scrub } from "@/components/Scrub";
+import { ExpandBleed } from "@/components/ExpandBleed";
+import { MenuAccordion } from "@/components/MenuAccordion";
+import { CounterMarquee } from "@/components/CounterMarquee";
+import { DepthStack } from "@/components/DepthStack";
+import { CloseBand } from "@/components/CloseBand";
+import { Btn } from "@/components/Btn";
 
 export default function Home() {
   return (
-    <div className="home">
-      <FireHero />
+    <>
+      <Curtain />
+      <HomeHero />
 
-      {/* section 2 — pinned scroll sequence, not another image-beside-text block */}
-      <FireSequence />
-
-      <FireMarquee />
-
-      {/* section 3 — full-bleed background with the copy as an offset card,
-          not centred, not paired beside the photo */}
-      <section className="dinner">
-        <div className="dinner__media">
-          <Image
-            src="/img/chef-grill.jpg"
-            alt="Flame and smoke rising off the grill as a dish is turned"
-            fill
-            sizes="100vw"
+      {/* the withheld H1 lands here, scrubbed word by word, over the
+          background wordmark */}
+      <section className="stmt" id="statement" aria-labelledby="stmt-h1">
+        <span className="grain" aria-hidden="true" />
+        <div className="stmt__word" aria-hidden="true">Ferrant</div>
+        <div className="wrap stmt__in">
+          <p className="eyebrow" data-rv="">One fire, every dish</p>
+          <h1 id="stmt-h1" className="sr-only">
+            Ferrant: one wood fire, no gas line, every dish cooked over it.
+          </h1>
+          <Scrub
+            className="stmt__text"
+            text="One wood fire. No gas line. Every dish on the menu is cooked over it, from the first bread to the last custard."
+            accent={["fire.", "custard."]}
           />
-        </div>
-        <div className="dinner__scrim" aria-hidden="true" />
-        <div className="dinner__card">
-          <h2>Dinner, nightly</h2>
-          <div className="prose">
-            <p>
+          <div className="stmt__foot" data-rv="">
+            <p className="stmt__meta">
               Open Tuesday to Sunday from 5:30pm. Walk in at the bar for a
-              plate and a glass, or book ahead for a table. The menu changes
-              with what the fire and the market give us that week.
+              plate and a glass, or book ahead for a table.
             </p>
+            <Btn href="/story" variant="ghost">Our story</Btn>
           </div>
-          <Link href="/menu" className="act">
-            View our menu
-          </Link>
         </div>
       </section>
 
-      {/* section 4 — a plain, quiet pause between two image-heavy sections:
-          no photo, no button, just the quote */}
-      <section className="chefquote">
-        <div className="wrap chefquote__in">
-          <p className="chefquote__text">
-            &ldquo;Every kitchen has a room the guests never see. Ours
-            doesn&rsquo;t. Come and watch the fire do the work.&rdquo;
-          </p>
-          <p className="chefquote__attr">Head chef, Ferrant</p>
-        </div>
-      </section>
+      <ExpandBleed />
+      <MenuAccordion />
+      <CounterMarquee />
+      <DepthStack />
 
-      <section className="callout">
-        <CtaVideo src="/video/cta-sear.mp4" poster="/img/meat-fire.jpg" />
-        <div className="callout__scrim" aria-hidden="true" />
-        <div className="wrap band callout__in">
-          <h2>Come sit by the fire.</h2>
-          <Link href="/reservations" className="act">
-            Reserve a table
-          </Link>
-        </div>
-      </section>
-    </div>
+      <CloseBand
+        video="/video/cta-sear.mp4"
+        poster="/img/meat-fire.jpg"
+        eyebrow="Dinner nightly from 5:30pm"
+        title="Come sit by the"
+        accent="fire."
+      >
+        <Btn href="/reservations?book=1">Reserve a table</Btn>
+      </CloseBand>
+    </>
   );
 }

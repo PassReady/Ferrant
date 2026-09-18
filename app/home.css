@@ -1,0 +1,790 @@
+/* ============================================================
+   HOME. Section plan: SPEC-SHEET.md §4 Home.
+   ============================================================ */
+
+/* 1. HERO: withheld H1, footage, frosted "Tonight" card */
+.hh {
+  position: relative;
+  height: 100svh;
+  min-height: 40rem;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: var(--soot);
+}
+.hh__media,
+.hh__glow,
+.hh__scrim {
+  position: absolute;
+  inset: 0;
+}
+.hh__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* centre vignette (AOMI) over a bottom scrim, both in the soot dark */
+.hh__scrim {
+  background: radial-gradient(130% 96% at 50% 46%, rgba(7, 5, 4, 0.72) 0%, rgba(7, 5, 4, 0.4) 44%, rgba(7, 5, 4, 0) 80%),
+    linear-gradient(rgba(7, 5, 4, 0.5) 0%, rgba(7, 5, 4, 0.12) 42%, rgba(7, 5, 4, 0.86) 100%);
+}
+/* the one warm light: breathes slowly */
+.hh__glow {
+  background: radial-gradient(60% 50% at 50% 70%, rgba(184, 67, 43, 0.35), transparent 70%);
+  mix-blend-mode: screen;
+}
+.hh__in {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding-top: var(--nav-h);
+}
+.hh__mark {
+  width: clamp(2.75rem, 4vw, 3.75rem);
+}
+.hh__mark img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(232, 162, 74, 0.55));
+}
+.hh__stand {
+  max-width: 13ch;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(3rem, 1.4rem + 5.6vw, 7.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--bone);
+}
+.hh__foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: clamp(1.25rem, 3vw, 2.5rem);
+}
+.hh__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.hh__cue-line {
+  position: relative;
+  width: 1px;
+  height: 3.5rem;
+  background: var(--line);
+  overflow: hidden;
+}
+.hh__cue-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--flame);
+  transform: translateY(-100%);
+}
+/* frosted glass: the blur does the work, only a trace of tint */
+.tonight {
+  width: min(22rem, 100%);
+  padding: 1.35rem;
+  border-radius: var(--r-card);
+  background: rgba(237, 228, 211, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.tonight__row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.tonight__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--flame);
+}
+.tonight__time {
+  margin-top: 0.9rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+.tonight__note {
+  margin: 0.35rem 0 1.1rem;
+  font-size: var(--t-small);
+  color: var(--ash);
+}
+.hh__toggle {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--nav-h) + 1rem);
+  right: var(--gutter);
+}
+@media (max-width: 700px) {
+  .hh__foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hh__cue {
+    display: none;
+  }
+  .tonight {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hh__glow {
+    animation: breathe 6s ease-in-out infinite alternate;
+  }
+  .hh__cue-line::after {
+    animation: cue 2.4s var(--ease-wipe) infinite;
+  }
+  .tonight__dot {
+    animation: pulse 2.4s var(--ease-hover) infinite;
+  }
+  @supports (animation-timeline: view()) {
+    /* the hero sinks away as the page moves: footage pushes in and
+       dims, the copy lifts off */
+    .hh__media {
+      animation: hero-push linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+    .hh__in {
+      animation: hero-lift linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 80%;
+    }
+  }
+}
+@keyframes breathe {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(232, 162, 74, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(232, 162, 74, 0);
+  }
+}
+@keyframes hero-push {
+  to {
+    transform: scale(1.12);
+    filter: brightness(0.5);
+  }
+}
+@keyframes hero-lift {
+  to {
+    transform: translateY(-18vh);
+    opacity: 0;
+  }
+}
+
+/* 2. STATEMENT: scroll-scrubbed H1 over the background wordmark */
+.stmt {
+  position: relative;
+  overflow: hidden;
+  padding-block: calc(var(--section) * 1.25) var(--section);
+  background: var(--forge);
+}
+.stmt__word {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 28vw;
+  line-height: 0.8;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(237, 228, 211, 0.04);
+  pointer-events: none;
+  user-select: none;
+}
+.stmt__in {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 2.5rem;
+}
+.stmt__text {
+  max-width: 21ch;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.5rem, 1.2rem + 4.6vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.stmt__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+.stmt__meta {
+  max-width: 44ch;
+  color: var(--ash);
+  font-size: var(--t-lead);
+  line-height: 1.5;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .stmt__word {
+      animation: drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+@keyframes drift {
+  from {
+    transform: translateX(8%);
+  }
+  to {
+    transform: translateX(-8%);
+  }
+}
+
+/* 3. EXPAND TO FULL BLEED (Phisio) + pull-back type (Pactum) */
+.xb {
+  position: relative;
+  background: var(--char);
+}
+.xb__pin {
+  position: relative;
+  height: 100svh;
+  min-height: 36rem;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+}
+.xb__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.xb__img {
+  object-fit: cover;
+}
+.xb__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(7, 5, 4, 0.15) 0%, rgba(7, 5, 4, 0.1) 40%, rgba(7, 5, 4, 0.88) 100%);
+}
+.xb__copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.25rem;
+  padding-bottom: clamp(2.5rem, 7vw, 6rem);
+}
+.xb__title {
+  font-size: clamp(3.5rem, 1.4rem + 8vw, 10rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  transform-origin: left bottom;
+}
+.xb__line {
+  max-width: 46ch;
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  color: rgba(237, 228, 211, 0.86);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .xb {
+      height: 260svh;
+      view-timeline-name: --xb;
+    }
+    .xb__pin {
+      position: sticky;
+      top: 0;
+    }
+    .xb__frame {
+      animation: bleed linear both;
+      animation-timeline: --xb;
+      animation-range: contain 0% contain 45%;
+    }
+    .xb__img {
+      animation: pullback linear both;
+      animation-timeline: --xb;
+      animation-range: contain 0% contain 70%;
+    }
+    .xb__title {
+      animation: pullback-type linear both;
+      animation-timeline: --xb;
+      animation-range: contain 35% contain 75%;
+    }
+    .xb__eyebrow,
+    .xb__line {
+      animation: fade-rise linear both;
+      animation-timeline: --xb;
+      animation-range: contain 60% contain 85%;
+    }
+  }
+}
+@keyframes bleed {
+  from {
+    clip-path: inset(30% 27% round 16px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+@media (max-width: 700px) {
+  @keyframes bleed {
+    from {
+      clip-path: inset(30% 12% round 16px);
+    }
+    to {
+      clip-path: inset(0 0 0 0 round 0);
+    }
+  }
+}
+
+/* 4. MENU ACCORDION (Norfolk) on the one bone band */
+.acc-menu {
+  position: relative;
+  padding-block: var(--section);
+  background: var(--bone);
+  color: var(--ink);
+}
+.acc-menu .acc {
+  color: var(--ember);
+}
+.acc-menu__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 3rem;
+}
+.acc-menu__head {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+.acc-menu__head .eyebrow {
+  order: 2;
+}
+.acc-menu__title {
+  font-size: var(--t-h2);
+  max-width: 14ch;
+}
+.acc-menu__media {
+  grid-column: 1 / span 5;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--nav-h) + 2rem);
+  aspect-ratio: 4 / 5;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--ink);
+}
+.acc-menu__photo {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 900ms var(--ease-wipe);
+}
+.acc-menu__photo img {
+  object-fit: cover;
+  transform: scale(1.12);
+  transition: transform 1400ms var(--ease-enter);
+}
+.acc-menu__photo[data-active="true"] {
+  clip-path: inset(0 0 0 0);
+  z-index: 1;
+}
+.acc-menu__photo[data-active="true"] img {
+  transform: none;
+}
+.acc-menu__chip {
+  position: absolute;
+  z-index: 2;
+  left: 1rem;
+  top: 1rem;
+  padding: 0.45em 0.95em;
+  border-radius: var(--r-pill);
+  background: rgba(7, 5, 4, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--flame);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.acc-menu__list {
+  grid-column: 7 / -1;
+  border-top: 1px solid var(--line-ink);
+}
+.acc-row {
+  border-bottom: 1px solid var(--line-ink);
+}
+.acc-row__head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.35rem 0;
+  text-align: left;
+  color: rgba(26, 20, 16, 0.58);
+  transition: color var(--dur-hover) var(--ease-hover);
+}
+.acc-row[data-open="true"] .acc-row__head,
+.acc-row__head:hover {
+  color: var(--ink);
+}
+.acc-row__num {
+  font-size: var(--t-small);
+  font-weight: 500;
+  color: var(--ember);
+}
+.acc-row__name {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.25rem, 1.5rem + 2.4vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: transform 600ms var(--ease-enter);
+}
+.acc-row[data-open="true"] .acc-row__name {
+  font-style: italic;
+  transform: translateX(0.75rem);
+}
+.acc-row__count {
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash-ink);
+}
+.acc-row__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 700ms var(--ease-enter);
+}
+.acc-row[data-open="true"] .acc-row__body {
+  grid-template-rows: 1fr;
+}
+.acc-row__inner {
+  overflow: hidden;
+  padding-left: 4rem;
+  visibility: hidden;
+  transition: visibility 0s linear 700ms;
+}
+.acc-row[data-open="true"] .acc-row__inner {
+  padding-bottom: 1.75rem;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.acc-row__line {
+  font-size: var(--t-lead);
+  line-height: 1.45;
+  color: var(--ink);
+}
+.acc-row__dishes {
+  margin: 1.1rem 0 1.5rem;
+  display: grid;
+}
+.acc-row__dishes li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-top: 1px dashed var(--line-ink);
+  color: var(--ash-ink);
+}
+.acc-row__dishes li span:last-child {
+  color: var(--ember);
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .acc-menu__media {
+    grid-column: 1 / -1;
+    position: relative;
+    top: 0;
+    aspect-ratio: 3 / 2;
+  }
+  .acc-menu__list {
+    grid-column: 1 / -1;
+  }
+  .acc-row__inner {
+    padding-left: 0;
+  }
+}
+
+/* 5. COUNTER-SCROLLING MARQUEES (Visionary) */
+.cm {
+  position: relative;
+  padding-block: calc(var(--section) * 0.75);
+  background: var(--forge);
+  overflow: hidden;
+  display: grid;
+  gap: 0.25rem;
+  -webkit-mask-image: var(--edge-fade);
+  mask-image: var(--edge-fade);
+}
+.cm__row {
+  overflow: hidden;
+}
+.cm__track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(4rem, 2rem + 9vw, 12.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.cm__track span {
+  flex: none;
+  padding-right: 0.3em;
+}
+.cm__track--a {
+  font-style: italic;
+  color: var(--bone);
+}
+.cm__track--b {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--brass);
+  transform: translateX(-25%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .cm__track--a {
+      animation: to-left linear both;
+      animation-timeline: view();
+    }
+    .cm__track--b {
+      animation: to-right linear both;
+      animation-timeline: view();
+    }
+  }
+}
+@keyframes to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+@keyframes to-right {
+  from {
+    transform: translateX(-25%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* 6. DEPTH STACK (Visionary) */
+.ds {
+  position: relative;
+  padding-block: var(--section);
+  background: var(--char);
+}
+.ds__head {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+.ds__title {
+  font-size: var(--t-h2);
+  max-width: 14ch;
+}
+.ds__stack {
+  display: grid;
+  gap: 2rem;
+  timeline-scope: --ds0, --ds1, --ds2;
+}
+.ds__card {
+  position: sticky;
+  top: calc(var(--nav-h) + 12px);
+  height: calc(100svh - var(--nav-h) - 36px);
+  min-height: 30rem;
+  border-radius: var(--r-stack);
+  overflow: hidden;
+  display: grid;
+  align-items: end;
+  isolation: isolate;
+  background: var(--soot);
+  transform-origin: 50% 0;
+}
+.ds__card:nth-child(1) {
+  view-timeline-name: --ds0;
+}
+.ds__card:nth-child(2) {
+  view-timeline-name: --ds1;
+}
+.ds__card:nth-child(3) {
+  view-timeline-name: --ds2;
+}
+.ds__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+.ds__img img {
+  object-fit: cover;
+  transition: transform 1200ms var(--ease-enter);
+}
+.ds__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(rgba(7, 5, 4, 0.45) 0%, rgba(7, 5, 4, 0.05) 35%, rgba(7, 5, 4, 0.9) 100%);
+}
+.ds__chips {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ds__num {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: var(--t-small);
+  color: var(--bone);
+}
+.ds__copy {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem clamp(2rem, 5vw, 3.5rem);
+}
+.ds__name {
+  font-size: clamp(3rem, 1.4rem + 6vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.ds__line {
+  max-width: 40ch;
+  font-size: var(--t-lead);
+  color: rgba(237, 228, 211, 0.86);
+}
+.ds__cta {
+  margin-top: 0.5rem;
+}
+.ds__card:hover .ds__img img {
+  transform: scale(1.04);
+}
+.ds__card:hover .ds__cta {
+  color: var(--ink);
+}
+.ds__card:hover .ds__cta::before {
+  transform: none;
+}
+.ds__card:hover .ds__cta .btn__roll {
+  transform: translateY(-100%);
+}
+.ds__card:hover .ds__cta .btn__disc {
+  background: var(--ink);
+  color: var(--bone);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .ds__card .ds__img {
+      animation: pullback-125 linear both;
+      animation-range: entry 0% entry 100%;
+    }
+    .ds__card .ds__name {
+      animation: rise-200 linear both;
+      animation-range: entry 20% entry 100%;
+    }
+    .ds__card .ds__line,
+    .ds__card .ds__cta {
+      animation: rise-150 linear both;
+      animation-range: entry 30% entry 100%;
+    }
+    .ds__card:nth-child(1) :is(.ds__img, .ds__name, .ds__line, .ds__cta) {
+      animation-timeline: --ds0;
+    }
+    .ds__card:nth-child(2) :is(.ds__img, .ds__name, .ds__line, .ds__cta) {
+      animation-timeline: --ds1;
+    }
+    .ds__card:nth-child(3) :is(.ds__img, .ds__name, .ds__line, .ds__cta) {
+      animation-timeline: --ds2;
+    }
+    /* the covered card recedes as the next one arrives */
+    .ds__card:nth-child(1) {
+      animation: recede linear both;
+      animation-timeline: --ds1;
+      animation-range: entry 0% entry 100%;
+    }
+    .ds__card:nth-child(2) {
+      animation: recede linear both;
+      animation-timeline: --ds2;
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+@keyframes pullback-125 {
+  from {
+    transform: scale(1.25);
+  }
+}
+@keyframes rise-200 {
+  from {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+}
+@keyframes rise-150 {
+  from {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+}
+@keyframes recede {
+  to {
+    transform: scale(0.92);
+    filter: blur(6px) brightness(0.55);
+  }
+}
+@media (max-width: 700px) {
+  .ds__card {
+    height: 78svh;
+    min-height: 26rem;
+  }
+  .ds__num {
+    display: none;
+  }
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { BtnInner } from "@/components/Btn";
 
 /**
  * A lightweight enquiry modal for a single event space — separate from the
@@ -47,8 +48,8 @@ export function EnquiryFlow({ space }: { space: string }) {
 
   return (
     <>
-      <button type="button" className="act" onClick={openModal}>
-        Enquire about {space}
+      <button type="button" className="btn btn--primary" onClick={openModal}>
+        <BtnInner>{`Enquire about ${space}`}</BtnInner>
       </button>
 
       {open &&
@@ -146,7 +147,7 @@ export function EnquiryFlow({ space }: { space: string }) {
                   {form.size}.
                 </p>
                 <p className="modal__demo">
-                  This is a demo — no email was sent and nothing was booked.
+                  This is a demo. No email was sent and nothing was booked.
                 </p>
                 <div className="modal__foot">
                   <span />

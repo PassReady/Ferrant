@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { BtnInner } from "@/components/Btn";
 
 const DAYS = ["S", "M", "T", "W", "T", "F", "S"];
 const MONTHS = [
@@ -142,16 +144,16 @@ export function BookingFlow() {
     <>
       <button
         type="button"
-        className="btn-fire"
+        className="btn btn--primary"
         onClick={() => {
           reset();
           setOpen(true);
         }}
       >
-        Book a table
+        <BtnInner>Book a table</BtnInner>
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
           className="modal"
           role="dialog"
@@ -352,7 +354,7 @@ export function BookingFlow() {
                   </div>
                 </dl>
                 <p className="modal__demo">
-                  This is a demo — no email was sent and no table was actually
+                  This is a demo. No email was sent and no table was actually
                   reserved.
                 </p>
                 <div className="modal__foot">
@@ -368,7 +370,8 @@ export function BookingFlow() {
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );

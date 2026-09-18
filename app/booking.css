@@ -1,0 +1,337 @@
+/* ============================================================
+   BOOKING. Moved out of globals.css in v4; corners brought onto the
+   house radii (16px panels, pills, circles).
+   ============================================================
+   Button, modal, calendar, stepper.
+   ============================================================ */
+.btn-fire {
+  border-radius: 999px;
+  font-family: var(--font-text), sans-serif;
+  font-size: var(--t-0);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--forge);
+  background: var(--flame);
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--flame);
+  transition: background 0.25s var(--ease), transform 0.15s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+.btn-fire:hover {
+  background: color-mix(in oklab, var(--flame) 88%, white);
+  box-shadow: 0 0 34px -6px rgba(232, 162, 74, 0.55);
+}
+.btn-fire:active {
+  transform: translateY(1px);
+}
+.btn-fire:disabled {
+  background: var(--scale-2);
+  border-color: var(--line);
+  color: var(--ash-dim);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: end center;
+  background: rgba(6, 5, 5, 0.72);
+  backdrop-filter: blur(3px);
+  animation: modalIn 0.25s var(--ease);
+}
+@media (min-width: 40rem) {
+  .modal {
+    place-items: center;
+    padding: 2rem;
+  }
+}
+@keyframes modalIn {
+  from {
+    opacity: 0;
+  }
+}
+.modal__panel {
+  border-radius: 16px;
+  overflow-x: hidden;
+  width: min(42rem, 100%);
+  max-height: 92svh;
+  overflow-y: auto;
+  background: var(--forge);
+  border: 1px solid var(--line);
+  animation: panelUp 0.32s var(--ease);
+}
+@media (min-width: 40rem) {
+  .modal__panel {
+    border-bottom: 1px solid var(--line);
+  }
+}
+@keyframes panelUp {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+.modal__bar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem clamp(1.25rem, 4vw, 2rem);
+  background: var(--forge);
+  border-bottom: 1px solid var(--line-soft);
+  z-index: 2;
+}
+.modal__brand {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: 0.14em;
+  font-size: 1rem;
+  color: var(--bone);
+}
+.modal__x {
+  font-size: var(--t--1);
+  letter-spacing: 0.04em;
+  color: var(--ash);
+}
+.modal__x:hover {
+  color: var(--bone);
+}
+.modal__body {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+.modal__back {
+  font-size: var(--t--1);
+  color: var(--ash);
+  margin-bottom: 1.25rem;
+}
+.modal__back:hover {
+  color: var(--bone);
+}
+.modal__h {
+  font-size: var(--d-3);
+  font-weight: 600;
+}
+.modal__sub {
+  margin-top: 0.6rem;
+  color: var(--ash);
+  font-size: var(--t-0);
+  max-width: 42ch;
+}
+.cal__months {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+@media (min-width: 34rem) {
+  .cal__months {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.cal__title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--t-0);
+  letter-spacing: 0.02em;
+  color: var(--bone);
+  margin-bottom: 0.75rem;
+}
+.cal__dow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--ash-dim);
+  text-align: center;
+  margin-bottom: 0.35rem;
+}
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal__cell {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: var(--t--1);
+  color: var(--bone);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+button.cal__cell:not(:disabled):hover {
+  border-color: var(--ash);
+}
+.cal__cell:disabled {
+  color: var(--ash-dim);
+  opacity: 0.4;
+  cursor: default;
+}
+.cal__cell[data-selected="true"] {
+  background: var(--flame);
+  color: var(--forge);
+  border-color: var(--flame);
+}
+.modal__rows {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+@media (min-width: 34rem) {
+  .modal__rows {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.modal__label {
+  display: block;
+  font-size: var(--t--1);
+  color: var(--ash);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.6rem;
+}
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.slot {
+  border-radius: 999px;
+  flex: 1 1 4rem;
+  padding: 0.65rem 0;
+  text-align: center;
+  font-size: var(--t--1);
+  color: var(--bone);
+  border: 1px solid var(--line);
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.slot:hover {
+  border-color: var(--ash);
+}
+.slot[data-selected="true"] {
+  background: var(--flame);
+  color: var(--forge);
+  border-color: var(--flame);
+}
+.stepper {
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.5rem;
+}
+.stepper button {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  color: var(--bone);
+  border: 1px solid var(--line);
+  font-size: 1rem;
+  transition: border-color 0.15s var(--ease);
+}
+.stepper button:hover:not(:disabled) {
+  border-color: var(--flame);
+}
+.stepper button:disabled {
+  color: var(--ash-dim);
+  cursor: not-allowed;
+}
+.stepper span {
+  font-size: var(--t--1);
+  color: var(--bone);
+}
+.modal__foot {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.modal__summary {
+  font-size: var(--t--1);
+  color: var(--ash);
+}
+.modal__input {
+  display: block;
+  margin-top: 1.25rem;
+}
+.modal__input span {
+  display: block;
+  font-size: var(--t--1);
+  color: var(--ash);
+  margin-bottom: 0.4rem;
+}
+.modal__input input {
+  width: 100%;
+  font: inherit;
+  font-size: var(--t-0);
+  color: var(--bone);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(231, 224, 210, 0.28);
+  padding: 0.55rem 0;
+  border-radius: 0;
+}
+.modal__input input:focus {
+  outline: none;
+  border-color: var(--flame);
+}
+.modal__done {
+  text-align: left;
+}
+.modal__mark {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, var(--flame), var(--ember) 72%);
+  box-shadow: 0 0 26px rgba(192, 64, 42, 0.5);
+  margin-bottom: 1.25rem;
+}
+.receipt {
+  border-radius: 12px; overflow: hidden;
+  margin-top: 1.75rem;
+  border: 1px solid var(--line);
+}
+.receipt div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem clamp(1rem, 3vw, 1.4rem);
+  border-bottom: 1px solid var(--line-soft);
+  font-size: var(--t-0);
+}
+.receipt div:last-child {
+  border-bottom: 0;
+}
+.receipt dt {
+  color: var(--ash);
+}
+.receipt dd {
+  color: var(--bone);
+  text-align: right;
+}
+.receipt div:first-child dd {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: 0.06em;
+  color: var(--flame);
+}
+.modal__demo {
+  margin-top: 1.25rem;
+  font-size: var(--t--1);
+  color: var(--ash-dim);
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal__panel {
+    animation: none;
+  }
+}

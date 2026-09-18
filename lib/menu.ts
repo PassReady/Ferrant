@@ -66,7 +66,7 @@ export const categoryImages: Record<Category, CategoryImage[]> = {
 
 export const seedMenu: MenuState = {
   intro:
-    "Everything below comes off the one fire in the kitchen. The selection shifts with the season and the market — this is what's running this week.",
+    "Everything below comes off the one fire in the kitchen. The selection shifts with the season and the market. This is what's running this week.",
   dishes: [
     // — Bites —
     {
