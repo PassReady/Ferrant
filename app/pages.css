@@ -8,7 +8,7 @@
 .mh {
   position: relative;
   min-height: 100svh;
-  overflow: hidden;
+  overflow: clip;
   display: grid;
   background: var(--soot);
 }
@@ -987,7 +987,7 @@
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   min-height: min(44rem, calc(100svh - var(--nav-h) - 5rem));
   border-radius: var(--r-card);
-  overflow: hidden;
+  overflow: clip;
   background: var(--char-2);
   box-shadow: 0 -30px 60px -30px rgba(0, 0, 0, 0.8);
 }
@@ -1000,7 +1000,7 @@
 .st__img {
   position: relative;
   min-height: 20rem;
-  overflow: hidden;
+  overflow: clip;
 }
 .st__img img {
   object-fit: cover;

@@ -845,7 +845,7 @@ ul {
   min-height: 92svh;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: clip;
   background: var(--soot);
   text-align: center;
 }
@@ -1156,3 +1156,8 @@ html[data-motion="paused"] .embers span {
     scroll-behavior: auto !important;
   }
 }
+
+/* NB: never put overflow: hidden on an ancestor of anything driven by
+   animation-timeline: view(). A hidden box counts as a scroll container,
+   the view timeline attaches to it instead of the page, and the effect
+   freezes. overflow: clip crops the same way without being a scroller. */

@@ -7,7 +7,7 @@
   position: relative;
   height: 100svh;
   min-height: 40rem;
-  overflow: hidden;
+  overflow: clip;
   display: grid;
   grid-template-rows: 1fr auto;
   background: var(--soot);
@@ -208,7 +208,7 @@
 /* 2. STATEMENT: scroll-scrubbed H1 over the background wordmark */
 .stmt {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   padding-block: calc(var(--section) * 1.25) var(--section);
   background: var(--forge);
 }
@@ -550,14 +550,14 @@
   position: relative;
   padding-block: calc(var(--section) * 0.75);
   background: var(--forge);
-  overflow: hidden;
+  overflow: clip;
   display: grid;
   gap: 0.25rem;
   -webkit-mask-image: var(--edge-fade);
   mask-image: var(--edge-fade);
 }
 .cm__row {
-  overflow: hidden;
+  overflow: clip;
 }
 .cm__track {
   display: flex;
